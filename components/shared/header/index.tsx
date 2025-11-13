@@ -5,9 +5,9 @@ import Menu from "./menu";
 
 const Header = () => {
   return (
-    <header className="w-full border-b bg-black">
-      <div className="wrapper flex-between bg-gray-500">
-        <div className="flex-start bg-blue-400">
+    <header className="w-full border-b">
+      <div className="wrapper flex-between">
+        <div className="flex-start">
           <Link href="/" className="flex-start">
             <Image
               src="/images/logo.svg"
