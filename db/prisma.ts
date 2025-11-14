@@ -2,10 +2,9 @@
 import 'dotenv/config';
 import { neonConfig } from '@neondatabase/serverless';
 // import { PrismaNeon } from '@prisma/adapter-neon';
-import { PrismaClient } from '@prisma/client';
-// import { PrismaClient } from '@/lib/generated/prisma';
+// import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@/lib/generated/prisma';
 import ws from 'ws';
-import { Product } from "@/types";
 
 // Sets up WebSocket connections, which enables Neon to use WebSocket communication.
 neonConfig.webSocketConstructor = ws;
