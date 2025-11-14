@@ -10,7 +10,6 @@ const ProductList = ({
   title?: string;
   limit?: number;
 }) => {
-  console.log("===>>>", data);
   const limitedData = limit ? data.slice(0, limit) : data;
 
   return (
