@@ -1,5 +1,4 @@
 import ProductList from "@/components/shared/products/product-list";
-// import sampleData from "@/db/sample-data";
 import {getLatestProducts} from '../../lib/actions/product.actions'
 
 const Homepage = async () => {
