@@ -1,5 +1,3 @@
-// import { Pool, neonConfig } from '@neondatabase/serverless';
-// import { PrismaClient } from '../lib/generated/prisma';
 import 'dotenv/config';
 import { PrismaClient } from '@prisma/client';
 import { PrismaNeon } from '@prisma/adapter-neon';
@@ -21,14 +19,12 @@ const adapter = new PrismaNeon({connectionString});
   result: {
     product: {
       price: {
-        // compute(product: any) {
         compute(product) {
           return product.price.toString();
         },
       },
       rating: {
         compute(product) {
-        // compute(product: any) {
           return product.rating.toString();
         },
       },
