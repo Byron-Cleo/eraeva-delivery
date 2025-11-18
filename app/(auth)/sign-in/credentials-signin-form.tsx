@@ -31,7 +31,7 @@ const CredentialsSignInForm = () => {
         <div>
           <Label htmlFor="email">Email:</Label>
           <Input
-            id="emal"
+            id="email"
             name="email"
             type="email"
             required
