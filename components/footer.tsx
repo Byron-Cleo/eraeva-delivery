@@ -8,7 +8,6 @@ const Footer = () => {
       <div className="p-5 flex-center">
         {currentYear} {APP_NAME}. All Rights Reserved.
       </div>
-      ;
     </footer>
   );
 };
