@@ -7,7 +7,7 @@ export type Product = z.infer<typeof insertProductSchema> & {
     createdAt: Date,
 }
 
-//here we are inferring the carts schemas type to create a TypeScript type
+//here we are inferring the carts zod schema type to create a TypeScript type
 export type Cart = z.infer<typeof insertCartSchema>
 
 export type CartItem = z.infer<typeof cartItemSchema>
