@@ -1,0 +1,9 @@
+Prisma Notes
+just like sequelize, prisma enables interacting with the database by absctacting writting raw queries.
+
+Prisma schema is used to create and run the migration to create the table in the database
+Steps:
+1. First create the model in the prisma schema that represents the the table in the database I.E the schema
+2. Run "npx prisma generate" - to generate the client so that we can access the cart from the client and do any database operation
+3. Run "npx prisma migrate dev --name add-cart" To create the migration and run the migration to add the table in the database
+4. Run "npx prisma studio" to view the database sync schema 
