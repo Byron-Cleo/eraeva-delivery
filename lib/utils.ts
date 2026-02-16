@@ -20,7 +20,7 @@ export function formatnumberWithDeciaml(num: number): string {
 //Format sign up errors
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function formatError(error: any) {
-  if (error instanceof z.ZodError) {
+  if (error.name === "ZodError") {
     //Handle zod errors
     const fieldErrors = Object.keys(error.issues).map((issue) => {
       // return {
