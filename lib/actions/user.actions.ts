@@ -10,7 +10,7 @@ import { formatError } from "@/lib/utils";
 //sign in the user with credentials
 export async function signInWithCredentials(
   prevState: unknown,
-  formData: FormData
+  formData: FormData,
 ) {
   try {
     const user = signInFormSchema.parse({
@@ -37,6 +37,7 @@ export async function signOutUser() {
 //sign up user
 export async function signUpUser(prevState: unknown, formData: FormData) {
   try {
+    //1. FORM DATA
     const user = signUpFormSchema.parse({
       name: formData.get("name"),
       email: formData.get("email"),
@@ -48,6 +49,7 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
 
     user.password = hashSync(user.password, 10);
 
+    //2. FORM DATA TO DATABASE.
     //create user in the database
     await prisma.user.create({
       data: {
