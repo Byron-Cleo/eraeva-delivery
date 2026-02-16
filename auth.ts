@@ -4,6 +4,8 @@ import { prisma } from "@/db/prisma";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compareSync } from "bcrypt-ts-edge";
 import type { NextAuthConfig } from "next-auth";
+import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
 
 export const config = {
   pages: {
@@ -21,6 +23,7 @@ export const config = {
         email: { type: "email" },
         password: { type: "password" },
       },
+      //this is the actual function being executed while
       async authorize(credentials) {
         if (credentials === null) return null;
 
@@ -53,17 +56,18 @@ export const config = {
     }),
   ],
   callbacks: {
+    //this function will be called whenever the auth() function is called in the application
     async session({ session, user, trigger, token }: any) {
       //set the user ID from the token
       session.user.id = token.sub;
       session.user.role = token.role;
       session.user.name = token.name;
-
+      
       //if there is an update, set the user name
       if (trigger === "update") {
         session.user.name = user.name;
       }
-
+      
       return session;
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
