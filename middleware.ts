@@ -2,10 +2,10 @@
 
 // export const middleware = auth;
 
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 // import {cookies } from "next/headers";
 
-export function middleware(request: Request) {
+export function middleware(request: NextRequest) {
   //check for session cart cookie
   if (!request.cookies.get("sessionCartId")) {
     // Generate  new session cart id cookie
