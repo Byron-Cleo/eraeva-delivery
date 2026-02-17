@@ -14,13 +14,13 @@ const AddToCart = ({ item }: { item: CartItem }) => {
   const { toast } = useToast();
 
   const handleAddToCart = async () => {
-    const res = await addItemToCart({ item });
+    const res = await addItemToCart({ item }) || undefined;
 
-    if (!res.success) {
+    if (!res?.success) {
       toast({
         variant: "destructive",
         title: "Error",
-        description: res.message,
+        description: res?.message || "Failed to add item to cart",
       });
       return;
       // router.refresh();
