@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { formatnumberWithDeciaml } from "./utils";
+import { formatNumberWithDecimal } from "./utils";
 
 const currency = z
   .string()
   .refine(
-    (value) => /^\d+(\.\d{2})?$/.test(formatnumberWithDeciaml(Number(value))),
+    (value) => /^\d+(\.\d{2})?$/.test(formatNumberWithDecimal(Number(value))),
     "Price must have exactly two decimal places"
   );
 
@@ -50,9 +50,10 @@ export const signUpFormSchema = z.object({
 
   export const insertCartSchema = z.object({
     items: z.array(cartItemSchema),
-    itemPrice: currency,
+    itemsPrice: currency,
     shippingPrice: currency,
     taxPrice: currency,
+    totalPrice: currency,
     sessionCartId: z.string().min(1, "Session Cart ID is required."),
     userId: z.string().optional().nullable(),
   })
