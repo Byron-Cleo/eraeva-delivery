@@ -6,13 +6,12 @@ import { NextResponse } from "next/server";
 // import {cookies } from "next/headers";
 
 export function middleware(request: Request) {
-  // console.log("MMMM===>>> request object", request);
   //check for session cart cookie
   if (!request.cookies.get("sessionCartId")) {
     // Generate  new session cart id cookie
     const sessionCartId = crypto.randomUUID();
 
-    //clone the request headers
+    //clone the incoming request headers
     const newRequestHeaders = new Headers(request.headers);
 
     //create new response and add the new headers
