@@ -96,7 +96,6 @@ export async function getMyCart() {
     where: userId ? { userId } : { sessionCartId },
   });
   if (!cart) return undefined;
-  console.log("CAERT===>", cart);
 
   //convert decimals and return
   return convertToPlainObject({
