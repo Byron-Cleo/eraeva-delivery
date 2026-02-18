@@ -12,6 +12,7 @@ import { auth } from "@/auth";
 import { prisma } from "@/db/prisma";
 import { cartItemSchema, insertCartSchema } from "../validators";
 import { revalidatePath } from "next/cache";
+import { Prisma } from "@prisma/client";
 
 //calculate cart prices
 const calcPrice = (items: CartItem[]) => {
@@ -54,6 +55,7 @@ export async function addItemToCart(data: { item: CartItem }) {
     });
     if (!product) throw new Error("Product not found");
 
+    //1. creating a cart is making it MUST HAVE A PRODUCT AND USER hence called a cart
     //creating new cart object
     if (!cart) {
       const newCart = insertCartSchema.parse({
@@ -71,12 +73,51 @@ export async function addItemToCart(data: { item: CartItem }) {
 
       return {
         success: true,
-        message: "Item added to cart successfully",
+        message: `${product.name} added to cart successfully`,
       };
     } else {
+      //2. If there is a cart: Meaning there is a PRODUCT AND ASSOCIATED USER
+      //check the existing item is already in the cart
+      const existItem = (cart.items as CartItem[]).find(
+        (i) => i.productId === item.productId,
+      );
 
+      if (existItem) {
+        //check stock
+        if (product.stock < existItem.qty + 1) {
+          throw new Error("Product is out of stock");
+        }
+
+        //increase the quantity
+        (cart.items as CartItem[]).find(
+          (i) => i.productId === item.productId,
+        )!.qty = existItem.qty + 1;
+
+      } else {
+        //NEW PRODUCT: meaning item product does not exist IN THE CART
+        if (product.stock < 1) throw new Error("Not enough stock");
+
+        //then add the product into the cart to FINALLY EXIST IN THE CART
+        (cart.items as CartItem[]).push(item);
+      }
+
+      //FINALY SAVE THE CART INTO THE DATABASE
+      await prisma.cart.update({
+        where: { id: cart.id },
+        data: {
+          items: cart.items as Prisma.CartUpdateitemsInput[],
+          ...calcPrice(cart.items as CartItem[]),
+        },
+      });
+
+      //Revalidate the product page: purpose to clear the cache for a particular path
+      revalidatePath(`/product/${product.slug}`);
+
+      return {
+        success: true,
+        message: `${product.name} ${existItem ? "updated in" : "added to"} Cart Successfully.`,
+      };
     }
-    
   } catch (error) {
     return {
       success: false,
