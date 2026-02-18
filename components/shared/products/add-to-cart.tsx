@@ -2,19 +2,19 @@
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { Plus } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
-import { addItemToCart } from "@/lib/actions/cart.actions";
+import { addItemToCart, removeItemFromCart } from "@/lib/actions/cart.actions";
 
-import { CartItem } from "@/types";
+import { CartItem, Cart } from "@/types";
 
-const AddToCart = ({ item }: { item: CartItem }) => {
+const AddToCart = ({ cart, item }: { cart?: Cart; item: CartItem }) => {
   const router = useRouter();
   const { toast } = useToast();
 
   const handleAddToCart = async () => {
-    const res = await addItemToCart({ item }) || undefined;
+    const res = (await addItemToCart({ item })) || undefined;
 
     if (!res?.success) {
       toast({
@@ -35,15 +35,46 @@ const AddToCart = ({ item }: { item: CartItem }) => {
           altText="Go to cart"
           onClick={() => router.push("/cart")}
         >
-         Go To Cart
+          Go To Cart
         </ToastAction>
       ),
     });
   };
 
-  return (
+  // handle remove from cart
+  const handleRemoveFromCat = async () => {
+    const res = (await removeItemFromCart(item.productId)) || undefined;
+
+    //Handle success case of removing from cart
+    toast({
+      variant: res.success ? "default" : "destructive",
+      description: res.message,
+    });
+
+  };
+
+  //check if item is in cart
+  const existItem =
+    cart && cart.items.find((x) => x.productId === item.productId);
+  console.log("existItem", existItem);
+
+  return existItem ? (
+    <div>
+      <Button
+        type="button"
+        variant="outline"
+        onClick={handleRemoveFromCat}
+      >
+        <Minus className="w-4 h-4" />
+      </Button>
+      <span className="px-2">{existItem.qty}</span>
+      <Button type="button" onClick={handleAddToCart}>
+        <Plus className="w-4 h-4" />
+      </Button>
+    </div>
+  ) : (
     <Button className="w-full" type="button" onClick={handleAddToCart}>
-      <Plus /> Add to Cart
+      <Plus className="w-4 h-4" /> Add to Cart
     </Button>
   );
 };
