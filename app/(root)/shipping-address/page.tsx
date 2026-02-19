@@ -21,7 +21,7 @@ const ShippingAddressPage = async () => {
   //get userId from session
   const session = await auth();
   const userId = session?.user?.id;
-  if (!userId) throw new Error("User has not id");
+  if (!userId) throw new Error("User has no id");
 
   const user = await getUserById(userId);
 
