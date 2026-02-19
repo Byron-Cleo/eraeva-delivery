@@ -7,14 +7,14 @@ const sampleData = {
       email: "admin@example.com",
       password: hashSync('12345', 10),
       role: "admin",
-      address: {pob: "205"}
+      address: {fullName: "Byron Ochara", streetAddress: "Nairobi, Kenya", city: "Nairobi", postalCode: "00100", country: "Kenya"}
     },
     {
-      name: "Regina",
+      name: "Maxin Ochara",
       email: "user@example.com",
       password: hashSync('12345', 10),
       role: "user",
-      address: {pob: "210"}
+      address: {fullName: "Maxin Ochara", streetAddress: "Mombasa, Kenya", city: "Mombasa", postalCode: "00200", country: "Kenya"}
     },
   ],
   products: [
