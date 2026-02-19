@@ -47,7 +47,6 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
               <TableBody>
                 {cart.items.map(
                   (item) => (
-                    console.log("cart item", item),
                     (
                       <TableRow key={item.slug}>
                         <TableCell>

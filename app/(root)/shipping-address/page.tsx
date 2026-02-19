@@ -23,7 +23,6 @@ const ShippingAddressPage = async () => {
     if(!userId) throw new Error("User has not id");
     
     const user = await getUserById(userId);
-    console.log("UUU===>>>", user)
 
   return <div><ShippingAddressForm address={user.address as ShippingAddress} /> </div>;
 };
