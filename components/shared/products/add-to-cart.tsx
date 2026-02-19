@@ -1,8 +1,9 @@
 "use client";
 
+import { useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { Minus, Plus } from "lucide-react";
+import { Minus, Plus, Loader } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { addItemToCart, removeItemFromCart } from "@/lib/actions/cart.actions";
@@ -13,44 +14,51 @@ const AddToCart = ({ cart, item }: { cart?: Cart; item: CartItem }) => {
   const router = useRouter();
   const { toast } = useToast();
 
-  const handleAddToCart = async () => {
-    const res = (await addItemToCart({ item })) || undefined;
+  // initializing useTransition hook for dispalying asyn actions
+  const [isPending, startTransition] = useTransition();
 
-    if (!res?.success) {
+  const handleAddToCart = async () => {
+    startTransition(async () => {
+      const res = (await addItemToCart({ item })) || undefined;
+
+      if (!res?.success) {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: res?.message || "Failed to add item to cart",
+        });
+        return;
+        // router.refresh();
+      }
+
+      //Handle success case of adding to cart
       toast({
-        variant: "destructive",
-        title: "Error",
-        description: res?.message || "Failed to add item to cart",
+        title: "Success",
+        description: res.message,
+        action: (
+          <ToastAction
+            className="text-white bg-primary hover:bg-gray-800"
+            altText="Go to cart"
+            onClick={() => router.push("/cart")}
+          >
+            Go To Cart
+          </ToastAction>
+        ),
       });
-      return;
-      // router.refresh();
-    }
-    //Handle success case of adding to cart
-    toast({
-      title: "Success",
-      description: res.message,
-      action: (
-        <ToastAction
-          className="text-white bg-primary hover:bg-gray-800"
-          altText="Go to cart"
-          onClick={() => router.push("/cart")}
-        >
-          Go To Cart
-        </ToastAction>
-      ),
     });
   };
 
   // handle remove from cart
-  const handleRemoveFromCat = async () => {
-    const res = (await removeItemFromCart(item.productId)) || undefined;
+  const handleRemoveFromCart = async () => {
+    startTransition(async () => {
+      const res = (await removeItemFromCart(item.productId)) || undefined;
 
-    //Handle success case of removing from cart
-    toast({
-      variant: res.success ? "default" : "destructive",
-      description: res.message,
+      //Handle success case of removing from cart
+      toast({
+        variant: res.success ? "default" : "destructive",
+        description: res.message,
+      });
     });
-
   };
 
   //check if item is in cart
@@ -60,21 +68,30 @@ const AddToCart = ({ cart, item }: { cart?: Cart; item: CartItem }) => {
 
   return existItem ? (
     <div>
-      <Button
-        type="button"
-        variant="outline"
-        onClick={handleRemoveFromCat}
-      >
-        <Minus className="w-4 h-4" />
+      <Button type="button" variant="outline" onClick={handleRemoveFromCart}>
+        {isPending ? (
+          <Loader className="w-4 h-4 animate-spin" />
+        ) : (
+          <Minus className="w-4 h-4" />
+        )}
       </Button>
       <span className="px-2">{existItem.qty}</span>
       <Button type="button" onClick={handleAddToCart}>
-        <Plus className="w-4 h-4" />
+        {isPending ? (
+          <Loader className="w-4 h-4 animate-spin" />
+        ) : (
+          <Plus className="w-4 h-4" />
+        )}
       </Button>
     </div>
   ) : (
     <Button className="w-full" type="button" onClick={handleAddToCart}>
-      <Plus className="w-4 h-4" /> Add to Cart
+      {isPending ? (
+        <Loader className="w-4 h-4 animate-spin" />
+      ) : (
+        <Plus className="w-4 h-4" />
+      )}
+      Add to Cart
     </Button>
   );
 };
