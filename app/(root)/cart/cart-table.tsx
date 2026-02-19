@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/table";
 import { Cart } from "@/types";
 import { Button } from "@/components/ui/button";
+import { formatCurrency } from "@/lib/utils";
+import { Card, CardContent } from "@/components/ui/card";
 
 const CartTable = ({ cart }: { cart?: Cart }) => {
   //then initailze the imported packages for their functionlities
@@ -122,6 +124,19 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
               </TableBody>
             </Table>
           </div>
+
+          <Card>
+            <CardContent className="p-4 gap-4">
+                <div className="pb-3 text-xl">Sub Total({cart.items.reduce((acc, item) => acc + item.qty, 0)}): <span className="font-bold">{formatCurrency(cart.itemsPrice)}</span></div>
+                <Button className="w-full" disabled={isPending} onClick={() => startTransition(() => router.push("/shipping-address"))}>
+                    {isPending ? (<Loader className="w-4 h-4 animate-spin"/>) : (<ArrowRight className="w-4 h-4"/>)}
+                    Proceed to checkout
+                </Button>
+            </CardContent>
+          </Card>
+
+
+
         </div>
       )}
     </>
