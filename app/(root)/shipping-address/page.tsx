@@ -18,7 +18,7 @@ const ShippingAddressPage = async () => {
     redirect("/cart");
   }
 
-  //get userId from session
+  //get userId from session from logged in user(ONLY!!)
   const session = await auth();
   const userId = session?.user?.id;
   if (!userId) throw new Error("User has no id");
