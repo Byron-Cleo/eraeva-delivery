@@ -71,7 +71,6 @@ export const config = {
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async jwt({ token, user, trigger, session }: any) {
-      console.log("user===>>>", user, trigger)
       // assign user info to the token on sign in
       if (user) {
         token.id = user.id
