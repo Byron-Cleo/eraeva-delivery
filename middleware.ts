@@ -17,7 +17,6 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   if (!sessionToken && protectedPaths.some((p) => p.test(pathname))) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
-
   }
 
   //check for session cart cookie
@@ -44,9 +43,3 @@ export function middleware(request: NextRequest) {
   //Always go to the next response as normal working of request response cycle
   return NextResponse.next();
 }
-
-// 2. The Matcher Config
-export const config = {
-  matcher: protectedPaths, // Specific paths
-  // matcher: ['/about/:path*', '/dashboard/:path*'], // Specific paths
-};
