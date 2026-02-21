@@ -18,8 +18,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, FileDiff, Loader } from "lucide-react";
+import { ArrowRight, Loader } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { updateUserPaymentMethod } from "@/lib/actions/user.actions";
 
 const PaymentMethodForm = ({
   preferredPaymentMethod,
@@ -27,7 +28,7 @@ const PaymentMethodForm = ({
   preferredPaymentMethod: string | null;
 }) => {
   const router = useRouter();
-  const toast = useToast();
+  const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof paymentMethodSchema>>({
@@ -35,7 +36,19 @@ const PaymentMethodForm = ({
     defaultValues: { type: preferredPaymentMethod || DEFAULT_PAYMENT_METHOD },
   });
 
-  const onSubmit = () => {
+  const onSubmit = async (values: z.infer<typeof paymentMethodSchema>) => {
+    startTransition(async () => {
+      const res = await updateUserPaymentMethod(values);
+
+      if (!res.success) {
+        toast({
+          variant: "destructive",
+          description: res.message,
+        });
+        return;
+      }
+      router.push("/place-order");
+    });
     return;
   };
 
