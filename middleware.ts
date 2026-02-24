@@ -15,13 +15,14 @@ export function middleware(request: NextRequest) {
   const sessionToken = request.cookies.get("authjs.session-token")?.value;
   const isAuthenticated = Boolean(sessionToken);
   const { pathname } = request.nextUrl;
-  if (!isAuthenticated && protectedPaths.some((p) => p.test(pathname))) {
-    return NextResponse.redirect(new URL("/sign-in", request.url));
+  if (protectedPaths.some((p) => p.test(pathname))) {
+    if(!isAuthenticated) return NextResponse.redirect(new URL("/sign-in", request.url));
+    return NextResponse.next();
   }
   // Optional: Redirect authenticated users away from the login page and redirect to their destinatin
-  if (isAuthenticated && protectedPaths.some((p) => p.test(pathname))) {
-    return NextResponse.redirect(new URL(pathname, request.url));
-  }
+  // if (isAuthenticated && protectedPaths.some((p) => p.test(pathname))) {
+  //   return NextResponse.redirect(new URL(pathname, request.url));
+  // }
   // if (!isAuthenticated && protectedPaths.some((p) => p.test(pathname))) {
   //   return NextResponse.redirect(new URL("/sign-in", request.url));
   // }
@@ -50,8 +51,3 @@ export function middleware(request: NextRequest) {
   //Always go to the next response as normal working of request response cycle
   return NextResponse.next();
 }
-
-// Matches all paths except API routes, static files, and images
-export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
-};
