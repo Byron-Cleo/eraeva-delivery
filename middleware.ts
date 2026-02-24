@@ -13,7 +13,7 @@ export function middleware(request: NextRequest) {
   //check the user is logged in or not logged in by using request's cookies
   //it identifies the logged in and not yet logged in user
   const sessionToken = request.cookies.get("authjs.session-token")?.value;
-  const isAuthenticated = !!sessionToken;
+  const isAuthenticated = Boolean(sessionToken);
   const { pathname } = request.nextUrl;
   if (!isAuthenticated && protectedPaths.some((p) => p.test(pathname))) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
