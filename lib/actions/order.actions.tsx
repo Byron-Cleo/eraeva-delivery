@@ -54,43 +54,52 @@ export async function createOrder() {
       totalPrice: cart.totalPrice,
     });
 
-    //create a transaction to create order and order items in database
-    const insertedOrderId = await prisma.$transaction(async (tx) => {
-      //create order
-      const insertedOrder = await tx.order.create({ data: order });
 
-      //create order items from the cart items
-      for (const item of cart.items as CartItem[]) {
-        await tx.orderItem.create({
+    //create a transaction to create order and order items in database
+    const insertedOrderId = await prisma.$transaction(
+      async (tx) => {
+        //create order
+        const insertedOrder = await tx.order.create({ data: order });
+
+        //create order items from the cart items
+        for (const item of cart.items as CartItem[]) {
+          await tx.orderItem.create({
+            data: {
+              ...item,
+              price: item.price,
+              orderId: insertedOrder.id,
+            },
+          });
+        }
+
+        //clear the cart now to be an empty cart for next shopping session
+        await tx.cart.update({
+          where: { id: cart.id },
           data: {
-            ...item,
-            price: item.price,
-            orderId: insertedOrder.id,
+            items: [],
+            totalPrice: 0,
+            taxPrice: 0,
+            shippingPrice: 0,
+            itemsPrice: 0,
           },
         });
-      }
 
-      //clear the cart now to be an empty cart for next shopping session
-      await tx.cart.update({
-        where: { id: cart.id },
-        data: {
-          items: [],
-          totalPrice: 0,
-          taxPrice: 0,
-          shippingPrice: 0,
-          itemsPrice: 0,
-        },
-      });
+        //finally return the isertedOrderId i.e after all the transactions
+        return insertedOrder.id;
+      },
+      {
+        timeout: 60000, // 60 seconds
+      },
+    );
 
-      //finally return the isertedOrderId i.e after all the transactions
-      return insertedOrder.id;
-    });
-
-    if(!insertedOrderId) throw new Error("Order not created")
+    if (!insertedOrderId) throw new Error("Order not created");
 
     //finally return the confirmation success message for notification
-    return {success: true, message: "Order created", redirectTo: `/order/${insertedOrderId}`}
-
+    return {
+      success: true,
+      message: "Order created",
+      redirectTo: `/order/${insertedOrderId}`,
+    };
   } catch (error) {
     if (isRedirectError(error)) throw error;
     return { success: false, message: formatError(error) };
