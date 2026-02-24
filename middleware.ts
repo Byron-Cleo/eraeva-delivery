@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const protectedPaths = [
-  /\/shipping-address/,
+  // /\/shipping-address/,
   /\/payment-method/,
   /\/place-order/,
   /\/profile/,
