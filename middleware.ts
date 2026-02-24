@@ -19,7 +19,7 @@ export function middleware(request: NextRequest) {
   // if (!isAuthenticated && protectedPaths.some((p) => p.test(pathname))) {
   //   return NextResponse.redirect(new URL("/sign-in", request.url));
   // }
-  // Optional: Redirect authenticated users away from the login page
+  // Optional: Redirect authenticated users away from the login page and redirect to their destinatin
   if (isAuthenticated && protectedPaths.some((p) => p.test(pathname))) {
     return NextResponse.redirect(new URL(pathname, request.url));
   } else if (!isAuthenticated && protectedPaths.some((p) => p.test(pathname))) {
