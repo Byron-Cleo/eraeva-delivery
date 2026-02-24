@@ -1,32 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
-  // const protectedPaths = [
-  //   /\/shipping-address/,
-  //   /\/payment-method/,
-  //   /\/place-order/,
-  //   /\/profile/,
-  //   /\/user\/(.*)/,
-  //   /\/order\/(.*)/,
-  //   /\/admin/,
-  // ];
+  const protectedPaths = [
+    /\/shipping-address/,
+    /\/payment-method/,
+    /\/place-order/,
+    /\/profile/,
+    /\/user\/(.*)/,
+    /\/order\/(.*)/,
+    /\/admin/,
+  ];
   //check the user is logged in or not logged in by using request's cookies
   //it identifies the logged in and not yet logged in user
   const sessionToken = request.cookies.get("authjs.session-token")?.value;
   const isAuthenticated = Boolean(sessionToken);
-  // const { pathname } = request.nextUrl;
-  if(!isAuthenticated) return NextResponse.redirect(new URL("/sign-in", request.url));
-  // if (protectedPaths.some((p) => p.test(pathname))) {
-  //   if(!isAuthenticated) return NextResponse.redirect(new URL("/sign-in", request.url));
-  //   return NextResponse.next();
-  // }
+  const { pathname } = request.nextUrl;
   // Optional: Redirect authenticated users away from the login page and redirect to their destinatin
-  // if (isAuthenticated && protectedPaths.some((p) => p.test(pathname))) {
-  //   return NextResponse.redirect(new URL(pathname, request.url));
-  // }
-  // if (!isAuthenticated && protectedPaths.some((p) => p.test(pathname))) {
-  //   return NextResponse.redirect(new URL("/sign-in", request.url));
-  // }
+  if (!isAuthenticated && protectedPaths.some((p) => p.test(pathname))) {
+    return NextResponse.redirect(new URL("/sign-in", request.url));
+  }
 
   //check for session cart cookie
   if (!request.cookies.get("sessionCartId")) {
