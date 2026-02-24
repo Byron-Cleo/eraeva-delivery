@@ -21,7 +21,7 @@ export function middleware(request: NextRequest) {
   //   return NextResponse.redirect(new URL("/sign-in", request.url));
   // }
   // Optional: Redirect authenticated users away from the login page
-  if (isAuthenticated && request.nextUrl.pathname === '/') {
+  if (isAuthenticated && protectedPaths.some((p) => p.test(pathname))) {
     return NextResponse.redirect(new URL(pathname, request.url));
   }
 
