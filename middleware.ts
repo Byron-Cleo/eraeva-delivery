@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const protectedPaths = [
-  // /\/shipping-address/,
+
+export function middleware(request: NextRequest) {
+  const protectedPaths = [
+  /\/shipping-address/,
   /\/payment-method/,
   /\/place-order/,
   /\/profile/,
@@ -9,13 +11,12 @@ const protectedPaths = [
   /\/order\/(.*)/,
   /\/admin/,
 ];
-
-export function middleware(request: NextRequest) {
   //check the user is logged in or not logged in by using request's cookies
   //it identifies the logged in and not yet logged in user
   const sessionToken = request.cookies.get("authjs.session-token")?.value;
+  const isAuthenticated = !!sessionToken;
   const { pathname } = request.nextUrl;
-  if (!sessionToken && protectedPaths.some((p) => p.test(pathname))) {
+  if (!isAuthenticated && protectedPaths.some((p) => p.test(pathname))) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 
@@ -43,3 +44,8 @@ export function middleware(request: NextRequest) {
   //Always go to the next response as normal working of request response cycle
   return NextResponse.next();
 }
+
+// Matches all paths except API routes, static files, and images
+export const config = {
+  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
+};
