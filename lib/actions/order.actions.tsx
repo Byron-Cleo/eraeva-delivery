@@ -87,9 +87,6 @@ export async function createOrder() {
         //finally return the isertedOrderId i.e after all the transactions
         return insertedOrder.id;
       },
-      {
-        timeout: 60000, // 60 seconds
-      },
     );
 
     if (!insertedOrderId) throw new Error("Order not created");
