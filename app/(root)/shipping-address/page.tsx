@@ -12,11 +12,11 @@ export const metadata: Metadata = {
 };
 
 const ShippingAddressPage = async () => {
-  // const cart = await getMyCart();
+  const cart = await getMyCart();
 
-  // if (!cart || cart.items.length === 0) {
-  //   redirect("/cart");
-  // }
+  if (!cart || cart.items.length === 0) {
+    redirect("/cart");
+  }
 
   //get userId from session from logged in user(ONLY!!)
   const session = await auth();
