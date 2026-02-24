@@ -4,30 +4,20 @@ import { is } from "zod/v4/locales";
 
 export function middleware(request: NextRequest) {
   const protectedPaths = [
-  "/shipping-address",
-  "/payment-method",
-  "/place-order",
-  "/profile",
-  "/user/*",
-  "/order/*",
-  "/admin",
+  // /\/shipping-address/,
+  /\/payment-method/,
+  /\/place-order/,
+  /\/profile/,
+  /\/user\/(.*)/,
+  /\/order\/(.*)/,
+  /\/admin/,
 ];
-//   const protectedPaths = [
-//   /\/shipping-address/,
-//   /\/payment-method/,
-//   /\/place-order/,
-//   /\/profile/,
-//   /\/user\/(.*)/,
-//   /\/order\/(.*)/,
-//   /\/admin/,
-// ];
   //check the user is logged in or not logged in by using request's cookies
   //it identifies the logged in and not yet logged in user
   const sessionToken = request.cookies.get("authjs.session-token")?.value;
   const isAuthenticated = !!sessionToken;
-  // console.log("+++++++>>>>>", isAuthenticated);
-  // const { pathname } = request.nextUrl;
-  if (!isAuthenticated && protectedPaths.some((p) => p.startsWith(p))) {
+  const { pathname } = request.nextUrl;
+  if (!isAuthenticated && protectedPaths.some((p) => p.test(pathname))) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 
