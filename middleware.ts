@@ -17,9 +17,9 @@ export function middleware(request: NextRequest) {
   const sessionToken = request.cookies.get("authjs.session-token")?.value;
   const isAuthenticated = !!sessionToken;
   const { pathname } = request.nextUrl;
-  if (!isAuthenticated && protectedPaths.some((p) => p.test(pathname))) {
-    return NextResponse.redirect(new URL("/sign-in", request.url));
-  }
+  // if (!isAuthenticated && protectedPaths.some((p) => p.test(pathname))) {
+  //   return NextResponse.redirect(new URL("/sign-in", request.url));
+  // }
   // Optional: Redirect authenticated users away from the login page
   if (isAuthenticated && request.nextUrl.pathname === '/') {
     return NextResponse.redirect(new URL(pathname, request.url));
