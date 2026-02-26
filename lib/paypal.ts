@@ -28,7 +28,6 @@ export const paypal = {
   },
   capturePayment: async function capturePayment(orderId: string) {
     const accessToken = await generateAccessToken();
-    console.log(accessToken)
     const url = `${base}/v2/checkout/orders${orderId}/capture`;
 
     const response = await fetch(url, {
@@ -44,7 +43,7 @@ export const paypal = {
 };
 
 //generate paypal access token
-async function generateAccessToken() {
+export async function generateAccessToken() {
   const { PAYAPAL_CLIENT_ID, PAYAPAL_APP_SECRET } = process.env;
   const auth = Buffer.from(
     `${PAYAPAL_CLIENT_ID}:${PAYAPAL_APP_SECRET}`,
@@ -72,4 +71,4 @@ async function handleResponse(response: Response) {
   }
 }
 
-export { generateAccessToken };
+// export { generateAccessToken };
