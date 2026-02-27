@@ -117,7 +117,7 @@ export async function getOrderById(orderId: string) {
 }
 
 //create new paypal order
-export async function createPaypalOrder(orderId: string) {
+export async function createPayPalOrder(orderId: string) {
   try {
     //get ordr from the database
     const order = await prisma.order.findFirst({
@@ -156,7 +156,7 @@ export async function createPaypalOrder(orderId: string) {
   }
 }
 
-//Approve paypal ordr and update order to paid
+//Approve paypal order and update order to paid
 export async function approvePaypalOrder(
   orderId: string,
   data: { orderID: string },
@@ -168,7 +168,7 @@ export async function approvePaypalOrder(
     });
     if (!order) throw new Error("Order not found");
 
-    const captureData = await paypal.captureOrder(data.orderID);
+    const captureData = await paypal.capturePayment(data.orderID);
 
     if (
       !captureData ||
@@ -188,7 +188,8 @@ export async function approvePaypalOrder(
       },
     });
 
-    revalidatePath(`/order/${orderId}`);
+    // revalidatePath(`/order/${orderId}`);
+    revalidatePath('/order/[id]', 'page');
 
     return {
       success: true,
@@ -207,7 +208,6 @@ async function updateOrderToPaid({
   orderId: string;
   paymentResult?: PaymentResult;
 }) {
-  // try {
   //1. Get ordr from the database
   const order = await prisma.order.findFirst({
     where: { id: orderId },
@@ -249,8 +249,4 @@ async function updateOrderToPaid({
   });
 
   if (!updatedOrder) throw new Error("Order not found.");
-  //
-  // } catch (error) {
-  // console.error("Error updating order to paid:", error);
-  // }
 }
