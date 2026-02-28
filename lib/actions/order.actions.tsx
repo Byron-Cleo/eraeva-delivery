@@ -265,13 +265,7 @@ export async function getMyOrders({limit=PAGE_SIZE, page}: {limit?: number, page
     skip: (page - 1) * limit,
   });
 
-  const totalOrders =await prisma.order.count({ where: { userId: session?.user?.id! } });
-
-  // const totalOrders = await prisma.order.count({ where: { userId: session.user.id } });
-  // const totalPages = Math.ceil(totalOrders / limit);
-
-
-  // const totalOrders = await prisma.order.count({ where: { userId } });
+  const totalOrders = await prisma.order.count({ where: { userId: session?.user?.id! } });
   const totalPages = Math.ceil(totalOrders / PAGE_SIZE);
 
   return {
