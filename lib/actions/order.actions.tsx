@@ -11,6 +11,7 @@ import { CartItem, PaymentResult } from "@/types";
 import { paypal } from "../paypal";
 import { revalidatePath } from "next/cache";
 import { PAGE_SIZE } from "../constants";
+import { Prisma } from "@prisma/client";
 
 //create order and create the order items
 export async function createOrder() {
@@ -185,12 +186,13 @@ export async function approvePaypalOrder(
         id: captureData.id,
         status: captureData.status,
         email_address: captureData.payer.email_address,
-        pricePaid: captureData.purchase_units[0]?.payments?.captures[0]?.amount?.value,
+        pricePaid:
+          captureData.purchase_units[0]?.payments?.captures[0]?.amount?.value,
       },
     });
 
     // revalidatePath(`/order/${orderId}`);
-    revalidatePath('/order/[id]', 'page');
+    revalidatePath("/order/[id]", "page");
 
     return {
       success: true,
@@ -253,7 +255,13 @@ async function updateOrderToPaid({
 }
 
 //get user's orders
-export async function getMyOrders({limit=PAGE_SIZE, page}: {limit?: number, page: number}) {
+export async function getMyOrders({
+  limit = PAGE_SIZE,
+  page,
+}: {
+  limit?: number;
+  page: number;
+}) {
   const session = await auth();
   if (!session) throw new Error("User is not authorized");
 
@@ -265,11 +273,46 @@ export async function getMyOrders({limit=PAGE_SIZE, page}: {limit?: number, page
     skip: (page - 1) * limit,
   });
 
-  const totalOrders = await prisma.order.count({ where: { userId: session?.user?.id! } });
+  const totalOrders = await prisma.order.count({
+    where: { userId: session?.user?.id! },
+  });
   const totalPages = Math.ceil(totalOrders / PAGE_SIZE);
 
   return {
     data: convertToPlainObject(data),
     totalPages,
+  };
+}
+
+type SalesDataType = {month: string; totalSales: number}[];
+
+//get sales data and order summary for admin dashboard
+export async function getOrderSummary() {
+  //get counts for each resource
+  const ordersCount = await prisma.order.count();
+  const productsCount = await prisma.product.count();
+  const usersCount = await prisma.user.count();
+
+  //calculate the total sales
+  const totalSales = await prisma.order.aggregate({
+    _sum: { totalPrice: true },
+  });
+
+  //get monthly sales
+  const salesDataRaw = await prisma.$queryRaw<Array<{ month: string; totalSales: Prisma.Decimal }>>`SELECT to_char("createdAt", 'MM-YYYY') as "month", SUM("totalPrice") as "totalSales" FROM "Order" GROUP BY to_char("createdAt", 'MM-YYYY')`;
+
+  const salesData:SalesDataType = salesDataRaw.map((entry) => ({month: entry.month, totalSales: Number(entry.totalSales)}));
+
+  // get the latest sales
+  const latestSales = await prisma.order.findMany({ orderBy: { createdAt: "desc" }, include: {user: {select: {name: true, email: true}}}, take: 6 });
+
+
+  return {
+    ordersCount,
+    productsCount,
+    usersCount,
+    totalSales,
+    salesData,
+    latestSales,
   };
 }
