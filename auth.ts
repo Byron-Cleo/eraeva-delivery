@@ -91,7 +91,7 @@ export const config = {
           const cookiesObject = await cookies();
           const sessionCartId = cookiesObject.get("sessionCartId")?.value;
 
-          if(sessionCartId) {
+          if(sessionCartId) { 
             const sessionCart = await prisma.cart.findFirst({ where: { sessionCartId } });
             if(sessionCart){
               //Delete current user cart
@@ -103,6 +103,12 @@ export const config = {
           }
         }
       }
+
+      //handle session updates
+      if(session?.user?.name && trigger === "update"){
+        token.name = session.user.name
+      }
+      
       return token;
     },
   },
