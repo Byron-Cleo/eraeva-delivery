@@ -284,7 +284,7 @@ export async function getMyOrders({
   };
 }
 
-type SalesDataType = {month: string; totalSales: number}[];
+type SalesDataType = { month: string; totalSales: number }[];
 
 //get sales data and order summary for admin dashboard
 export async function getOrderSummary() {
@@ -299,13 +299,21 @@ export async function getOrderSummary() {
   });
 
   //get monthly sales
-  const salesDataRaw = await prisma.$queryRaw<Array<{ month: string; totalSales: Prisma.Decimal }>>`SELECT to_char("createdAt", 'MM-YYYY') as "month", SUM("totalPrice") as "totalSales" FROM "Order" GROUP BY to_char("createdAt", 'MM-YYYY')`;
+  const salesDataRaw = await prisma.$queryRaw<
+    Array<{ month: string; totalSales: Prisma.Decimal }>
+  >`SELECT to_char("createdAt", 'MM-YYYY') as "month", SUM("totalPrice") as "totalSales" FROM "Order" GROUP BY to_char("createdAt", 'MM-YYYY')`;
 
-  const salesData:SalesDataType = salesDataRaw.map((entry) => ({month: entry.month, totalSales: Number(entry.totalSales)}));
+  const salesData: SalesDataType = salesDataRaw.map((entry) => ({
+    month: entry.month,
+    totalSales: Number(entry.totalSales),
+  }));
 
   // get the latest sales
-  const latestSales = await prisma.order.findMany({ orderBy: { createdAt: "desc" }, include: {user: {select: {name: true, email: true}}}, take: 4 });
-
+  const latestSales = await prisma.order.findMany({
+    orderBy: { createdAt: "desc" },
+    include: { user: { select: { name: true, email: true } } },
+    take: 4,
+  });
 
   return {
     ordersCount,
@@ -314,5 +322,28 @@ export async function getOrderSummary() {
     totalSales,
     salesData,
     latestSales,
+  };
+}
+
+//get all orders
+export async function getAllOrders({
+  limit = PAGE_SIZE,
+  page,
+}: {
+  limit?: number;
+  page: number;
+}) {
+  const data = await prisma.order.findMany({
+    orderBy: { createdAt: "desc" },
+    take: limit,
+    skip: (page - 1) * limit,
+    include: { user: { select: { name: true } } },
+  });
+
+  const dataCount = await prisma.order.count();
+
+  return {
+    data,
+    totalPages: Math.ceil(dataCount / limit),
   };
 }
