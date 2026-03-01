@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import React from "react";
-import { title } from "process";
 
 const links = [
   { title: "Profile", href: "/user/profile" },
@@ -15,24 +14,25 @@ const MainNav = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLElement>) => {
+  const pathname = usePathname();
+
   return (
     <nav className={cn("flex items-center space-x-4", className)} {...props}>
-        {links.map((link) => {
-            const pathname = usePathname();
-            const isActive = pathname === link.href;
-            return (
-                <Link
-                    key={link.href}
-                    href={link.href}
-                    className={cn(
-                      "text-sm font-medium transition-colors hover:text-primary",
-                      isActive ? "text-primary" : "text-muted-foreground"
-                    )}
-                >
-                  {link.title}
-                </Link>
-            );
-        })}
+      {links.map((link) => {
+        const isActive = pathname === link.href;
+        return (
+          <Link
+            key={link.href}
+            href={link.href}
+            className={cn(
+              "text-sm font-medium transition-colors hover:text-primary",
+              isActive ? "text-primary" : "text-muted-foreground",
+            )}
+          >
+            {link.title}
+          </Link>
+        );
+      })}
     </nav>
   );
 };
