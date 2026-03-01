@@ -304,7 +304,7 @@ export async function getOrderSummary() {
   const salesData:SalesDataType = salesDataRaw.map((entry) => ({month: entry.month, totalSales: Number(entry.totalSales)}));
 
   // get the latest sales
-  const latestSales = await prisma.order.findMany({ orderBy: { createdAt: "desc" }, include: {user: {select: {name: true, email: true}}}, take: 6 });
+  const latestSales = await prisma.order.findMany({ orderBy: { createdAt: "desc" }, include: {user: {select: {name: true, email: true}}}, take: 4 });
 
 
   return {
