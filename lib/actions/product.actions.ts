@@ -22,6 +22,12 @@ export async function getProductBySlug(slug: string) {
   return await prisma.product.findFirst({ where: { slug: slug } });
 }
 
+//get single product by its ID
+export async function getProductById(productId: string) {
+  const data = await prisma.product.findFirst({ where: { id: productId } });
+  return convertToPlainObject(data)
+}
+
 //get all products
 export async function getAllProducts({
   query,
@@ -37,6 +43,7 @@ export async function getAllProducts({
   const data = await prisma.product.findMany({
     skip: (page - 1) * limit,
     take: limit,
+    orderBy: { createdAt: "desc" },
   });
   const dataCount = await prisma.product.count();
 
