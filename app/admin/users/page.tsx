@@ -45,10 +45,10 @@ const AdminUsersPage = async (props: {
                 <TableCell>
                   <Button asChild variant="outline" size="sm">
                     <Link
-                      href={`/user/${user.id}`}
+                      href={`/admin/users/${user.id}`}
                       className="text-sm text-primary font-medium"
                     >
-                      Details
+                      Edit
                     </Link>
                   </Button>
                   <DeleteDialog id={user.id} action={deleteUser}/>
