@@ -283,7 +283,8 @@ const ProductForm = ({
           )}
           />
         </div>
-        <div>{/* submit */}
+        <div>
+          {/* submit */}
           <Button type="submit" size="lg" disabled={form.formState.isSubmitting} className="button col-span-2 w-full">
             {form.formState.isSubmitting ? "Submitting" : `${type} Product`}
           </Button>
