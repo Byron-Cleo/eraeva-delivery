@@ -14,6 +14,10 @@ import { Textarea } from "../ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { createProduct, updateProduct } from "@/lib/actions/product.actions";
+import {UploadButton} from "@/lib/uploadthing"
+import { Card, CardContent } from "../ui/card";
+import Image from "next/image";
+import { Upload } from "lucide-react";
 
 
 const ProductForm = ({
@@ -77,6 +81,8 @@ const ProductForm = ({
       }
     }
   }
+
+  const images = form.watch("images")
 
   return (
     <Form {...form}>
@@ -177,7 +183,43 @@ const ProductForm = ({
           )}
           />
         </div>
-        <div className="flex flex-col md:flex-row gap-5">{/* images */}</div>
+        <div className="flex flex-col md:flex-row gap-5">
+          {/* images */}
+          <FormField 
+          control={form.control}
+          name="images"
+          render={() => (
+            <FormItem className="w-full">
+              <FormLabel>Images</FormLabel>
+              <FormControl>
+                <Card>
+                  <CardContent className="sapce-y-2 mt-2 min-h-48">
+                    <div className="flex-start space-x-2">
+                      {images.map((image: string) => (
+                        <Image key={image} src={image} alt="product image" className="w-20 h-20 object-cover rounded-sm " width={100} height={100}/>
+                      ))}
+                      <FormControl>
+                        <UploadButton className="upload-field" endpoint="imageUploader" onClientUploadComplete={(res: {url: string}[]) => {
+                          form.setValue("images", [...images, res[0].url])
+                        }}
+                        onUploadError={(error: Error) => {
+                          toast({
+                            variant: "destructive",
+                            description: `Error! ${error.message}`
+                          })
+                        }}/>
+                      </FormControl>
+                    </div>
+
+                  </CardContent>
+                </Card>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+            
+          )}
+          />
+        </div>
         <div className="flex flex-col md:flex-row gap-5">
           {/* isFeatured */}
         </div>
