@@ -1,5 +1,5 @@
 import notFound from "@/app/not-found";
-import ProductForm from "@/components/admin/product-form";
+import UpdateProductForm from "@/components/admin/update-product-form";
 import { getProductById } from "@/lib/actions/product.actions";
 import { Metadata } from "next";
 
@@ -20,7 +20,8 @@ const AdminProductUpdatePage = async (props: {
   return (
     <div className="space-y-8 max-w-5xl max-auto">
       <h1 className="h2-bold">Update Product</h1>
-      <ProductForm type="Update" product={product} productId={product.id} />
+      <UpdateProductForm product={product} productId={product.id} />
+      {/* <UpdateProductForm type="Update" product={product} productId={product.id} /> */}
     </div>
   );
 };
