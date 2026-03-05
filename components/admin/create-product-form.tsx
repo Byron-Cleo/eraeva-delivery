@@ -21,12 +21,12 @@ import { Upload } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
 
 
-const ProductForm = ({
-  type,
+const CreateProductForm = ({
+  // type,
   product,
   productId,
 }: {
-  type: "Create" | "Update";
+  // type: "Create" | "Update";
   product?: Product;
   productId?: string;
 }) => {
@@ -34,17 +34,12 @@ const ProductForm = ({
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof insertProductSchema>>({
-    resolver:
-      type === "Update"
-        ? zodResolver(updateProductSchema)
-        : zodResolver(insertProductSchema),
-    defaultValues:
-      product && type === "Update" ? product : productDefaultValues,
+    resolver: zodResolver(insertProductSchema),
+    defaultValues: productDefaultValues,
   });
 
   const onSubmit:SubmitHandler<z.infer<typeof insertProductSchema>> = async (values) => {
-    // form action on creating product
-    if(type === "Create") {
+    
       const res = await createProduct(values)
 
       if(!res.success){
@@ -58,29 +53,6 @@ const ProductForm = ({
         })
         router.push('/admin/products')
       }
-    }
-
-    //form action on update
-    if(type === "Update"){
-      if(!productId){
-        router.push('/admin/products')
-        return;
-      }
-
-      const res = await updateProduct({...values, id: productId})
-
-      if(!res.success){
-        toast({
-          variant: 'destructive',
-          description: res.message
-        })
-      } else {
-        toast({
-          description: res.message
-        })
-        router.push('/admin/products')
-      }
-    }
   }
 
   const images = form.watch("images")
@@ -286,7 +258,7 @@ const ProductForm = ({
         <div>
           {/* submit */}
           <Button type="submit" size="lg" disabled={form.formState.isSubmitting} className="button col-span-2 w-full">
-            {form.formState.isSubmitting ? "Submitting" : `${type} Product`}
+            {form.formState.isSubmitting ? "Submitting" : "Create Product"}
           </Button>
         </div>
       </form>
@@ -294,4 +266,4 @@ const ProductForm = ({
   );
 };
 
-export default ProductForm;
+export default CreateProductForm;
