@@ -17,29 +17,35 @@ import { createProduct, updateProduct } from "@/lib/actions/product.actions";
 import {UploadButton} from "@/lib/uploadthing"
 import { Card, CardContent } from "../ui/card";
 import Image from "next/image";
-import { Upload } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
 
 
-const CreateProductForm = ({
+const ProductForm = ({
   // type,
-  product,
-  productId,
+  // product,
+  // productId,
 }: {
   // type: "Create" | "Update";
-  product?: Product;
-  productId?: string;
+  // product?: Product;
+  // productId?: string;
 }) => {
   const router = useRouter();
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof insertProductSchema>>({
-    resolver: zodResolver(insertProductSchema),
-    defaultValues: productDefaultValues,
-  });
+      resolver: zodResolver(insertProductSchema),
+      defaultValues: productDefaultValues,
+    });
+
+  // const form = useForm<z.infer<typeof insertProductSchema>>({
+  //   resolver: type === "" ? zodResolver(updateProductSchema) : zodResolver(insertProductSchema),
+  //   defaultValues:
+  //     product && type === "Update" ? product : productDefaultValues,
+  // });
 
   const onSubmit:SubmitHandler<z.infer<typeof insertProductSchema>> = async (values) => {
-    
+    // form action on creating product
+    // if(type === "Create") {
       const res = await createProduct(values)
 
       if(!res.success){
@@ -53,6 +59,29 @@ const CreateProductForm = ({
         })
         router.push('/admin/products')
       }
+    // }
+
+    //form action on update
+    // if(type === "Update"){
+    //   if(!productId){
+    //     router.push('/admin/products')
+    //     return;
+    //   }
+
+    //   const res = await updateProduct({...values, id: productId})
+
+    //   if(!res.success){
+    //     toast({
+    //       variant: 'destructive',
+    //       description: res.message
+    //     })
+    //   } else {
+    //     toast({
+    //       description: res.message
+    //     })
+    //     router.push('/admin/products')
+    //   }
+    // }
   }
 
   const images = form.watch("images")
@@ -255,10 +284,9 @@ const CreateProductForm = ({
           )}
           />
         </div>
-        <div>
-          {/* submit */}
+        <div>{/* submit */}
           <Button type="submit" size="lg" disabled={form.formState.isSubmitting} className="button col-span-2 w-full">
-            {form.formState.isSubmitting ? "Submitting" : "Create Product"}
+            {form.formState.isSubmitting ? "Submitting" : " Create Product"}
           </Button>
         </div>
       </form>
@@ -266,4 +294,4 @@ const CreateProductForm = ({
   );
 };
 
-export default CreateProductForm;
+export default ProductForm;

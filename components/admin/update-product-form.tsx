@@ -1,8 +1,7 @@
 "use client";
 
 import { useToast } from "@/hooks/use-toast";
-import { productDefaultValues } from "@/lib/constants";
-import { insertProductSchema, updateProductSchema } from "@/lib/validators";
+import { updateProductSchema } from "@/lib/validators";
 import { Product } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -13,11 +12,10 @@ import slugify from "slugify";
 import { Textarea } from "../ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { createProduct, updateProduct } from "@/lib/actions/product.actions";
+import { updateProduct } from "@/lib/actions/product.actions";
 import {UploadButton} from "@/lib/uploadthing"
 import { Card, CardContent } from "../ui/card";
 import Image from "next/image";
-import { Upload } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
 
 
@@ -38,7 +36,7 @@ const UpdateProductForm = ({
     defaultValues: product,
   });
 
-  const onSubmit:SubmitHandler<z.infer<typeof insertProductSchema>> = async (values) => {
+  const onSubmit:SubmitHandler<z.infer<typeof updateProductSchema>> = async (values) => {
 
     //form action on update
     // if(type === "Update"){
@@ -75,7 +73,7 @@ const UpdateProductForm = ({
           <FormField 
           control={form.control}
           name="name"
-          render={({field}: {field: ControllerRenderProps<z.infer<typeof insertProductSchema>, "name">;}) => (
+          render={({field}: {field: ControllerRenderProps<z.infer<typeof updateProductSchema>, "name">;}) => (
             <FormItem className="w-full">
               <FormLabel>Name</FormLabel>
               <FormControl>
@@ -90,7 +88,7 @@ const UpdateProductForm = ({
           <FormField 
           control={form.control}
           name="slug"
-          render={({field}: {field: ControllerRenderProps<z.infer<typeof insertProductSchema>, "slug">;}) => (
+          render={({field}: {field: ControllerRenderProps<z.infer<typeof updateProductSchema>, "slug">;}) => (
             <FormItem className="w-full">
               <FormLabel>Slug</FormLabel>
               <FormControl>
@@ -111,7 +109,7 @@ const UpdateProductForm = ({
           <FormField 
           control={form.control}
           name="category"
-          render={({field}: {field: ControllerRenderProps<z.infer<typeof insertProductSchema>, "category">;}) => (
+          render={({field}: {field: ControllerRenderProps<z.infer<typeof updateProductSchema>, "category">;}) => (
             <FormItem className="w-full">
               <FormLabel>Category</FormLabel>
               <FormControl>
@@ -125,7 +123,7 @@ const UpdateProductForm = ({
           <FormField 
           control={form.control}
           name="brand"
-          render={({field}: {field: ControllerRenderProps<z.infer<typeof insertProductSchema>, "brand">;}) => (
+          render={({field}: {field: ControllerRenderProps<z.infer<typeof updateProductSchema>, "brand">;}) => (
             <FormItem className="w-full">
               <FormLabel>Brand</FormLabel>
               <FormControl>
@@ -141,7 +139,7 @@ const UpdateProductForm = ({
           <FormField 
           control={form.control}
           name="price"
-          render={({field}: {field: ControllerRenderProps<z.infer<typeof insertProductSchema>, "price">;}) => (
+          render={({field}: {field: ControllerRenderProps<z.infer<typeof updateProductSchema>, "price">;}) => (
             <FormItem className="w-full">
               <FormLabel>Price</FormLabel>
               <FormControl>
@@ -155,7 +153,7 @@ const UpdateProductForm = ({
           <FormField 
           control={form.control}
           name="stock"
-          render={({field}: {field: ControllerRenderProps<z.infer<typeof insertProductSchema>, "stock">;}) => (
+          render={({field}: {field: ControllerRenderProps<z.infer<typeof updateProductSchema>, "stock">;}) => (
             <FormItem className="w-full">
               <FormLabel>Stock</FormLabel>
               <FormControl>
@@ -252,7 +250,7 @@ const UpdateProductForm = ({
           <FormField 
           control={form.control}
           name="description"
-          render={({field}: {field: ControllerRenderProps<z.infer<typeof insertProductSchema>, "description">;}) => (
+          render={({field}: {field: ControllerRenderProps<z.infer<typeof updateProductSchema>, "description">;}) => (
             <FormItem className="w-full">
               <FormLabel>Description</FormLabel>
               <FormControl>
