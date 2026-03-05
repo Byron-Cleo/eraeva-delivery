@@ -42,6 +42,8 @@ const UserUpdateForm = ({user}: {user: z.infer<typeof updateUserSchema>}) => {
                 variant: "default",
                 description: res.message
             })
+            
+            //to reset the form to initial empty fields
             form.reset()
             router.push("/admin/users")
 
