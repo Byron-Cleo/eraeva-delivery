@@ -4,6 +4,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import Link from "next/link";
@@ -17,7 +19,7 @@ const ProductCarousel = ({ data }: { data: Product[] }) => {
       opts={{ loop: true }}
       plugins={[
         Autoplay({
-          delay: 2000,
+          delay: 10000,
           stopOnInteraction: true,
           stopOnMouseEnter: true,
         }),
@@ -46,6 +48,8 @@ const ProductCarousel = ({ data }: { data: Product[] }) => {
           </CarouselItem>
         ))}
       </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
     </Carousel>
   );
 };
