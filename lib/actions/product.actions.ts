@@ -35,27 +35,55 @@ export async function getAllProducts({
   limit = PAGE_SIZE,
   page,
   category,
+  price,
+  rating,
+  sort,
 }: {
   query: string;
   limit?: number;
   page: number;
   category?: string;
+  price?: string;
+  rating?: string;
+  sort?: string;
 }) {
-  //search by name from the SEARCHBOX INPUT
+  //QUERY FILTER: search by name from the SEARCHBOX INPUT
   const queryFilter: Prisma.ProductWhereInput =
     query && query !== "all"
       ? {
-          // user: {
           name: {
             contains: query,
             mode: "insensitive",
           } as Prisma.StringFilter,
-          // }
         }
       : {};
 
+  //Category filter
+  const categoryFilter: Prisma.ProductWhereInput =
+    category && category != "all" ? { category } : {};
+
+  //Price filter
+  const priceFilter: Prisma.ProductWhereInput =
+    price && price != "all"
+      ? {
+          price: {
+            gte: Number(price.split("-")[0]), 
+            lte: Number(price.split("-")[1]),
+          },
+        }
+      : {};
+
+  //Rating filter
+  const ratingFilter: Prisma.ProductWhereInput =
+    rating && rating !== "all" ? { rating: { gte: Number(rating) } } : {};
+
   const data = await prisma.product.findMany({
-    where: { ...queryFilter },
+    where: {
+      ...queryFilter,
+      ...categoryFilter,
+      ...priceFilter,
+      ...ratingFilter,
+    },
     skip: (page - 1) * limit,
     take: limit,
     orderBy: { createdAt: "desc" },
@@ -134,7 +162,7 @@ export async function getFeaturedProducts() {
   const data = await prisma.product.findMany({
     where: { isFeatured: true },
     orderBy: { createdAt: "desc" },
-    take: 4
+    take: 4,
   });
 
   return convertToPlainObject(data);
