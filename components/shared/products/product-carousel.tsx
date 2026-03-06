@@ -5,10 +5,10 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { Product } from "@prisma/client";
 import Autoplay from "embla-carousel-autoplay";
 import Link from "next/link";
 import Image from "next/image";
+import { Product } from "@/types";
 
 const ProductCarousel = ({ data }: { data: Product[] }) => {
   return (
