@@ -137,6 +137,5 @@ export async function getFeaturedProducts() {
     take: 4
   });
 
-  return data;
-  // return convertToPlainObject(data);
+  return convertToPlainObject(data);
 }
