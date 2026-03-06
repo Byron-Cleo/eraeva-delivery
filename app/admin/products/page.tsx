@@ -14,6 +14,7 @@ import {
 import { formatCurrency, formatId } from "@/lib/utils";
 import Pagination from "@/components/shared/pagination/pagination";
 import DeleteDialog from "@/components/shared/delete-dialog/delete-dialog";
+import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
@@ -62,6 +63,7 @@ const AdminProductsPage = async (props: {
               <TableHead>CATEGORY</TableHead>
               <TableHead>STOCK</TableHead>
               <TableHead>RATING</TableHead>
+              <TableHead>BANNER</TableHead>
               <TableHead className="W-[100px]">ACTION</TableHead>
             </TableRow>
           </TableHeader>
@@ -76,6 +78,7 @@ const AdminProductsPage = async (props: {
                 <TableCell>{product.category}</TableCell>
                 <TableCell>{product.stock}</TableCell>
                 <TableCell>{product.rating}</TableCell>
+                <TableCell>{product.isFeatured ? (<Badge variant="default">With Banner</Badge>) :(<Badge variant="destructive">No Banner</Badge>)}</TableCell>
                 <TableCell className="flex gap-2">
                   <Button asChild variant="outline" size="sm">
                     <Link href={`/admin/products/${product.id}`}>Edit</Link>
