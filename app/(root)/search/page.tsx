@@ -1,4 +1,5 @@
 import ProductCard from "@/components/shared/products/product-card";
+import { Button } from "@/components/ui/button";
 import {
   getAllProducts,
   getAllCategories,
@@ -8,27 +9,27 @@ import Link from "next/link";
 const prices = [
   {
     name: "Ksh 1 to Ksh 50",
-    value: "1-50"
+    value: "1-50",
   },
   {
     name: "Ksh 51 to Ksh 100",
-    value: "51-100"
+    value: "51-100",
   },
   {
     name: "Ksh 101 to Ksh 200",
-    value: "101-200"
+    value: "101-200",
   },
   {
     name: "Ksh 201 to Ksh 500",
-    value: "201-500"
+    value: "201-500",
   },
   {
     name: "Ksh 501 to Ksh 1000",
-    value: "501-1000"
+    value: "501-1000",
   },
-]
+];
 
-const ratings = [4,3,2,1]
+const ratings = [4, 3, 2, 1];
 
 const SearchPage = async (props: {
   searchParams: Promise<{
@@ -88,7 +89,7 @@ const SearchPage = async (props: {
   return (
     <div className="grid md:grid-cols-5 md:gap-5">
       <div className="filter-links">
-        {/* FILTERS SECTION: Category Links */}
+        {/*START: Category Links */}
         <div className="mt-3 mb-2 text-xl">Category</div>
         <div>
           <ul className="space-y-1">
@@ -112,13 +113,15 @@ const SearchPage = async (props: {
             ))}
           </ul>
         </div>
-        {/* FILTERS SECTION: Price Links */}
+        {/*END: Category Links */}
+
+        {/* START: Price Links */}
         <div className="mt-8 mb-2 text-xl">Price</div>
         <div>
           <ul className="space-y-1">
             <li>
               <Link
-                className={`${(price === "all") && "font-bold"}`}
+                className={`${price === "all" && "font-bold"}`}
                 href={getFilterUrl({ p: "all" })}
               >
                 Any
@@ -136,14 +139,15 @@ const SearchPage = async (props: {
             ))}
           </ul>
         </div>
+        {/* END: Price Links */}
 
-        {/* FILTERS SECTION: Rating Links */}
+        {/* START: Rating Links */}
         <div className="mt-8 mb-2 text-xl">Customer Ratings</div>
         <div>
           <ul className="space-y-1">
             <li>
               <Link
-                className={`${(rating === "all") && "font-bold"}`}
+                className={`${rating === "all" && "font-bold"}`}
                 href={getFilterUrl({ r: "all" })}
               >
                 Any
@@ -161,10 +165,28 @@ const SearchPage = async (props: {
             ))}
           </ul>
         </div>
-
+        {/* END: Rating Links */}
       </div>
+      {/* End of filter links */}
       <div className="md:col-span-4 spce-y-4">
-        
+        <div className="flex-col my-4 md:flex-row flex-between">
+          <div className="flex items-center">
+            {q !== "all" && q !== "" && "Query/Search: " + q}
+            {category !== "all" && category !== "" && "Category: " + category}
+            {price !== "all" && " Price: " + price}
+            {rating !== "all" && " Rating: " + rating + " starts & up"}
+            &nbsp;
+            {(q !== "all" && q !== "") ||
+            (category !== "all" && category !== "") ||
+            rating !== "all" ||
+            price !== "all" ? (
+              <Button variant="link">
+                {" "}
+                <Link href="/search">Clear</Link>
+              </Button>
+            ) : null}
+          </div>
+        </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {products.data.length === 0 && <div>No Products Found</div>}
           {products.data.map((product) => (
