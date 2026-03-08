@@ -26,9 +26,12 @@ export const shippingAddressDefaultValues = {
   country: "",
 };
 
-export const PAYMENT_METHODS = process.env.PAYMENT_METHODS ? process.env.PAYMENT_METHODS.split(", ") : ["PayPal", "Stripe", "CashOnDelivery"]
+export const PAYMENT_METHODS = process.env.PAYMENT_METHODS
+  ? process.env.PAYMENT_METHODS.split(", ")
+  : ["PayPal", "Stripe", "CashOnDelivery"];
 
-export const DEFAULT_PAYMENT_METHOD = process.env.DEFAULT_PAYMENT_METHOD || "PayPal"
+export const DEFAULT_PAYMENT_METHOD =
+  process.env.DEFAULT_PAYMENT_METHOD || "PayPal";
 
 export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 5;
 
@@ -45,6 +48,14 @@ export const productDefaultValues = {
   numReviews: "0",
   isFeatured: false,
   banner: null,
-}
+};
 
-export const USER_ROLES = process.env.USER_ROLES ? process.env.USER_ROLES.split(", ") : ["admin", "user"]
+export const USER_ROLES = process.env.USER_ROLES
+  ? process.env.USER_ROLES.split(", ")
+  : ["admin", "user"];
+
+export const reviewFormDefaultvalues = {
+  title: "",
+  comment: "",
+  rating: 0,
+};
