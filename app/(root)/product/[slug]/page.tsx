@@ -6,6 +6,8 @@ import { getProductBySlug } from "@/lib/actions/product.actions";
 import ProductImages from "@/components/shared/products/product-images";
 import AddToCart from "@/components/shared/products/add-to-cart";
 import { getMyCart } from "@/lib/actions/cart.actions";
+import ReviewList from "./review-list";
+import { auth } from "@/auth";
 
 const ProductDetailsPage = async (props: {
   params: Promise<{ slug: string }>;
@@ -14,13 +16,19 @@ const ProductDetailsPage = async (props: {
   const product = await getProductBySlug(slug);
   if (!product) notFound();
 
+  const session = await auth();
+  const userId = session?.user?.id;
+
   const cart = await getMyCart();
   return (
     <>
       <section>
         <div className="grid grid-cols-1 md:grid-cols-5">
           {/* Images column */}
-          <div className="col-span-2"> <ProductImages images={product.images}/></div>
+          <div className="col-span-2">
+            {" "}
+            <ProductImages images={product.images} />
+          </div>
           <div className="col-span-2 p-5">
             {/* Details column */}
             <div className="flex flex-col gap-6">
@@ -63,22 +71,31 @@ const ProductDetailsPage = async (props: {
                 </div>
                 {product.stock > 0 && (
                   <div className="flex-center">
-                    <AddToCart 
-                    cart={cart} 
-                    item ={{
-                      productId: product.id,
-                      name: product.name,
-                      slug: product.slug,
-                      price: product.price,
-                      qty: 1,
-                      image: product.images![0],
-                    }} />
+                    <AddToCart
+                      cart={cart}
+                      item={{
+                        productId: product.id,
+                        name: product.name,
+                        slug: product.slug,
+                        price: product.price,
+                        qty: 1,
+                        image: product.images![0],
+                      }}
+                    />
                   </div>
                 )}
               </CardContent>
             </Card>
           </div>
         </div>
+      </section>
+      <section className="mt-10">
+        <h2 className="h2-bold">Customer Reviews</h2>
+        <ReviewList
+          userId={userId || ""}
+          productId={product.id}
+          productSlug={product.slug}
+        />
       </section>
     </>
   );
