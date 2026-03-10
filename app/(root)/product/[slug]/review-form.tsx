@@ -66,7 +66,6 @@ const ReviewForm = ({
   const onSubmit: SubmitHandler<z.infer<typeof insertReviewSchema>> = async (
     values,
   ) => {
-    console.log("VVVV===>", values)
     //then now call the review action, to create or update the review in the database
     const res = await createUpdateReview({ ...values, productId });
 
