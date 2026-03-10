@@ -37,7 +37,7 @@ export async function createUpdateReview(
       where: {
         productId: review.productId,
         userId: review.userId,
-      }
+      },
     });
 
     await prisma.$transaction(async (tx) => {
@@ -87,4 +87,32 @@ export async function createUpdateReview(
   } catch (error) {
     return { success: false, message: formatError(error) };
   }
+}
+
+//get all reviews for a product
+//desc means from the newly most recent review
+export async function getReviews({ productId }: { productId: string }) {
+  const data = await prisma.review.findMany({
+    where: { productId },
+    include: {
+      user: { select: { name: true } },
+    },
+    orderBy: { createdAt: "desc" },
+  });
+  return { data };
+}
+
+//get review written by current user
+export async function geReviewByProductId({
+  productId,
+}: {
+  productId: string;
+}) {
+  const session = await auth();
+
+  if (!session) throw new Error("User not found");
+
+  return await prisma.review.findFirst({
+    where: { productId, userId: session?.user?.id },
+  });
 }
