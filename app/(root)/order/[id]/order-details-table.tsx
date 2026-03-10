@@ -28,8 +28,6 @@ import {
   deliverOrder,
 } from "@/lib/actions/order.actions";
 import { useToast } from "@/hooks/use-toast";
-import { is } from "zod/v4/locales";
-import { isatty } from "tty";
 
 const OrderDetailsTable = ({
   order,
