@@ -125,8 +125,13 @@ export async function deleteProduct(id: string) {
 //create a product
 export async function createProduct(data: z.infer<typeof insertProductSchema>) {
   try {
+    //validate and store the review
     const product = insertProductSchema.parse(data);
+
+    //now create the review and store in the database
     await prisma.product.create({ data: product });
+
+    //navigate back to the page where it is being created in the admin page
     revalidatePath("/admin/products");
 
     return { success: true, message: "Product created successfully" };
