@@ -31,7 +31,10 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 import { StarIcon } from "lucide-react";
-import { createUpdateReview } from "@/lib/actions/review.actions";
+import {
+  createUpdateReview,
+  geReviewByProductId,
+} from "@/lib/actions/review.actions";
 
 const ReviewForm = ({
   userId,
@@ -51,11 +54,18 @@ const ReviewForm = ({
   });
 
   //Open Form handler
-  const handleOpenForm = () => {
+  const handleOpenForm = async () => {
     // this is same as seting the form values using the form attribute which distinguishes the
     //different form values, BUT NOW, DOING IT MANUALLY IN THE CODE INSTAED OF USER INPUT.
     form.setValue("productId", productId);
     form.setValue("userId", userId);
+
+    const review = await geReviewByProductId({ productId });
+    if (review) {
+      form.setValue("title", review.title);
+      form.setValue("description", review.description);
+      form.setValue("rating", review.rating);
+    }
 
     //then open the form modal
     setOpen(true);
