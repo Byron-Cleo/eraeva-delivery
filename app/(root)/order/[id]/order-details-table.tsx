@@ -28,15 +28,18 @@ import {
   deliverOrder,
 } from "@/lib/actions/order.actions";
 import { useToast } from "@/hooks/use-toast";
+import StripePayment from "./stripe-payment";
 
 const OrderDetailsTable = ({
   order,
   paypalClientId,
   isAdmin,
+  stripeClientSecret,
 }: {
   order: Order;
   paypalClientId: string;
   isAdmin: boolean;
+  stripeClientSecret: string | null;
 }) => {
   const {
     id,
@@ -77,7 +80,7 @@ const OrderDetailsTable = ({
 
   const handleApprovePayPalOrder = async (data: { orderID: string }) => {
     const res = await approvePaypalOrder(order.id, data);
-    
+
     toast({
       variant: res.success ? "default" : "destructive",
       description: res.message,
@@ -86,48 +89,50 @@ const OrderDetailsTable = ({
   };
 
   const MarkAsPaidButton = () => {
-    const [isPending, startTransition] = useTransition()
-    const {toast} = useToast()
+    const [isPending, startTransition] = useTransition();
+    const { toast } = useToast();
 
     return (
       <Button
-      type="button"
-      disabled={isPending}
-      onClick={() => startTransition( async () => {
-        const res = await updateOrderToPaidCOD(order.id)
-        toast({
-          variant: res.success ? "default" : "destructive",
-          description: res.message
-        })
-      })}
+        type="button"
+        disabled={isPending}
+        onClick={() =>
+          startTransition(async () => {
+            const res = await updateOrderToPaidCOD(order.id);
+            toast({
+              variant: res.success ? "default" : "destructive",
+              description: res.message,
+            });
+          })
+        }
       >
         {isPending ? "procssing..." : "Mark As Paid"}
       </Button>
-    )
+    );
+  };
 
-  }
- 
   const MarkAsDeliveredButton = () => {
-    const [isPending, startTransition] = useTransition()
-    const {toast} = useToast()
+    const [isPending, startTransition] = useTransition();
+    const { toast } = useToast();
 
     return (
       <Button
-      type="button"
-      disabled={isPending}
-      onClick={() => startTransition( async () => {
-        const res = await deliverOrder(order.id)
-        toast({
-          variant: res.success ? "default" : "destructive",
-          description: res.message
-        })
-      })}
+        type="button"
+        disabled={isPending}
+        onClick={() =>
+          startTransition(async () => {
+            const res = await deliverOrder(order.id);
+            toast({
+              variant: res.success ? "default" : "destructive",
+              description: res.message,
+            });
+          })
+        }
       >
         {isPending ? "procssing..." : "Mark As Delivered"}
       </Button>
-    )
-
-  }
+    );
+  };
 
   return (
     <>
@@ -243,13 +248,20 @@ const OrderDetailsTable = ({
                 </div>
               )}
 
+              {/* Stripe Payment */}
+              {!isPaid && paymentMethod === "Stripe" && stripeClientSecret && (
+                <StripePayment
+                  priceInCents={Number(order.totalPrice) * 100}
+                  orderId={order.id}
+                  clientSecret={stripeClientSecret}
+                />
+              )}
+
               {/* Cash on Delivery */}
               {isAdmin && !isPaid && paymentMethod === "CashOnDelivery" && (
                 <MarkAsPaidButton />
               )}
-              {isAdmin && isPaid && !isDelivered && (
-                <MarkAsDeliveredButton />
-              )}
+              {isAdmin && isPaid && !isDelivered && <MarkAsDeliveredButton />}
             </CardContent>
           </Card>
         </div>
