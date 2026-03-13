@@ -204,7 +204,7 @@ export async function approvePaypalOrder(
 }
 
 //update order to paid
-async function updateOrderToPaid({
+export async function updateOrderToPaid({
   orderId,
   paymentResult,
 }: {
@@ -333,21 +333,23 @@ export async function getAllOrders({
 }: {
   limit?: number;
   page: number;
-  query: string
+  query: string;
 }) {
-
   //search by name from the SEARCHBOX INPUT
-  const queryFilter: Prisma.OrderWhereInput = query && query !== "all" ? {
-    user: {
-      name: {
-        contains: query,
-        mode: 'insensitive'
-      } as Prisma.StringFilter
-    }
-  } : {}
+  const queryFilter: Prisma.OrderWhereInput =
+    query && query !== "all"
+      ? {
+          user: {
+            name: {
+              contains: query,
+              mode: "insensitive",
+            } as Prisma.StringFilter,
+          },
+        }
+      : {};
 
   const data = await prisma.order.findMany({
-    where: {...queryFilter},
+    where: { ...queryFilter },
     orderBy: { createdAt: "desc" },
     take: limit,
     skip: (page - 1) * limit,
