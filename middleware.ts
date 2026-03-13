@@ -12,10 +12,21 @@ export async function middleware(request: NextRequest) {
     /\/admin/,
   ];
   const secret = process.env.NEXTAUTH_SECRET;
-  const token = await getToken({
-    req: request,
-    secret: secret,
-  });
+  let token;
+  if ((process.env.PROJECT_ENV as string) === "development") {
+    token = await getToken({
+      req: request,
+      secret: secret,
+      cookieName: "authjs.session-token",
+    });
+  } else {
+    token = await getToken({
+      req: request,
+      secret: secret,
+      cookieName: "__Secure-authjs.session-token",
+    });
+  }
+  // console.log("TTTTT====>>>>", token);
   //check the user is logged in or not logged in by using request's cookies
   //it identifies the logged in and not yet logged in user
   // const sessionToken = request.cookies.get("authjs.session-token")?.value;
