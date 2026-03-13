@@ -20,17 +20,18 @@ export async function POST(req: NextRequest) {
       paymentResult: {
         id: object.id,
         status: "COMPLETED",
-        email_address: object.billing_details.email,
+        email_address: "byron.ochara@gmail.com",
+        // email_address: object.billing_details.email | null,
         pricePaid: (object.amount / 100).toFixed(),
       },
     });
 
     return NextResponse.json({
-        message: "UpdateOrderToPaid was Successful"
-    })
+      message: "UpdateOrderToPaid was Successful",
+    });
   }
 
   return NextResponse.json({
-        message: "event is not charge.succeed"
-    })
+    message: "event is not charge.succeed",
+  });
 }
