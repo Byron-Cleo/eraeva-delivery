@@ -35,7 +35,7 @@ export const config = {
         if (user && user.password) {
           const isMatch = compareSync(
             credentials.password as string,
-            user.password
+            user.password,
           );
 
           //if the password is correct, return the user
@@ -61,19 +61,19 @@ export const config = {
       session.user.id = token.sub;
       session.user.role = token.role;
       session.user.name = token.name;
-      
+
       //if there is an update, set the user name
       if (trigger === "update") {
         session.user.name = user.name;
       }
-      
+
       return session;
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async jwt({ token, user, trigger, session }: any) {
       // assign user info to the token on sign in
       if (user) {
-        token.id = user.id
+        token.id = user.id;
         token.role = user.role;
 
         //if user has no name the use the email as name
@@ -87,28 +87,33 @@ export const config = {
           });
         }
 
-        if(trigger === "signIn" || trigger === "signUp") {
+        if (trigger === "signIn" || trigger === "signUp") {
           const cookiesObject = await cookies();
           const sessionCartId = cookiesObject.get("sessionCartId")?.value;
 
-          if(sessionCartId) { 
-            const sessionCart = await prisma.cart.findFirst({ where: { sessionCartId } });
-            if(sessionCart){
+          if (sessionCartId) {
+            const sessionCart = await prisma.cart.findFirst({
+              where: { sessionCartId },
+            });
+            if (sessionCart) {
               //Delete current user cart
-              await prisma.cart.deleteMany({where: {userId: user.id}});
+              await prisma.cart.deleteMany({ where: { userId: user.id } });
 
               //assign new cart
-              await prisma.cart.update({where: {id: sessionCart.id}, data: {userId: user.id}})
+              await prisma.cart.update({
+                where: { id: sessionCart.id },
+                data: { userId: user.id },
+              });
             }
           }
         }
       }
 
       //handle session updates
-      if(session?.user?.name && trigger === "update"){
-        token.name = session.user.name
+      if (session?.user?.name && trigger === "update") {
+        token.name = session.user.name;
       }
-      
+
       return token;
     },
   },
