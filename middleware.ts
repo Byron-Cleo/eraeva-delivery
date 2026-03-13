@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const protectedPaths = [
     /\/shipping-address/,
     /\/payment-method/,
@@ -10,14 +11,24 @@ export function middleware(request: NextRequest) {
     /\/order\/(.*)/,
     /\/admin/,
   ];
+  const secret = process.env.NEXTAUTH_SECRET;
+  const token = await getToken({
+    req: request,
+    secret: secret,
+  });
   //check the user is logged in or not logged in by using request's cookies
   //it identifies the logged in and not yet logged in user
-  const sessionToken = request.cookies.get("authjs.session-token")?.value;
-  const isAuthenticated = Boolean(sessionToken);
+  // const sessionToken = request.cookies.get("authjs.session-token")?.value;
+  // const isAuthenticated = Boolean(sessionToken);
+  // const session = await auth()
   const { pathname } = request.nextUrl;
   // Optional: Redirect authenticated users away from the login page and redirect to their destinatin
-  if (!isAuthenticated && protectedPaths.some((p) => p.test(pathname))) {
-    return NextResponse.redirect(new URL("/sign-in", request.url));
+  // if (!isAuthenticated && protectedPaths.some((p) => p.test(pathname))) {
+  if (!token && protectedPaths.some((p) => p.test(pathname))) {
+    const signinUrl = new URL("/sign-in", request.url);
+    signinUrl.searchParams.set("callbackUrl", request.nextUrl.pathname);
+
+    return NextResponse.redirect(signinUrl);
   }
 
   //check for session cart cookie
@@ -44,7 +55,3 @@ export function middleware(request: NextRequest) {
   //Always go to the next response as normal working of request response cycle
   return NextResponse.next();
 }
-
-export const config = {
-  matcher: ['/shipping-address', '/user/:path*', '/order/:path*'],
-};
