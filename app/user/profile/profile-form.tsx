@@ -31,7 +31,6 @@ const ProfileForm = () => {
   const { toast } = useToast();
 
   const onSubmit = async (values: z.infer<typeof updateUserProfileSchema>) => {
-    console.log(values);
     const res = await updateProfile(values);
     if (!res.success) {
       toast({

@@ -253,7 +253,7 @@ export async function updateOrderToPaid({
   });
 
   if (!updatedOrder) throw new Error("Order not found.");
-  
+
   sendPurchaseReceipt({
     order: {
       ...updatedOrder,
@@ -380,7 +380,6 @@ export async function deleteOrder(id: string) {
     revalidatePath("/admin/orders");
     return { success: true, message: "Order Deleted Successfully." };
   } catch (error) {
-    console.log(error);
     return { success: false, message: formatError(error) };
   }
 }
