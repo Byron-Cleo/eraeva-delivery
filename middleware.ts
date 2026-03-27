@@ -31,7 +31,8 @@ export async function middleware(request: NextRequest) {
   }
   const { pathname } = request.nextUrl;
   
-  // Optional: Redirect authenticated users away from the login page and redirect to their destinatin
+  // Optional: Redirect authenticated users away from the login page 
+  // and redirect to their destinatin
   if (!token && protectedPaths.some((p) => p.test(pathname))) {
     const signinUrl = new URL("/sign-in", request.url);
     signinUrl.searchParams.set("callbackUrl", request.nextUrl.pathname);
