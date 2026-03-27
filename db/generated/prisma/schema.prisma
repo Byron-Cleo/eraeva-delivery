@@ -5,14 +5,14 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
   // provider = "prisma-client"
   output   = "../db/generated/prisma"
   // previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider = "postgresql" 
+  provider = "postgresql"
   // url      = env("DATABASE_URL")
 }
 
@@ -124,7 +124,7 @@ model Order {
   deliveredAt     DateTime?   @db.Timestamp(6)
   createdAt       DateTime    @default(now()) @db.Timestamp(6)
   user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  orderitem     OrderItem[]
+  orderitem       OrderItem[]
 }
 
 model OrderItem {
