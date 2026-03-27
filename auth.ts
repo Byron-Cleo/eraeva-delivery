@@ -12,7 +12,7 @@ export const config = {
     error: "/sign-in",
   },
   session: {
-    strategy: "jwt",
+    strategy: "jwt", 
     maxAge: 30 * 24 * 60 * 60, //30 days
   },
   adapter: PrismaAdapter(prisma),
@@ -57,7 +57,7 @@ export const config = {
   callbacks: {
     //this function will be called whenever the auth() function is called in the application
     async session({ session, user, trigger, token }: any) {
-      //set the user ID from the token
+      //set the user ID and other user data from the token
       session.user.id = token.sub;
       session.user.role = token.role;
       session.user.name = token.name;
