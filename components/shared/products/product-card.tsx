@@ -7,7 +7,7 @@ import Rating from "./rating";
 
 const ProductCard = ({ product }: { product: Product }) => {
   return (
-    <Card className="w-full max-w-sm">
+    <Card className="w-full max-w-sm justify-self-center">
       <CardHeader className="p-0 items-center">
         <Link href={`/product/${product.slug}`}>
           <Image
