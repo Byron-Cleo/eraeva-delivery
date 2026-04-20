@@ -6,17 +6,16 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 //Static target date(replace with desired date)
-const TARGET_DATE = new Date("2026-03-20T00:00:00");
+const TARGET_DATE = new Date("2026-04-25T00:00:00");
 
 //function to calculate the time remaining
 const calculateTimeRemaining = (targetDate: Date) => {
   const currentTime = new Date();
-  const timeDifference = Math.max((Number(targetDate) - Number(currentTime)), 0);
+  const timeDifference = Math.max(Number(targetDate) - Number(currentTime), 0);
   // console.log(timeDifference)
   return {
     days: Math.floor(timeDifference / (1000 * 60 * 60 * 24)),
-    hours:
-      Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+    hours:Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),),
     minutes: Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)),
     seconds: Math.floor((timeDifference % (1000 * 60)) / 1000),
   };
