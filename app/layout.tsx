@@ -11,7 +11,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    template: `%s | Prostore`,
+    template: `%s | Eraeva Delivery`,
     default: APP_NAME,
   },
   description: APP_DESCRIPTION,
