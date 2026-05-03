@@ -2,7 +2,7 @@ import ProductList from "@/components/shared/products/product-list";
 import {
   getLatestProducts,
   getFeaturedProducts,
-} from "../../lib/actions/product.actions";
+} from "@/lib/actions/product.actions";
 import ProductCarousel from "@/components/shared/products/product-carousel";
 import ViewAllProductsButton from "@/components/view-all-products-button";
 import IconBoxes from "@/components/icon-boxes";

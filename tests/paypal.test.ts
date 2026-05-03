@@ -1,4 +1,4 @@
-import { generateAccessToken, paypal } from "../lib/paypal";
+import { generateAccessToken, paypal } from "../src/lib/paypal";
 
 //test to generate the access token from paypal
 test("generates token from paypal", async () => {
@@ -10,7 +10,7 @@ test("generates token from paypal", async () => {
 //test to create paypal order
 test("creates paypal order", async () => {
   const token = await generateAccessToken();
-  console.log(token)
+  console.log(token);
   const price = 10.0;
   const createOrderResponse = await paypal.createOrder(price);
   console.log(createOrderResponse);
@@ -28,9 +28,9 @@ test("simulate capturing a payment from an order", async () => {
       status: "COMPLETED",
     });
 
-    const captureResponse = await paypal.capturePayment(orderId);
-    expect(captureResponse).toHaveProperty("status");
-    expect(captureResponse.status).toBe("COMPLETED");
+  const captureResponse = await paypal.capturePayment(orderId);
+  expect(captureResponse).toHaveProperty("status");
+  expect(captureResponse.status).toBe("COMPLETED");
 
-    mockCapturePayment.mockRestore();
+  mockCapturePayment.mockRestore();
 });

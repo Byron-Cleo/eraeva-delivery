@@ -7,14 +7,31 @@ import type { NextAuthConfig } from "next-auth";
 import { cookies } from "next/headers";
 
 export const config = {
+  secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/sign-in",
     error: "/sign-in",
   },
   session: {
-    strategy: "jwt", 
-    maxAge: 30 * 24 * 60 * 60, //30 days
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
+  cookies: {
+    sessionToken: {
+      name:
+        process.env.PROJECT_ENV === "development"
+          ? "authjs.session-token"
+          : "__Secure-authjs.session-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.PROJECT_ENV !== "development",
+      },
+    },
+  },
+  trustHost: true,
+  debug: process.env.PROJECT_ENV === "development",
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
@@ -73,6 +90,7 @@ export const config = {
     async jwt({ token, user, trigger, session }: any) {
       // assign user info to the token on sign in
       if (user) {
+        token.sub = user.id;
         token.id = user.id;
         token.role = user.role;
 
