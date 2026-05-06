@@ -40,16 +40,25 @@
     opacity: 1;
   }
   100% {
-    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1);
+    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty)))
+      scale(1);
     opacity: 0;
   }
 }
 
 @keyframes heart-pop {
-  0%   { transform: scale(1); }
-  30%  { transform: scale(1.4); }
-  60%  { transform: scale(0.9); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.4);
+  }
+  60% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .heart-pop {
@@ -130,8 +139,6 @@
   }
 }
 
-
-
 @layer base {
   * {
     @apply border-border;
@@ -140,7 +147,6 @@
     @apply bg-background text-foreground;
   }
 }
-
 
 /* uploadthing button text override */
 html.dark .upload-field .text-white {
