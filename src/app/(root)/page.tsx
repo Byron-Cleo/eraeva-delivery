@@ -22,7 +22,7 @@ const Homepage = async () => {
       {/* <ProductList data={latestProducts} title="Newest Arrivals" limit={4} /> */}
       <ProductList
         data={sampleData.products as unknown as Product[]}
-        title="Newest Arrivals"
+        title="Our Popular Menu"
         limit={4}
       />
       {/* <ViewAllProductsButton />
