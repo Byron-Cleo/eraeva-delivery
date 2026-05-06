@@ -15,6 +15,12 @@ export async function middleware(request: NextRequest) {
   //check the user is logged in or not logged in by using request's cookies
   //it identifies the logged in and not yet logged in user
   const secret = process.env.NEXTAUTH_SECRET;
+
+  // If NextAuth is not configured yet, skip all auth checks
+  if (!secret) {
+    return NextResponse.next();
+  }
+
   let token;
   if ((process.env.PROJECT_ENV as string) === "development") {
     token = await getToken({
@@ -30,8 +36,8 @@ export async function middleware(request: NextRequest) {
     });
   }
   const { pathname } = request.nextUrl;
-  
-  // Optional: Redirect authenticated users away from the login page 
+
+  // Optional: Redirect authenticated users away from the login page
   // and redirect to their destinatin
   if (!token && protectedPaths.some((p) => p.test(pathname))) {
     const signinUrl = new URL("/sign-in", request.url);

@@ -137,4 +137,14 @@ export const config = {
   },
 } satisfies NextAuthConfig;
 
-export const { handlers, auth, signIn, signOut } = NextAuth(config);
+// When NEXTAUTH_SECRET is not configured (e.g. during early development),
+// export no-op stubs so the app boots without JWTSessionError / auth crashes.
+const _stub = async () => null;
+export const { handlers, auth, signIn, signOut } = process.env.NEXTAUTH_SECRET
+  ? NextAuth(config)
+  : {
+      handlers: { GET: _stub, POST: _stub },
+      auth: _stub,
+      signIn: _stub,
+      signOut: _stub,
+    };
