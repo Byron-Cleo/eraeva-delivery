@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-import Stripe from "stripe";
 import { updateOrderToPaid } from "@/lib/actions/order.actions";
 
 export async function POST(req: NextRequest) {
+  if (!process.env.STRIPE_WEBHOOK_SECRET) {
+    return NextResponse.json(
+      { message: "Stripe not configured" },
+      { status: 400 },
+    );
+  }
+
   //Build the webhook event
+  const { default: Stripe } = await import("stripe");
   const event = await Stripe.webhooks.constructEvent(
     await req.text(),
     req.headers.get("stripe-signature") as string,
