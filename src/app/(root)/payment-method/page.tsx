@@ -3,6 +3,7 @@ import { auth } from "@/auth";
 import { getUserById } from "@/lib/actions/user.actions";
 import PaymentMethodForm from "./peyment-method-form";
 import CheckoutSteps from "@/components/shared/checkout-steps/checkout-steps";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Select Payment Method",
@@ -12,7 +13,8 @@ const PaymentMethodPage = async () => {
   const session = await auth();
   const userId = session?.user?.id;
 
-  if (!userId) throw new Error("User not found");
+  // if (!userId) throw new Error("User not found");
+  if (!userId) redirect("/sign-in?callbackUrl=/payment-method");
 
   const user = await getUserById(userId);
   return (

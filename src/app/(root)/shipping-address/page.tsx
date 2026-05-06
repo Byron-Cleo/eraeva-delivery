@@ -21,7 +21,8 @@ const ShippingAddressPage = async () => {
   //get userId from session from logged in user(ONLY!!)
   const session = await auth();
   const userId = session?.user?.id;
-  if (!userId) throw new Error("User has no id");
+  // if (!userId) throw new Error("User has no id");
+  if (!userId) redirect("/sign-in?callbackUrl=/shipping-address");
 
   const user = await getUserById(userId);
 
