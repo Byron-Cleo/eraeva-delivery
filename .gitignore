@@ -39,3 +39,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# scripts (local utility scripts, not for production)
+/scripts
+
