@@ -96,8 +96,8 @@ const sampleData = {
       description:
         "Tender pieces of beef stir-fried with onions, tomatoes, and Kenyan spices. Best enjoyed with ugali or chapati.",
       images: [
-        "/images/sample-meals/beef-fry-chapati.png",
         "/images/sample-meals/beef-fry-rice.png",
+        "/images/sample-meals/beef-fry-chapati.png",
         "/images/sample-meals/beef-fry-ugali.png",
       ],
       price: "12.99",
@@ -120,8 +120,8 @@ const sampleData = {
       description:
         "Tender pieces of chicken stir-fried with onions, tomatoes, and Kenyan spices. Best enjoyed with ugali or chapati.",
       images: [
-        "/images/sample-meals/chicken-fry-chapati.png",
         "/images/sample-meals/chicken-fry-rice.png",
+        "/images/sample-meals/chicken-fry-chapati.png",
         "/images/sample-meals/chicken-fry-ugali.png",
       ],
       price: "12.99",
