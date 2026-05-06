@@ -38,11 +38,11 @@ import {
 
 const ReviewForm = ({
   userId,
-  productId,
+  menuId,
   onReviewSubmitted,
 }: {
   userId: string;
-  productId: string;
+  menuId: string;
   onReviewSubmitted: () => void;
 }) => {
   const [open, setOpen] = useState(false);
@@ -57,10 +57,10 @@ const ReviewForm = ({
   const handleOpenForm = async () => {
     // this is same as seting the form values using the form attribute which distinguishes the
     //different form values, BUT NOW, DOING IT MANUALLY IN THE CODE INSTAED OF USER INPUT.
-    form.setValue("productId", productId);
+    form.setValue("menuId", menuId);
     form.setValue("userId", userId);
 
-    const review = await geReviewByProductId({ productId });
+    const review = await geReviewByProductId({ menuId });
     if (review) {
       form.setValue("title", review.title);
       form.setValue("description", review.description);
@@ -77,7 +77,7 @@ const ReviewForm = ({
     values,
   ) => {
     //then now call the review action, to create or update the review in the database
-    const res = await createUpdateReview({ ...values, productId });
+    const res = await createUpdateReview({ ...values, menuId });
 
     if (!res.success) {
       return toast({

@@ -18,26 +18,26 @@ import Rating from "@/components/shared/products/rating";
 
 const ReviewList = ({
   userId,
-  productId,
+  menuId,
   productSlug,
 }: {
   userId: string;
-  productId: string;
+  menuId: string;
   productSlug: string;
 }) => {
   const [reviews, setReviews] = useState<Review[]>([]);
 
   useEffect(() => {
     const loadReviews = async () => {
-      const res = await getReviews({ productId });
+      const res = await getReviews({ menuId });
       setReviews(res.data);
     };
     loadReviews();
-  }, [productId]);
+  }, [menuId]);
 
   //reload reviews either after created or updated
   const reload = async () => {
-    const res = await getReviews({productId})
+    const res = await getReviews({ menuId })
     setReviews([...res.data])
   };
 
@@ -47,7 +47,7 @@ const ReviewList = ({
       {userId ? (
         <ReviewForm
           userId={userId}
-          productId={productId}
+          menuId={menuId}
           onReviewSubmitted={reload}
         />
       ) : (

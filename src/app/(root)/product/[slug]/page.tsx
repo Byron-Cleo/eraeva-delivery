@@ -95,7 +95,7 @@ const ProductDetailsPage = async (props: {
         <h2 className="h2-bold">Customer Reviews</h2>
         <ReviewList
           userId={userId || ""}
-          productId={product.id}
+          menuId={product.id}
           productSlug={product.slug}
         />
       </section> */}
