@@ -3,14 +3,22 @@
 import { useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { Minus, Plus, Loader } from "lucide-react";
+import { Minus, Plus, Loader, ShoppingCart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { addItemToCart, removeItemFromCart } from "@/lib/actions/cart.actions";
 
 import { CartItem, Cart } from "@/types";
 
-const AddToCart = ({ cart, item }: { cart?: Cart; item: CartItem }) => {
+const AddToCart = ({
+  cart,
+  item,
+  iconOnly = false,
+}: {
+  cart?: Cart;
+  item: CartItem;
+  iconOnly?: boolean;
+}) => {
   const router = useRouter();
   const { toast } = useToast();
 
@@ -83,8 +91,25 @@ const AddToCart = ({ cart, item }: { cart?: Cart; item: CartItem }) => {
         )}
       </Button>
     </div>
+  ) : iconOnly ? (
+    <button
+      type="button"
+      onClick={handleAddToCart}
+      className="p-2.5 rounded-full bg-green-500 hover:bg-green-600 text-white shadow-md transition-all duration-200 hover:scale-110"
+    >
+      {isPending ? (
+        <Loader className="w-5 h-5 animate-spin" />
+      ) : (
+        <ShoppingCart className="w-5 h-5" />
+      )}
+    </button>
   ) : (
-    <Button className="w-full" type="button" onClick={handleAddToCart}>
+    <Button
+      variant="outline"
+      className="w-full"
+      type="button"
+      onClick={handleAddToCart}
+    >
       {isPending ? (
         <Loader className="w-4 h-4 animate-spin" />
       ) : (
