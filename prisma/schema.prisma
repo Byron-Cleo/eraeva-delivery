@@ -26,7 +26,7 @@ enum MealPeriod {
   BEVERAGE
 }
 
-model Product {
+model Menu {
   id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name        String
   slug        String   @unique(map: "product_slug_idx")
@@ -45,14 +45,14 @@ model Product {
   // ── Relation 1: single starch accompaniment (e.g. ugali, chapati) ──────────
   // Stores the ID of one ProductAccompaniment row chosen as the default starch.
   // Nullable — can be set or changed at any time without affecting vegetables.
-  accompanyId String?               @db.Uuid
-  accompany   ProductAccompaniment? @relation("ProductAccompany", fields: [accompanyId], references: [id])
+  accompanyId String?            @db.Uuid
+  accompany   MenuAccompaniment? @relation("MenuAccompany", fields: [accompanyId], references: [id])
 
   // ── Relation 2: single vegetable side (e.g. cabbage or sukuma wiki) ────────
   // Stores the ID of one ProductAccompaniment row chosen as the default vegetable.
   // Nullable — can be set or swapped at any time without affecting the starch.
-  vegetableId String?               @db.Uuid
-  vegetable   ProductAccompaniment? @relation("ProductVegetable", fields: [vegetableId], references: [id])
+  vegetableId String?            @db.Uuid
+  vegetable   MenuAccompaniment? @relation("MenuVegetable", fields: [vegetableId], references: [id])
 
   OrderItem OrderItem[]
   reviews   Review[]
@@ -60,7 +60,7 @@ model Product {
   // ── Meal type membership (many-to-many via ProductMealType) ────────────────
   // A product can belong to multiple meal periods (e.g. both Lunch and Dinner).
   // The join table ProductMealType links each product to its meal types.
-  mealTypes ProductMealType[]
+  mealTypes MenuMealType[]
 }
 
 model User {
@@ -164,7 +164,7 @@ model OrderItem {
   slug      String
   image     String
   order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product   Menu    @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@id([orderId, productId], map: "orderitems_orderIdproductId_pk")
 }
@@ -172,18 +172,18 @@ model OrderItem {
 // Represents one meal period tab (Breakfast, Lunch, Dinner, Dessert, Beverage).
 // Stored as a row so the admin can later attach metadata (icon, sortOrder, label).
 model MealType {
-  id        String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name      MealPeriod        @unique // enforced by enum — no duplicates, no typos
-  sortOrder Int               @default(0) // controls left-to-right tab order on the UI
-  products  ProductMealType[]
+  id        String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      MealPeriod     @unique // enforced by enum — no duplicates, no typos
+  sortOrder Int            @default(0) // controls left-to-right tab order on the UI
+  products  MenuMealType[]
 }
 
 // Explicit join table connecting Product ↔ MealType (many-to-many).
 // Explicit (not implicit) so extra fields can be added later if needed.
-model ProductMealType {
+model MenuMealType {
   productId  String   @db.Uuid
   mealTypeId String   @db.Uuid
-  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product    Menu     @relation(fields: [productId], references: [id], onDelete: Cascade)
   mealType   MealType @relation(fields: [mealTypeId], references: [id], onDelete: Cascade)
 
   @@id([productId, mealTypeId])
@@ -192,7 +192,7 @@ model ProductMealType {
 // All accompaniment options — both starches and vegetables — are stored here.
 // The `category` field tells them apart. Products reference this table via
 // two separate named relations (see Product model above).
-model ProductAccompaniment {
+model MenuAccompaniment {
   id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name        String // e.g. "Ugali", "Chapati", "Cabbage", "Sukuma Wiki"
   category    String // e.g. "starch" | "vegetable" — plain string, easy to extend
@@ -202,10 +202,10 @@ model ProductAccompaniment {
   createdAt   DateTime @default(now()) @db.Timestamp(6)
 
   // Back-reference for Relation 1: products that chose this as their starch
-  productsAsAccompany Product[] @relation("ProductAccompany")
+  productsAsAccompany Menu[] @relation("MenuAccompany")
 
   // Back-reference for Relation 2: products that chose this as their vegetable
-  productsAsVegetable Product[] @relation("ProductVegetable")
+  productsAsVegetable Menu[] @relation("MenuVegetable")
 }
 
 model Review {
@@ -217,6 +217,6 @@ model Review {
   description        String
   isVerifiedPurchase Boolean  @default(true)
   createdAt          DateTime @default(now()) @db.Timestamp(6)
-  product            Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product            Menu     @relation(fields: [productId], references: [id], onDelete: Cascade)
   user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
