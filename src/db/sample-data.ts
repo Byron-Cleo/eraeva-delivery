@@ -1,4 +1,5 @@
 import { hashSync } from "bcrypt-ts-edge";
+import { MealPeriod } from "@prisma/client";
 
 // Pre-defined UUIDs allow cross-referencing between seeded records
 // without querying the database between inserts (e.g. Product.accompanyId → ID.ugali).
@@ -78,8 +79,8 @@ const sampleData = {
   // One row per MealPeriod enum value currently in use.
   // sortOrder drives the left-to-right tab order rendered on the UI.
   mealTypes: [
-    { id: ID.lunchType, name: "LUNCH", sortOrder: 1 },
-    { id: ID.dinnerType, name: "DINNER", sortOrder: 2 },
+    { id: ID.lunchType, name: MealPeriod.LUNCH, sortOrder: 1 },
+    { id: ID.dinnerType, name: MealPeriod.DINNER, sortOrder: 2 },
   ],
 
   // ── Product ────────────────────────────────────────────────────────────────
