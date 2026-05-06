@@ -99,9 +99,9 @@ const sampleData = {
         "/images/sample-meals/beef-fry-rice.png",
         "/images/sample-meals/beef-fry-ugali.png",
       ],
-      price: 12.99,
+      price: "12.99",
       brand: "Eraeva Kitchen",
-      rating: 4.8,
+      rating: "4.8",
       numReviews: 24,
       stock: 20,
       isFeatured: true,
@@ -111,7 +111,6 @@ const sampleData = {
       vegetableId: null,
     },
 
-    
     {
       id: ID.chickenFry,
       name: "Chicken Fry",
@@ -124,9 +123,9 @@ const sampleData = {
         "/images/sample-meals/chicken-fry-rice.png",
         "/images/sample-meals/chicken-fry-ugali.png",
       ],
-      price: 12.99,
+      price: "12.99",
       brand: "Eraeva Kitchen",
-      rating: 4.8,
+      rating: "4.8",
       numReviews: 24,
       stock: 20,
       isFeatured: true,

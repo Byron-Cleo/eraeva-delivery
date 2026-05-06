@@ -8,6 +8,7 @@ import ViewAllProductsButton from "@/components/view-all-products-button";
 import IconBoxes from "@/components/icon-boxes";
 import DealCountDown from "@/components/deal-countdown";
 import sampleData from "@/db/sample-data";
+import { Product } from "@/types";
 
 const Homepage = async () => {
   const latestProducts = await getLatestProducts();
@@ -20,7 +21,7 @@ const Homepage = async () => {
       )} */}
       {/* <ProductList data={latestProducts} title="Newest Arrivals" limit={4} /> */}
       <ProductList
-        data={sampleData.products}
+        data={sampleData.products as unknown as Product[]}
         title="Newest Arrivals"
         limit={4}
       />
