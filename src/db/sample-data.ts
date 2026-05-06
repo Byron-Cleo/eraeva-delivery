@@ -2,12 +2,12 @@ import { hashSync } from "bcrypt-ts-edge";
 import { MealPeriod } from "@prisma/client";
 
 // Pre-defined UUIDs allow cross-referencing between seeded records
-// without querying the database between inserts (e.g. Product.accompanyId → ID.ugali).
+// without querying the database between inserts (e.g. Menu.accompanyId → ID.ugali).
 const ID = {
-  // Products
+  // Menus
   beefFry: "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
   chickenFry: "f6a7b8c9-d0e1-4f2a-3b4c-5d6e7f8a9b0c",
-  // ProductAccompaniment rows
+  // MenuAccompaniment rows
   ugali: "b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e",
   rice: "b2c3d499-f6a7-4b8c-9d0e-1f2a3b4c5d6e",
   chapati: "c3d4e5f6-a7b8-4c9d-0e1f-2a3b4c5d6e7f",
@@ -46,8 +46,8 @@ const sampleData = {
     },
   ],
 
-  // ── ProductAccompaniment ───────────────────────────────────────────────────
-  // Seeded before products because Product.accompanyId is a FK into this table.
+  // ── MenuAccompaniment ────────────────────────────────────────────────────────
+  // Seeded before menus because Menu.accompanyId is a FK into this table.
   accompaniments: [
     {
       id: ID.ugali,
@@ -83,11 +83,11 @@ const sampleData = {
     { id: ID.dinnerType, name: MealPeriod.DINNER, sortOrder: 2 },
   ],
 
-  // ── Product ────────────────────────────────────────────────────────────────
+  // ── Menu ──────────────────────────────────────────────────────────────────
   // accompanyId → the default starch served with this dish (Ugali).
   // Chapati is also seeded above as an option the customer can swap to.
-  // vegetableId is null — no vegetable side defined for this product yet.
-  products: [
+  // vegetableId is null — no vegetable side defined for this menu item yet.
+  menus: [
     {
       id: ID.beefFry,
       name: "Beef Fry",
@@ -137,10 +137,10 @@ const sampleData = {
     },
   ],
 
-  // ── ProductMealType (join table) ───────────────────────────────────────────
+  // ── MenuMealType (join table) ──────────────────────────────────────────────
   // Beef Fry is served at both Lunch and Dinner.
-  // These rows must be inserted after both Product and MealType rows exist.
-  productMealTypes: [
+  // These rows must be inserted after both Menu and MealType rows exist.
+  menuMealTypes: [
     { productId: ID.beefFry, mealTypeId: ID.lunchType },
     { productId: ID.beefFry, mealTypeId: ID.dinnerType },
     { productId: ID.chickenFry, mealTypeId: ID.lunchType },
