@@ -37,8 +37,8 @@ const ReviewList = ({
 
   //reload reviews either after created or updated
   const reload = async () => {
-    const res = await getReviews({ menuId })
-    setReviews([...res.data])
+    const res = await getReviews({ menuId });
+    setReviews([...res.data]);
   };
 
   return (
@@ -74,8 +74,8 @@ const ReviewList = ({
             <CardContent>
               <div className="flex space-x-4 text-sm text-muted-foreground">
                 {/* RATING */}
-                <Rating value={review.rating}/>
-                
+                <Rating value={review.rating} />
+
                 <div className="flex items-center">
                   <User className="mr-1 h-3 w-3" />
                   {review.user ? review.user.name : "User"}
@@ -86,7 +86,6 @@ const ReviewList = ({
                   {formatDateTime(review.createdAt).dateTime}
                 </div>
               </div>
-
             </CardContent>
           </Card>
         ))}
