@@ -10,7 +10,7 @@ import { Prisma } from "@prisma/client";
 
 //get latest products
 export async function getLatestProducts() {
-  const data = await prisma.product.findMany({
+  const data = await prisma.menu.findMany({
     take: LATEST_PRODUCTS_LIMIT,
     orderBy: { createdAt: "desc" },
   });
@@ -20,12 +20,12 @@ export async function getLatestProducts() {
 
 //get single product by its slug
 export async function getProductBySlug(slug: string) {
-  return await prisma.product.findFirst({ where: { slug: slug } });
+  return await prisma.menu.findFirst({ where: { slug: slug } });
 }
 
 //get single product by its ID
 export async function getProductById(productId: string) {
-  const data = await prisma.product.findFirst({ where: { id: productId } });
+  const data = await prisma.menu.findFirst({ where: { id: productId } });
   return convertToPlainObject(data);
 }
 
@@ -48,7 +48,7 @@ export async function getAllProducts({
   sort?: string;
 }) {
   //QUERY FILTER: search by name from the SEARCHBOX INPUT
-  const queryFilter: Prisma.ProductWhereInput =
+  const queryFilter: Prisma.MenuWhereInput =
     query && query !== "all"
       ? {
           name: {
@@ -59,25 +59,25 @@ export async function getAllProducts({
       : {};
 
   //Category filter
-  const categoryFilter: Prisma.ProductWhereInput =
+  const categoryFilter: Prisma.MenuWhereInput =
     category && category != "all" ? { category } : {};
 
   //Price filter
-  const priceFilter: Prisma.ProductWhereInput =
+  const priceFilter: Prisma.MenuWhereInput =
     price && price != "all"
       ? {
           price: {
-            gte: Number(price.split("-")[0]), 
+            gte: Number(price.split("-")[0]),
             lte: Number(price.split("-")[1]),
           },
         }
       : {};
 
   //Rating filter
-  const ratingFilter: Prisma.ProductWhereInput =
+  const ratingFilter: Prisma.MenuWhereInput =
     rating && rating !== "all" ? { rating: { gte: Number(rating) } } : {};
 
-  const data = await prisma.product.findMany({
+  const data = await prisma.menu.findMany({
     where: {
       ...queryFilter,
       ...categoryFilter,
@@ -86,16 +86,16 @@ export async function getAllProducts({
     },
     skip: (page - 1) * limit,
     take: limit,
-    orderBy: 
-    sort === "lowest"
-    ? { price: "asc"} 
-    : sort === "highest"
-    ? {price: "desc"}
-    : sort === "rating"
-    ? {rating: "desc"}
-    : { createdAt: "desc" },
+    orderBy:
+      sort === "lowest"
+        ? { price: "asc" }
+        : sort === "highest"
+          ? { price: "desc" }
+          : sort === "rating"
+            ? { rating: "desc" }
+            : { createdAt: "desc" },
   });
-  const dataCount = await prisma.product.count();
+  const dataCount = await prisma.menu.count();
 
   return {
     data,
@@ -106,13 +106,13 @@ export async function getAllProducts({
 //DELETE A PRODUCT
 export async function deleteProduct(id: string) {
   try {
-    const productExist = await prisma.product.findFirst({
+    const productExist = await prisma.menu.findFirst({
       where: { id },
     });
 
     if (!productExist) throw new Error("Product is not found");
 
-    await prisma.product.delete({ where: { id } });
+    await prisma.menu.delete({ where: { id } });
 
     revalidatePath("/admin/products");
 
@@ -129,7 +129,7 @@ export async function createProduct(data: z.infer<typeof insertProductSchema>) {
     const product = insertProductSchema.parse(data);
 
     //now create the review and store in the database
-    await prisma.product.create({ data: product });
+    await prisma.menu.create({ data: product });
 
     //navigate back to the page where it is being created in the admin page
     revalidatePath("/admin/products");
@@ -144,13 +144,13 @@ export async function createProduct(data: z.infer<typeof insertProductSchema>) {
 export async function updateProduct(data: z.infer<typeof updateProductSchema>) {
   try {
     const product = updateProductSchema.parse(data);
-    const productExists = await prisma.product.findFirst({
+    const productExists = await prisma.menu.findFirst({
       where: { id: product.id },
     });
 
     if (!productExists) throw new Error("Product not found");
 
-    await prisma.product.update({ where: { id: product.id }, data: product });
+    await prisma.menu.update({ where: { id: product.id }, data: product });
 
     revalidatePath("/admin/products");
 
@@ -162,7 +162,7 @@ export async function updateProduct(data: z.infer<typeof updateProductSchema>) {
 
 //get all categories
 export async function getAllCategories() {
-  const data = await prisma.product.groupBy({
+  const data = await prisma.menu.groupBy({
     by: ["category"],
     _count: true,
   });
@@ -171,7 +171,7 @@ export async function getAllCategories() {
 
 //get featurd products
 export async function getFeaturedProducts() {
-  const data = await prisma.product.findMany({
+  const data = await prisma.menu.findMany({
     where: { isFeatured: true },
     orderBy: { createdAt: "desc" },
     take: 4,

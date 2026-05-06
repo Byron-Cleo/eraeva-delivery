@@ -299,7 +299,7 @@ type SalesDataType = { month: string; totalSales: number }[];
 export async function getOrderSummary() {
   //get counts for each resource
   const ordersCount = await prisma.order.count();
-  const productsCount = await prisma.product.count();
+  const productsCount = await prisma.menu.count();
   const usersCount = await prisma.user.count();
 
   //calculate the total sales

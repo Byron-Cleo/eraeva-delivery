@@ -30,7 +30,7 @@ async function main() {
   await prisma.menu.createMany({ data: sampleData.menus });
   console.log("Seeded menus");
 
-  // 4. Join table last — both productId and mealTypeId must already exist.
+  // 4. Join table last — both menuId and mealTypeId must already exist.
   await prisma.menuMealType.createMany({
     data: sampleData.menuMealTypes,
   });

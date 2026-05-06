@@ -50,7 +50,7 @@ export async function addItemToCart(data: { item: CartItem }) {
     const item = cartItemSchema.parse(data.item);
 
     //find the product from the database
-    const product = await prisma.product.findFirst({
+    const product = await prisma.menu.findFirst({
       where: { id: item.productId },
     });
     if (!product) throw new Error("Product not found");
@@ -160,7 +160,7 @@ export async function removeItemFromCart(productId: string) {
     if (!sessionCartId) throw new Error("Cart session not found");
 
     //Get the product from the database
-    const product = await prisma.product.findFirst({
+    const product = await prisma.menu.findFirst({
       where: { id: productId },
     });
     if (!product) throw new Error("Product not found");
@@ -173,7 +173,7 @@ export async function removeItemFromCart(productId: string) {
     const exist = (cart.items as CartItem[]).find(
       (x) => x.productId === productId,
     );
-    
+
     if (!exist) throw new Error("Item not found in cart");
 
     //check cart item with 1 quantity
@@ -205,7 +205,6 @@ export async function removeItemFromCart(productId: string) {
       success: true,
       message: `${product.name} was removed from cart successfully`,
     };
-
   } catch (error) {
     return {
       success: false,

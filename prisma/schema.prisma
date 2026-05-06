@@ -156,17 +156,17 @@ model Order {
 }
 
 model OrderItem {
-  orderId   String  @db.Uuid
-  productId String  @db.Uuid
-  qty       Int
-  price     Decimal @db.Decimal(12, 2)
-  name      String
-  slug      String
-  image     String
-  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product   Menu    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  orderId String  @db.Uuid
+  menuId  String  @db.Uuid
+  qty     Int
+  price   Decimal @db.Decimal(12, 2)
+  name    String
+  slug    String
+  image   String
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  menu    Menu    @relation(fields: [menuId], references: [id], onDelete: Cascade)
 
-  @@id([orderId, productId], map: "orderitems_orderIdproductId_pk")
+  @@id([orderId, menuId], map: "orderitems_orderIdmenuId_pk")
 }
 
 // Represents one meal period tab (Breakfast, Lunch, Dinner, Dessert, Beverage).
@@ -175,18 +175,18 @@ model MealType {
   id        String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name      MealPeriod     @unique // enforced by enum — no duplicates, no typos
   sortOrder Int            @default(0) // controls left-to-right tab order on the UI
-  products  MenuMealType[]
+  menus     MenuMealType[]
 }
 
 // Explicit join table connecting Product ↔ MealType (many-to-many).
 // Explicit (not implicit) so extra fields can be added later if needed.
 model MenuMealType {
-  productId  String   @db.Uuid
+  menuId     String   @db.Uuid
   mealTypeId String   @db.Uuid
-  product    Menu     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  menu       Menu     @relation(fields: [menuId], references: [id], onDelete: Cascade)
   mealType   MealType @relation(fields: [mealTypeId], references: [id], onDelete: Cascade)
 
-  @@id([productId, mealTypeId])
+  @@id([menuId, mealTypeId])
 }
 
 // All accompaniment options — both starches and vegetables — are stored here.
@@ -211,12 +211,12 @@ model MenuAccompaniment {
 model Review {
   id                 String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId             String   @db.Uuid
-  productId          String   @db.Uuid
+  menuId             String   @db.Uuid
   rating             Int
   title              String
   description        String
   isVerifiedPurchase Boolean  @default(true)
   createdAt          DateTime @default(now()) @db.Timestamp(6)
-  product            Menu     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  menu               Menu     @relation(fields: [menuId], references: [id], onDelete: Cascade)
   user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

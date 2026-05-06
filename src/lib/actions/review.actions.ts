@@ -27,15 +27,15 @@ export async function createUpdateReview(
     });
 
     //Get product that is being reviewed
-    const product = await prisma.product.findFirst({
-      where: { id: review.productId },
+    const product = await prisma.menu.findFirst({
+      where: { id: review.menuId },
     });
     if (!product) throw new Error("Product not found");
 
     //check if user already reviewed a product
     const reviewExists = await prisma.review.findFirst({
       where: {
-        productId: review.productId,
+        menuId: review.menuId,
         userId: review.userId,
       },
     });
@@ -61,17 +61,17 @@ export async function createUpdateReview(
       //Get average rating
       const averageRating = await tx.review.aggregate({
         _avg: { rating: true },
-        where: { productId: review.productId },
+        where: { menuId: review.menuId },
       });
 
       //Get number of reviews
       const numReviews = await tx.review.count({
-        where: { productId: review.productId },
+        where: { menuId: review.menuId },
       });
 
       //finally update the rating and numReviews in the PRODUCT TABLE
-      await tx.product.update({
-        where: { id: review.productId },
+      await tx.menu.update({
+        where: { id: review.menuId },
         data: {
           rating: averageRating._avg.rating || 0,
           numReviews,
@@ -91,9 +91,9 @@ export async function createUpdateReview(
 
 //get all reviews for a product
 //desc means from the newly most recent review
-export async function getReviews({ productId }: { productId: string }) {
+export async function getReviews({ menuId }: { menuId: string }) {
   const data = await prisma.review.findMany({
-    where: { productId },
+    where: { menuId },
     include: {
       user: { select: { name: true } },
     },
@@ -103,16 +103,12 @@ export async function getReviews({ productId }: { productId: string }) {
 }
 
 //get review written by current user
-export async function geReviewByProductId({
-  productId,
-}: {
-  productId: string;
-}) {
+export async function geReviewByProductId({ menuId }: { menuId: string }) {
   const session = await auth();
 
   if (!session) throw new Error("User not found");
 
   return await prisma.review.findFirst({
-    where: { productId, userId: session?.user?.id },
+    where: { menuId, userId: session?.user?.id },
   });
 }

@@ -1,5 +1,4 @@
 import { hashSync } from "bcrypt-ts-edge";
-import { MealPeriod } from "@prisma/client";
 
 // Pre-defined UUIDs allow cross-referencing between seeded records
 // without querying the database between inserts (e.g. Menu.accompanyId → ID.ugali).
@@ -79,8 +78,8 @@ const sampleData = {
   // One row per MealPeriod enum value currently in use.
   // sortOrder drives the left-to-right tab order rendered on the UI.
   mealTypes: [
-    { id: ID.lunchType, name: MealPeriod.LUNCH, sortOrder: 1 },
-    { id: ID.dinnerType, name: MealPeriod.DINNER, sortOrder: 2 },
+    { id: ID.lunchType, name: "LUNCH", sortOrder: 1 },
+    { id: ID.dinnerType, name: "DINNER", sortOrder: 2 },
   ],
 
   // ── Menu ──────────────────────────────────────────────────────────────────
@@ -141,10 +140,10 @@ const sampleData = {
   // Beef Fry is served at both Lunch and Dinner.
   // These rows must be inserted after both Menu and MealType rows exist.
   menuMealTypes: [
-    { productId: ID.beefFry, mealTypeId: ID.lunchType },
-    { productId: ID.beefFry, mealTypeId: ID.dinnerType },
-    { productId: ID.chickenFry, mealTypeId: ID.lunchType },
-    { productId: ID.chickenFry, mealTypeId: ID.dinnerType },
+    { menuId: ID.beefFry, mealTypeId: ID.lunchType },
+    { menuId: ID.beefFry, mealTypeId: ID.dinnerType },
+    { menuId: ID.chickenFry, mealTypeId: ID.lunchType },
+    { menuId: ID.chickenFry, mealTypeId: ID.dinnerType },
   ],
 };
 
