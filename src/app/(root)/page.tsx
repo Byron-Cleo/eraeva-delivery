@@ -19,12 +19,7 @@ const Homepage = async () => {
       {/* {featuredProducts.length > 0 && (
         <ProductCarousel data={featuredProducts} />
       )} */}
-      {/* <ProductList data={latestProducts} title="Newest Arrivals" limit={4} /> */}
-      <ProductList
-        data={sampleData.products as unknown as Product[]}
-        title="Our Popular Menu"
-        limit={4}
-      />
+      <ProductList data={latestProducts} title="Our Popular Menu" limit={4} />
       {/* <ViewAllProductsButton />
       <DealCountDown />
       <IconBoxes /> */}
