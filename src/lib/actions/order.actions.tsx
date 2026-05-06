@@ -228,8 +228,8 @@ export async function updateOrderToPaid({
   await prisma.$transaction(async (tx) => {
     //iterate over products and update stock
     for (const item of order.orderitem) {
-      await tx.product.update({
-        where: { id: item.productId },
+      await tx.menu.update({
+        where: { id: item.menuId },
         data: { stock: { increment: -item.qty } },
       });
     }
