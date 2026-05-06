@@ -1,23 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Creator: CorelDRAW X5 -->
-<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="2048px" height="2048px" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
-viewBox="0 0 2048 2048"
- xmlns:xlink="http://www.w3.org/1999/xlink">
- <defs>
-  <style type="text/css">
-   <![CDATA[
-    .fil0 {fill:#FFCA28}
-    .fil1 {fill:#FFFFFE;fill-rule:nonzero}
-   ]]>
-  </style>
- </defs>
- <g id="Layer_x0020_1">
-  <metadata id="CorelCorpID_0Corel-Layer"/>
-  <rect class="fil0" width="2048" height="2048" rx="256" ry="256"/>
-  <g id="_617655424">
-   <path class="fil1" d="M1601 765l28 0 5 28 158 688 0 182 -1536 0 0 -189 159 -682 5 -28 28 0 206 0c-17,64 -28,130 -31,192 -1,28 -4,58 15,81 13,15 31,22 50,22 46,0 65,-33 67,-74 0,-8 0,-16 1,-24 4,-63 17,-132 37,-197l461 0c24,75 38,155 38,228 0,37 30,67 67,67 37,0 67,-30 67,-67 0,-74 -11,-152 -32,-228l209 0z"/>
-   <path class="fil1" d="M688 1032c-39,0 -34,-41 -32,-67 6,-102 35,-232 88,-340 58,-120 146,-215 261,-225 16,-1 30,-1 46,1 90,12 169,85 229,185 69,116 112,272 112,412 0,18 -15,33 -33,33 -18,0 -33,-15 -33,-33 0,-128 -40,-271 -103,-378 -48,-80 -108,-139 -172,-152 -14,-3 -30,-3 -44,-2 -86,9 -154,88 -202,187 -48,99 -76,218 -81,312 -1,25 5,66 -34,66z"/>
-  </g>
- </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" width="2048" height="2048"
+     style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality;">
+
+  <!-- Background: deep dark warm brown/black -->
+  <rect width="2048" height="2048" rx="256" ry="256" fill="#4A8F63"/>
+
+  <!-- ═══════════════════════════════ PLATE ═══════════════════════════════ -->
+
+  <!-- Outer decorative ring -->
+  <circle cx="1024" cy="780" r="310" fill="none" stroke="#C8933A" stroke-width="20"/>
+  <!-- Inner plate ring -->
+  <circle cx="1024" cy="780" r="248" fill="none" stroke="#C8933A" stroke-width="10" opacity="0.7"/>
+  <!-- Center ornament: small ring + dot -->
+  <circle cx="1024" cy="780" r="38" fill="none" stroke="#C8933A" stroke-width="8" opacity="0.75"/>
+  <circle cx="1024" cy="780" r="10" fill="#C8933A"/>
+
+  <!-- Cardinal decorative dots on outer ring -->
+  <circle cx="1024" cy="470" r="12" fill="#C8933A"/>  <!-- top    -->
+  <circle cx="1334" cy="780" r="12" fill="#C8933A"/>  <!-- right  -->
+  <circle cx="714"  cy="780" r="12" fill="#C8933A"/>  <!-- left   -->
+  <circle cx="1024" cy="1090" r="12" fill="#C8933A"/> <!-- bottom -->
+
+  <!-- ═══════════════════════════════ FORK ════════════════════════════════ -->
+  <!-- 3 tines, fork center x≈594, spans y=420–1385 -->
+
+  <!-- Tine 1 -->
+  <rect x="541" y="420" width="26" height="215" rx="13" fill="#C8933A"/>
+  <!-- Tine 2 -->
+  <rect x="581" y="420" width="26" height="215" rx="13" fill="#C8933A"/>
+  <!-- Tine 3 -->
+  <rect x="621" y="420" width="26" height="215" rx="13" fill="#C8933A"/>
+
+  <!-- Taper: tines converge into handle -->
+  <path d="M541,625 L647,625 L619,705 L565,705 Z" fill="#C8933A"/>
+
+  <!-- Handle -->
+  <rect x="565" y="700" width="54" height="685" rx="27" fill="#C8933A"/>
+
+  <!-- ═══════════════════════════════ KNIFE ════════════════════════════════ -->
+  <!-- Knife center x≈1439, spans y=420–1385 -->
+
+  <!-- Blade (curves outward from spine to edge, tapers to point at top) -->
+  <path d="M1403,420 C1403,420 1476,498 1476,680 L1403,680 Z" fill="#C8933A"/>
+
+  <!-- Blade spine reinforcement -->
+  <rect x="1403" y="420" width="14" height="262" rx="7" fill="#C8933A"/>
+
+  <!-- Bolster / guard -->
+  <rect x="1399" y="676" width="80" height="32" rx="10" fill="#C8933A"/>
+
+  <!-- Handle -->
+  <rect x="1403" y="704" width="72" height="681" rx="36" fill="#C8933A"/>
+
+  <!-- ═══════════════════════════════ TEXT ═════════════════════════════════ -->
+
+  <!-- Top rule -->
+  <line x1="500" y1="1460" x2="1548" y2="1460" stroke="#8B1A1A" stroke-width="6"/>
+
+  <!-- Brand name -->
+  <text x="1024" y="1598"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="178" font-weight="bold"
+        text-anchor="middle"
+        fill="#FFD700" letter-spacing="16">ERAEVA</text>
+
+  <!-- Tagline -->
+  <text x="1024" y="1692"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="76" font-weight="bold"
+        text-anchor="middle"
+        fill="#FFD700" letter-spacing="28">DELIVERY</text>
+
+  <!-- Bottom rule -->
+  <line x1="500" y1="1714" x2="1548" y2="1714" stroke="#8B1A1A" stroke-width="6"/>
+
 </svg>
