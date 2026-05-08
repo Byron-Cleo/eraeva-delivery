@@ -120,9 +120,9 @@ const sampleData = {
       description:
         "Tender pieces of chicken stir-fried with onions, tomatoes, and Kenyan spices. Best enjoyed with ugali or chapati.",
       images: [
+        "/images/sample-meals/chicken-fry-ugali.png",
         "/images/sample-meals/chicken-fry-rice.png",
         "/images/sample-meals/chicken-fry-chapati.png",
-        "/images/sample-meals/chicken-fry-ugali.png",
       ],
       price: "400.00",
       brand: "Eraeva Kitchen",
