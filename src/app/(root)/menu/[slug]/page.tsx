@@ -14,9 +14,9 @@ const ProductDetailsPage = async (props: {
   params: Promise<{ slug: string }>;
 }) => {
   const { slug } = await props.params;
-  const product = await getMenuBySlug(slug);
-  console.log("========>>>>", product);
-  if (!product) notFound();
+  const menu = await getMenuBySlug(slug);
+  console.log("========>>>>", menu);
+  if (!menu) notFound();
 
   const session = await auth();
   const userId = session?.user?.id;
@@ -29,77 +29,77 @@ const ProductDetailsPage = async (props: {
           {/* Images column */}
           <div className="col-span-2">
             {" "}
-            <MenuImages images={product.images} />
+            <MenuImages images={menu.images} />
           </div>
           <div className="col-span-2 p-5">
             {/* Details column */}
             <div className="flex flex-col gap-6">
               <p>
-                {product.brand} {product.category}
+                {menu.brand} {menu.category}
               </p>
-              <h1 className="h3-bold">{product.name}</h1>
-              <Rating value={Number(product.rating)} />
-              <p>{product.numReviews} Review(s)</p>
+              <h1 className="h3-bold">{menu.name}</h1>
+              <Rating value={Number(menu.rating)} />
+              <p>{menu.numReviews} Review(s)</p>
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                 <MenuPrice
-                  value={Number(product.price)}
+                  value={Number(menu.price)}
                   className="w-24 px-5 py-2 text-green-700 bg-green-100 rounded-full"
                 />
               </div>
             </div>
             <div className="mt-10">
               <p className="font-semibold">Description</p>
-              <p>{product.description}</p>
+              <p>{menu.description}</p>
             </div>
-            {(product.accompany || product.vegetable) && (
+            {(menu.accompany || menu.vegetable) && (
               <div className="mt-10">
                 <p className="font-semibold mb-3">Served With</p>
                 <div className="flex flex-col gap-3">
-                  {product.accompany && (
+                  {menu.accompany && (
                     <div className="flex items-center gap-3 rounded-lg border p-3">
-                      {product.accompany.image && (
+                      {menu.accompany.image && (
                         <img
-                          src={product.accompany.image}
-                          alt={product.accompany.name}
+                          src={menu.accompany.image}
+                          alt={menu.accompany.name}
                           className="h-12 w-12 rounded object-cover"
                         />
                       )}
                       <div className="flex-1">
-                        <p className="font-medium">{product.accompany.name}</p>
-                        {product.accompany.description && (
+                        <p className="font-medium">{menu.accompany.name}</p>
+                        {menu.accompany.description && (
                           <p className="text-sm text-muted-foreground">
-                            {product.accompany.description}
+                            {menu.accompany.description}
                           </p>
                         )}
                       </div>
-                      {product.accompany.price && (
+                      {menu.accompany.price && (
                         <MenuPrice
-                          value={Number(product.accompany.price)}
+                          value={Number(menu.accompany.price)}
                           className="text-sm"
                         />
                       )}
                     </div>
                   )}
-                  {product.vegetable && (
+                  {menu.vegetable && (
                     <div className="flex items-center gap-3 rounded-lg border p-3">
-                      {product.vegetable.image && (
+                      {menu.vegetable.image && (
                         <img
-                          src={product.vegetable.image}
-                          alt={product.vegetable.name}
+                          src={menu.vegetable.image}
+                          alt={menu.vegetable.name}
                           className="h-12 w-12 rounded object-cover"
                         />
                       )}
                       <div className="flex-1">
-                        <p className="font-medium">{product.vegetable.name}</p>
-                        {product.vegetable.description && (
+                        <p className="font-medium">{menu.vegetable.name}</p>
+                        {menu.vegetable.description && (
                           <p className="text-sm text-muted-foreground">
-                            {product.vegetable.description}
+                            {menu.vegetable.description}
                           </p>
                         )}
                       </div>
-                      {product.vegetable.price && (
+                      {menu.vegetable.price && (
                         <MenuPrice
-                          value={Number(product.vegetable.price)}
+                          value={Number(menu.vegetable.price)}
                           className="text-sm"
                         />
                       )}
@@ -116,28 +116,28 @@ const ProductDetailsPage = async (props: {
                 <div className="flex justify-between mb-2">
                   <div>Price</div>
                   <div>
-                    <MenuPrice value={Number(product.price)} />
+                    <MenuPrice value={Number(menu.price)} />
                   </div>
                 </div>
                 <div className="flex justify-between mb-2">
                   <div>Status</div>
-                  {product.stock > 0 ? (
+                  {menu.stock > 0 ? (
                     <Badge variant="outline">In Stock</Badge>
                   ) : (
                     <Badge variant="destructive">Out Stock</Badge>
                   )}
                 </div>
-                {product.stock > 0 && (
+                {menu.stock > 0 && (
                   <div className="flex-center">
                     <AddToCart
                       cart={cart}
                       item={{
-                        productId: product.id,
-                        name: product.name,
-                        slug: product.slug,
-                        price: product.price,
+                        productId: menu.id,
+                        name: menu.name,
+                        slug: menu.slug,
+                        price: menu.price,
                         qty: 1,
-                        image: product.images![0],
+                        image: menu.images![0],
                       }}
                     />
                   </div>
