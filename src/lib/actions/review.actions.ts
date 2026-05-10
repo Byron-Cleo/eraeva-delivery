@@ -80,7 +80,7 @@ export async function createUpdateReview(
 
       //revalidate path like to just remain in the same page where the review is
       //being created or updated from th modal form
-      revalidatePath(`/product/${product.slug}`);
+      revalidatePath(`/menu/${product.slug}`);
     });
 
     return { success: true, message: "Review updated successfully" };

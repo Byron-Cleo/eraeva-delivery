@@ -28,7 +28,7 @@ const ProductCarousel = ({ data }: { data: Product[] }) => {
       <CarouselContent>
         {data.map((product) => (
           <CarouselItem key={product.id}>
-            <Link href={`/product/${product.slug}`}>
+            <Link href={`/menu/${product.slug}`}>
               <div className="relative mx-auto">
                 <Image
                   src={product.banner!}

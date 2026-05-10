@@ -66,7 +66,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         </div>
       </div>
       <div className="flex items-center justify-end px-4 pt-4 pb-2">
-        <Link href={`/product/${product.slug}`}>
+        <Link href={`/menu/${product.slug}`}>
           <Image
             src={product.images[0]}
             alt={product.name}
@@ -81,7 +81,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         <span className="inline-block w-fit text-[11px] font-medium uppercase tracking-wide text-primary bg-primary/10 px-2.5 py-0.5 rounded-full">
           {product.category}
         </span>
-        <Link href={`/product/${product.slug}`}>
+        <Link href={`/menu/${product.slug}`}>
           <h2 className="text-sm font-semibold hover:text-primary transition-colors duration-200">
             {product.name}
           </h2>

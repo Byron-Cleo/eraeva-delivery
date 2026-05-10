@@ -55,7 +55,7 @@ const ReviewList = ({
           Please{" "}
           <Link
             className="text-blue-700 px-2"
-            href={`/sign-in?callbackUrl=/product/${productSlug}`}
+            href={`/sign-in?callbackUrl=/menu/${productSlug}`}
           >
             Sign in
           </Link>

@@ -69,7 +69,7 @@ export async function addItemToCart(data: { item: CartItem }) {
       await prisma.cart.create({ data: newCart });
 
       //Revalidate the product page: purpose to clear the cache for a particular path
-      revalidatePath(`/product/${product.slug}`);
+      revalidatePath(`/menu/${product.slug}`);
 
       return {
         success: true,
@@ -110,7 +110,7 @@ export async function addItemToCart(data: { item: CartItem }) {
       });
 
       //Revalidate the product page: purpose to clear the cache for a particular path
-      revalidatePath(`/product/${product.slug}`);
+      revalidatePath(`/menu/${product.slug}`);
 
       return {
         success: true,
@@ -199,7 +199,7 @@ export async function removeItemFromCart(productId: string) {
     });
 
     //Revalidate the product page: purpose to clear the cache for a particular path
-    revalidatePath(`/product/${product.slug}`);
+    revalidatePath(`/menu/${product.slug}`);
 
     return {
       success: true,

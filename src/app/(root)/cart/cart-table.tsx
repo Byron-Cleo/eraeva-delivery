@@ -51,7 +51,7 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                       <TableRow key={item.slug}>
                         <TableCell>
                           <Link
-                            href={`/product/${item.slug}`}
+                            href={`/menu/${item.slug}`}
                             className="flex items-center gap-2"
                           >
                             <Image
