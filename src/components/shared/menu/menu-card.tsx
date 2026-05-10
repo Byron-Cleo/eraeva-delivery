@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Heart, Utensils } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import ProductPrice from "./product-price";
+import ProductPrice from "./menu-price";
 import Rating from "./rating";
 import { Product } from "@/types";
 

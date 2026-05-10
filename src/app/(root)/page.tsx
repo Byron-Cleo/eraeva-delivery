@@ -1,9 +1,9 @@
-import ProductList from "@/components/shared/menu/product-list";
+import ProductList from "@/components/shared/menu/menu-list";
 import {
   getLatestProducts,
   getFeaturedProducts,
 } from "@/lib/actions/product.actions";
-import ProductCarousel from "@/components/shared/menu/product-carousel";
+import ProductCarousel from "@/components/shared/menu/menu-carousel";
 import ViewAllProductsButton from "@/components/view-all-products-button";
 import IconBoxes from "@/components/icon-boxes";
 import DealCountDown from "@/components/deal-countdown";

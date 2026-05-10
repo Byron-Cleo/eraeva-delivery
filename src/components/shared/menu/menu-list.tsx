@@ -1,4 +1,4 @@
-import ProductCard from "./product-card";
+import ProductCard from "./menu-card";
 import { Product } from "@/types";
 
 const ProductList = ({
