@@ -1,6 +1,6 @@
 import MenuList from "@/components/shared/menu/menu-list";
 import {
-  getLatestProducts,
+  getLatestMenus,
   getFeaturedProducts,
 } from "@/lib/actions/menu.actions";
 import MenuCarousel from "@/components/shared/menu/menu-carousel";
@@ -11,7 +11,7 @@ import sampleData from "@/db/sample-data";
 import { Product } from "@/types";
 
 const Homepage = async () => {
-  const latestProducts = await getLatestProducts();
+  const latestProducts = await getLatestMenus();
   const featuredProducts = await getFeaturedProducts();
 
   return (

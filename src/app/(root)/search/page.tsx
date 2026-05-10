@@ -1,6 +1,6 @@
 import MenuCard from "@/components/shared/menu/menu-card";
 import { Button } from "@/components/ui/button";
-import { getAllProducts, getAllCategories } from "@/lib/actions/menu.actions";
+import { getAllMenus, getAllCategories } from "@/lib/actions/menu.actions";
 import Link from "next/link";
 
 const prices = [
@@ -111,7 +111,7 @@ const SearchPage = async (props: {
     return `/search?${new URLSearchParams(params).toString()}`;
   };
 
-  const products = await getAllProducts({
+  const products = await getAllMenus({
     query: q,
     category,
     price,

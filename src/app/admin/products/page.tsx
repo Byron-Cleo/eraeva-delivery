@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getAllProducts, deleteProduct } from "@/lib/actions/menu.actions";
+import { getAllMenus, deleteProduct } from "@/lib/actions/menu.actions";
 import { Metadata } from "next";
 import { prisma } from "@/db/prisma";
 import { Button } from "@/components/ui/button";
@@ -30,7 +30,7 @@ const AdminProductsPage = async (props: {
   const searchText = searchParams.query || "";
   const category = searchParams.category || "";
 
-  const products = await getAllProducts({ query: searchText, page, category });
+  const products = await getAllMenus({ query: searchText, page, category });
 
   return (
     <div className="spce-y-2">

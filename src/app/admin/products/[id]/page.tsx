@@ -1,6 +1,6 @@
 import notFound from "@/app/not-found";
 import UpdateProductForm from "@/components/admin/update-product-form";
-import { getProductById } from "@/lib/actions/menu.actions";
+import { getMenuById } from "@/lib/actions/menu.actions";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ const AdminProductUpdatePage = async (props: {
 }) => {
   const { id } = await props.params;
 
-  const product = await getProductById(id);
+  const product = await getMenuById(id);
 
   if (!product) return notFound();
 

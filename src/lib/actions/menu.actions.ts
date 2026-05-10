@@ -9,7 +9,7 @@ import z from "zod";
 import { Prisma } from "@prisma/client";
 
 //get latest products
-export async function getLatestProducts() {
+export async function getLatestMenus() {
   const data = await prisma.menu.findMany({
     take: LATEST_PRODUCTS_LIMIT,
     orderBy: { createdAt: "desc" },
@@ -19,7 +19,7 @@ export async function getLatestProducts() {
 }
 
 //get single product by its slug
-export async function getProductBySlug(slug: string) {
+export async function getMenuBySlug(slug: string) {
   return await prisma.menu.findFirst({
     where: { slug: slug },
     include: {
@@ -30,13 +30,13 @@ export async function getProductBySlug(slug: string) {
 }
 
 //get single product by its ID
-export async function getProductById(productId: string) {
+export async function getMenuById(productId: string) {
   const data = await prisma.menu.findFirst({ where: { id: productId } });
   return convertToPlainObject(data);
 }
 
 //get all products
-export async function getAllProducts({
+export async function getAllMenus({
   query,
   limit = PAGE_SIZE,
   page,

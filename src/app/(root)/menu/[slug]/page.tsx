@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import MenuPrice from "@/components/shared/menu/menu-price";
-import { getProductBySlug } from "@/lib/actions/menu.actions";
+import { getMenuBySlug } from "@/lib/actions/menu.actions";
 import MenuImages from "@/components/shared/menu/menu-images";
 import AddToCart from "@/components/shared/menu/add-to-cart";
 import { getMyCart } from "@/lib/actions/cart.actions";
@@ -14,7 +14,7 @@ const ProductDetailsPage = async (props: {
   params: Promise<{ slug: string }>;
 }) => {
   const { slug } = await props.params;
-  const product = await getProductBySlug(slug);
+  const product = await getMenuBySlug(slug);
   console.log("========>>>>", product);
   if (!product) notFound();
 
