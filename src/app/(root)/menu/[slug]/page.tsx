@@ -15,7 +15,6 @@ const ProductDetailsPage = async (props: {
 }) => {
   const { slug } = await props.params;
   const menu = await getMenuBySlug(slug);
-  console.log("========>>>>", menu);
   if (!menu) notFound();
 
   const session = await auth();
