@@ -1,9 +1,9 @@
-import ProductList from "@/components/shared/menu/menu-list";
+import MenuList from "@/components/shared/menu/menu-list";
 import {
   getLatestProducts,
   getFeaturedProducts,
-} from "@/lib/actions/product.actions";
-import ProductCarousel from "@/components/shared/menu/menu-carousel";
+} from "@/lib/actions/menu.actions";
+import MenuCarousel from "@/components/shared/menu/menu-carousel";
 import ViewAllProductsButton from "@/components/view-all-products-button";
 import IconBoxes from "@/components/icon-boxes";
 import DealCountDown from "@/components/deal-countdown";
@@ -17,9 +17,9 @@ const Homepage = async () => {
   return (
     <>
       {/* {featuredProducts.length > 0 && (
-        <ProductCarousel data={featuredProducts} />
+        <MenuCarousel data={featuredProducts} />
       )} */}
-      <ProductList data={latestProducts} title="Our Popular Menu" limit={4} />
+      <MenuList data={latestProducts} title="Our Popular Menu" limit={4} />
       {/* <ViewAllProductsButton />
       <DealCountDown />
       <IconBoxes /> */}

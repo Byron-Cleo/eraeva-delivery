@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import ProductPrice from "@/components/shared/menu/menu-price";
-import { getProductBySlug } from "@/lib/actions/product.actions";
-import ProductImages from "@/components/shared/menu/menu-images";
+import MenuPrice from "@/components/shared/menu/menu-price";
+import { getProductBySlug } from "@/lib/actions/menu.actions";
+import MenuImages from "@/components/shared/menu/menu-images";
 import AddToCart from "@/components/shared/menu/add-to-cart";
 import { getMyCart } from "@/lib/actions/cart.actions";
 import ReviewList from "./review-list";
@@ -29,7 +29,7 @@ const ProductDetailsPage = async (props: {
           {/* Images column */}
           <div className="col-span-2">
             {" "}
-            <ProductImages images={product.images} />
+            <MenuImages images={product.images} />
           </div>
           <div className="col-span-2 p-5">
             {/* Details column */}
@@ -41,7 +41,7 @@ const ProductDetailsPage = async (props: {
               <Rating value={Number(product.rating)} />
               <p>{product.numReviews} Review(s)</p>
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                <ProductPrice
+                <MenuPrice
                   value={Number(product.price)}
                   className="w-24 px-5 py-2 text-green-700 bg-green-100 rounded-full"
                 />
@@ -73,7 +73,7 @@ const ProductDetailsPage = async (props: {
                         )}
                       </div>
                       {product.accompany.price && (
-                        <ProductPrice
+                        <MenuPrice
                           value={Number(product.accompany.price)}
                           className="text-sm"
                         />
@@ -98,7 +98,7 @@ const ProductDetailsPage = async (props: {
                         )}
                       </div>
                       {product.vegetable.price && (
-                        <ProductPrice
+                        <MenuPrice
                           value={Number(product.vegetable.price)}
                           className="text-sm"
                         />
@@ -116,7 +116,7 @@ const ProductDetailsPage = async (props: {
                 <div className="flex justify-between mb-2">
                   <div>Price</div>
                   <div>
-                    <ProductPrice value={Number(product.price)} />
+                    <MenuPrice value={Number(product.price)} />
                   </div>
                 </div>
                 <div className="flex justify-between mb-2">

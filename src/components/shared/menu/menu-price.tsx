@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-const ProductPrice = ({
+const MenuPrice = ({
   value,
   className,
 }: {
@@ -15,11 +15,10 @@ const ProductPrice = ({
 
   return (
     <p className={cn("text-2xl", className)}>
-      <span className="text-xs align-super">KSh </span>
-      {" "}{intValue}
+      <span className="text-xs align-super">KSh </span> {intValue}
       <span className="text-xs align-super">.{floatvalue}</span>
     </p>
   );
 };
 
-export default ProductPrice;
+export default MenuPrice;

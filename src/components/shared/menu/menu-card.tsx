@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Heart, Utensils } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import ProductPrice from "./menu-price";
+import MenuPrice from "./menu-price";
 import Rating from "./rating";
 import { Product } from "@/types";
 
@@ -20,7 +20,7 @@ const BURST_PARTICLES = [
   { tx: "-30px", ty: "0px" },
 ];
 
-const ProductCard = ({ product }: { product: Product }) => {
+const MenuCard = ({ product }: { product: Product }) => {
   const [liked, setLiked] = useState(false);
   const [burst, setBurst] = useState(false);
 
@@ -101,7 +101,7 @@ const ProductCard = ({ product }: { product: Product }) => {
                 ({product.numReviews})
               </span>
             </div>
-            <ProductPrice value={Number(product.price)} />
+            <MenuPrice value={Number(product.price)} />
           </div>
         ) : (
           <p className="text-destructive text-sm">Out of Stock</p>
@@ -111,4 +111,4 @@ const ProductCard = ({ product }: { product: Product }) => {
   );
 };
 
-export default ProductCard;
+export default MenuCard;

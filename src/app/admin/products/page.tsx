@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getAllProducts, deleteProduct } from "@/lib/actions/product.actions";
+import { getAllProducts, deleteProduct } from "@/lib/actions/menu.actions";
 import { Metadata } from "next";
 import { prisma } from "@/db/prisma";
 import { Button } from "@/components/ui/button";
@@ -78,7 +78,13 @@ const AdminProductsPage = async (props: {
                 <TableCell>{product.category}</TableCell>
                 <TableCell>{product.stock}</TableCell>
                 <TableCell>{product.rating}</TableCell>
-                <TableCell>{product.isFeatured ? (<Badge variant="default">With Banner</Badge>) :(<Badge variant="destructive">No Banner</Badge>)}</TableCell>
+                <TableCell>
+                  {product.isFeatured ? (
+                    <Badge variant="default">With Banner</Badge>
+                  ) : (
+                    <Badge variant="destructive">No Banner</Badge>
+                  )}
+                </TableCell>
                 <TableCell className="flex gap-2">
                   <Button asChild variant="outline" size="sm">
                     <Link href={`/admin/products/${product.id}`}>Edit</Link>

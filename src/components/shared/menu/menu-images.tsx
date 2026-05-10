@@ -3,11 +3,14 @@ import { useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
-const ProductImages = ({ images }: { images: string[] }) => {
+const MenuImages = ({ images }: { images: string[] }) => {
   const [current, setCurrent] = useState(0);
   const currentImage = images[current];
   const currentImageName = currentImage.split("/").pop(); // e.g. "beef-fry-rice.png"
-  const currentAccompaniment = currentImageName?.replace(".png", "").split("-").pop(); // e.g. "rice"
+  const currentAccompaniment = currentImageName
+    ?.replace(".png", "")
+    .split("-")
+    .pop(); // e.g. "rice"
 
   return (
     <div className="space-y-4">
@@ -20,7 +23,14 @@ const ProductImages = ({ images }: { images: string[] }) => {
       />
       <div className="flex">
         {images.map((image, index) => (
-          <div key={image} onClick={() => setCurrent(index)} className={cn('border mr-2 cursor-pointer hover:border-orange-600', current === index && 'border-orange-600')}>
+          <div
+            key={image}
+            onClick={() => setCurrent(index)}
+            className={cn(
+              "border mr-2 cursor-pointer hover:border-orange-600",
+              current === index && "border-orange-600",
+            )}
+          >
             <Image src={image} alt="image" width={100} height={100} />
           </div>
         ))}
@@ -29,4 +39,4 @@ const ProductImages = ({ images }: { images: string[] }) => {
   );
 };
 
-export default ProductImages;
+export default MenuImages;

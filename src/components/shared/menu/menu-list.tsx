@@ -1,7 +1,7 @@
-import ProductCard from "./menu-card";
+import MenuCard from "./menu-card";
 import { Product } from "@/types";
 
-const ProductList = ({
+const MenuList = ({
   data,
   title,
   limit,
@@ -18,7 +18,7 @@ const ProductList = ({
       {data.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {limitedData.map((product: Product) => (
-            <ProductCard key={product.slug} product={product} />
+            <MenuCard key={product.slug} product={product} />
           ))}
         </div>
       ) : (
@@ -30,4 +30,4 @@ const ProductList = ({
   );
 };
 
-export default ProductList;
+export default MenuList;

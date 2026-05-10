@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getAllCategories } from "@/lib/actions/product.actions";
+import { getAllCategories } from "@/lib/actions/menu.actions";
 import { SearchIcon } from "lucide-react";
 
 const Search = async () => {
@@ -38,7 +38,7 @@ const Search = async () => {
           className="md:w-[100px] lg:w-[300px]"
         />
         <Button>
-            <SearchIcon />
+          <SearchIcon />
         </Button>
       </div>
     </form>

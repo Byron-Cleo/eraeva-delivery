@@ -1,9 +1,6 @@
-import ProductCard from "@/components/shared/menu/menu-card";
+import MenuCard from "@/components/shared/menu/menu-card";
 import { Button } from "@/components/ui/button";
-import {
-  getAllProducts,
-  getAllCategories,
-} from "@/lib/actions/product.actions";
+import { getAllProducts, getAllCategories } from "@/lib/actions/menu.actions";
 import Link from "next/link";
 
 const prices = [
@@ -241,7 +238,7 @@ const SearchPage = async (props: {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {products.data.length === 0 && <div>No Products Found</div>}
           {products.data.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <MenuCard key={product.id} product={product} />
           ))}
         </div>
       </div>

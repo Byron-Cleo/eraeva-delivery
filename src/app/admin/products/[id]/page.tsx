@@ -1,6 +1,6 @@
 import notFound from "@/app/not-found";
 import UpdateProductForm from "@/components/admin/update-product-form";
-import { getProductById } from "@/lib/actions/product.actions";
+import { getProductById } from "@/lib/actions/menu.actions";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

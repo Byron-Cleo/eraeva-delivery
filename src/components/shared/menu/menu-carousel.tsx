@@ -12,7 +12,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Product } from "@/types";
 
-const ProductCarousel = ({ data }: { data: Product[] }) => {
+const MenuCarousel = ({ data }: { data: Product[] }) => {
   return (
     <Carousel
       className="w-full mb-12"
@@ -54,4 +54,4 @@ const ProductCarousel = ({ data }: { data: Product[] }) => {
   );
 };
 
-export default ProductCarousel;
+export default MenuCarousel;
