@@ -1,4 +1,4 @@
-import ProductCard from "@/components/shared/products/product-card";
+import ProductCard from "@/components/shared/menu/product-card";
 import { Button } from "@/components/ui/button";
 import {
   getAllProducts,

@@ -1,9 +1,15 @@
-// import { PrismaClient } from '../lib/generated/prisma'
+import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
+import { PrismaNeon } from "@prisma/adapter-neon";
+import { neonConfig } from "@neondatabase/serverless";
+import ws from "ws";
 import sampleData from "./sample-data";
 
 async function main() {
-  const prisma = new PrismaClient();
+  neonConfig.webSocketConstructor = ws;
+  const connectionString = `${process.env.DATABASE_URL}`;
+  const adapter = new PrismaNeon({ connectionString });
+  const prisma = new PrismaClient({ adapter });
 
   // ── Wipe in reverse-FK order so constraints are never violated ────────────
   await prisma.menuMealType.deleteMany();

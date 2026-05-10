@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Calendar, User } from "lucide-react";
 import { formatDateTime } from "@/lib/utils";
-import Rating from "@/components/shared/products/rating";
+import Rating from "@/components/shared/menu/rating";
 
 const ReviewList = ({
   userId,

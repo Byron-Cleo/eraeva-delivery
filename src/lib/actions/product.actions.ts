@@ -20,7 +20,13 @@ export async function getLatestProducts() {
 
 //get single product by its slug
 export async function getProductBySlug(slug: string) {
-  return await prisma.menu.findFirst({ where: { slug: slug } });
+  return await prisma.menu.findFirst({
+    where: { slug: slug },
+    include: {
+      accompany: true,
+      vegetable: true,
+    },
+  });
 }
 
 //get single product by its ID

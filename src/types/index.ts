@@ -10,11 +10,23 @@ import {
   insertReviewSchema,
 } from "@/lib/validators";
 
+export type MenuAccompaniment = {
+  id: string;
+  name: string;
+  category: string;
+  description: string | null;
+  price: string | null;
+  image: string | null;
+  createdAt: Date;
+};
+
 export type Product = z.infer<typeof insertProductSchema> & {
   id: string;
   rating: string;
   numReviews: number;
   createdAt: Date;
+  accompany?: MenuAccompaniment | null;
+  vegetable?: MenuAccompaniment | null;
 };
 
 //here we are inferring the carts zod schema type to create a TypeScript type

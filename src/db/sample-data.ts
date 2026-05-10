@@ -7,10 +7,15 @@ const ID = {
   // Menus
   beefFry: "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
   chickenFry: "f6a7b8c9-d0e1-4f2a-3b4c-5d6e7f8a9b0c",
-  // MenuAccompaniment rows
+  // MenuAccompaniment rows — starches
   ugali: "b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e",
   rice: "b2c3d499-f6a7-4b8c-9d0e-1f2a3b4c5d6e",
   chapati: "c3d4e5f6-a7b8-4c9d-0e1f-2a3b4c5d6e7f",
+  // MenuAccompaniment rows — vegetables
+  sukumaWiki: "d4e5f601-a7b8-4c9d-0e1f-2a3b4c5d6e7f",
+  cabbage: "e5f6a702-b8c9-4d0e-1f2a-3b4c5d6e7f8a",
+  kundeSpinach: "f6a7b803-c9d0-4e1f-2a3b-4c5d6e7f8a9b",
+  managu: "a7b8c904-d0e1-4f2a-3b4c-5d6e7f8a9b0c",
   // MealType rows
   lunchType: "d4e5f6a7-b8c9-4d0e-1f2a-3b4c5d6e7f8a",
   dinnerType: "e5f6a7b8-c9d0-4e1f-2a3b-4c5d6e7f8a9b",
@@ -55,7 +60,7 @@ const sampleData = {
       category: "starch",
       description: "Kenyan staple made from maize flour — firm and filling",
       price: null,
-      image: "/images/sample-meals/ugali.jpg",
+      image: "/images/sample-meals/ugali.png",
     },
     {
       id: ID.chapati,
@@ -63,7 +68,7 @@ const sampleData = {
       category: "starch",
       description: "Soft, layered flatbread — a popular Kenyan accompaniment",
       price: null,
-      image: "/images/sample-meals/chapati.jpg",
+      image: "/images/sample-meals/chapati.png",
     },
     {
       id: ID.rice,
@@ -71,7 +76,43 @@ const sampleData = {
       category: "starch",
       description: "Fluffy steamed white rice — light and versatile",
       price: null,
-      image: "/images/sample-meals/rice.jpg",
+      image: "/images/sample-meals/rice.png",
+    },
+    // ── Vegetables ──────────────────────────────────────────────────────────
+    {
+      id: ID.sukumaWiki,
+      name: "Sukuma Wiki",
+      category: "vegetable",
+      description:
+        "Finely shredded kale sautéed with onions — a Kenyan classic",
+      price: "0.00",
+      image: "/images/sample-meals/sukuma-wiki.png",
+    },
+    {
+      id: ID.cabbage,
+      name: "Cabbage",
+      category: "vegetable",
+      description:
+        "Lightly stir-fried shredded cabbage with tomatoes and spices",
+      price: "0.00",
+      image: "/images/sample-meals/cabbage.png",
+    },
+    {
+      id: ID.kundeSpinach,
+      name: "Kunde Spinach",
+      category: "vegetable",
+      description: "Tender cowpea leaves cooked with garlic and spices",
+      price: "50.00",
+      image: "/images/sample-meals/kunde-spinach.png",
+    },
+    {
+      id: ID.managu,
+      name: "Managu",
+      category: "vegetable",
+      description:
+        "African nightshade — a nutritious and flavourful traditional green",
+      price: "50.00",
+      image: "/images/sample-meals/managu.png",
     },
   ],
 
@@ -107,9 +148,9 @@ const sampleData = {
       stock: 20,
       isFeatured: true,
       banner: "banner-beef-fry.jpg",
-      // Default starch is Ugali. Chapati is a valid alternative (also seeded).
+      // Default starch: Ugali. Default vegetable: Sukuma Wiki.
       accompanyId: ID.ugali,
-      vegetableId: null,
+      vegetableId: ID.sukumaWiki,
     },
 
     {
@@ -131,9 +172,9 @@ const sampleData = {
       stock: 20,
       isFeatured: true,
       banner: "banner-chicken-fry.jpg",
-      // Default starch for chicken is Rice. Ugali/Chapati are also available.
+      // Default starch: Rice. Default vegetable: Kunde Spinach.
       accompanyId: ID.rice,
-      vegetableId: null,
+      vegetableId: ID.kundeSpinach,
     },
   ],
 

@@ -1,20 +1,21 @@
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import ProductPrice from "@/components/shared/products/product-price";
+import ProductPrice from "@/components/shared/menu/product-price";
 import { getProductBySlug } from "@/lib/actions/product.actions";
-import ProductImages from "@/components/shared/products/product-images";
-import AddToCart from "@/components/shared/products/add-to-cart";
+import ProductImages from "@/components/shared/menu/product-images";
+import AddToCart from "@/components/shared/menu/add-to-cart";
 import { getMyCart } from "@/lib/actions/cart.actions";
 import ReviewList from "./review-list";
 import { auth } from "@/auth";
-import Rating from "@/components/shared/products/rating";
+import Rating from "@/components/shared/menu/rating";
 
 const ProductDetailsPage = async (props: {
   params: Promise<{ slug: string }>;
 }) => {
   const { slug } = await props.params;
   const product = await getProductBySlug(slug);
+  console.log("========>>>>", product);
   if (!product) notFound();
 
   const session = await auth();
@@ -50,6 +51,63 @@ const ProductDetailsPage = async (props: {
               <p className="font-semibold">Description</p>
               <p>{product.description}</p>
             </div>
+            {(product.accompany || product.vegetable) && (
+              <div className="mt-10">
+                <p className="font-semibold mb-3">Served With</p>
+                <div className="flex flex-col gap-3">
+                  {product.accompany && (
+                    <div className="flex items-center gap-3 rounded-lg border p-3">
+                      {product.accompany.image && (
+                        <img
+                          src={product.accompany.image}
+                          alt={product.accompany.name}
+                          className="h-12 w-12 rounded object-cover"
+                        />
+                      )}
+                      <div className="flex-1">
+                        <p className="font-medium">{product.accompany.name}</p>
+                        {product.accompany.description && (
+                          <p className="text-sm text-muted-foreground">
+                            {product.accompany.description}
+                          </p>
+                        )}
+                      </div>
+                      {product.accompany.price && (
+                        <ProductPrice
+                          value={Number(product.accompany.price)}
+                          className="text-sm"
+                        />
+                      )}
+                    </div>
+                  )}
+                  {product.vegetable && (
+                    <div className="flex items-center gap-3 rounded-lg border p-3">
+                      {product.vegetable.image && (
+                        <img
+                          src={product.vegetable.image}
+                          alt={product.vegetable.name}
+                          className="h-12 w-12 rounded object-cover"
+                        />
+                      )}
+                      <div className="flex-1">
+                        <p className="font-medium">{product.vegetable.name}</p>
+                        {product.vegetable.description && (
+                          <p className="text-sm text-muted-foreground">
+                            {product.vegetable.description}
+                          </p>
+                        )}
+                      </div>
+                      {product.vegetable.price && (
+                        <ProductPrice
+                          value={Number(product.vegetable.price)}
+                          className="text-sm"
+                        />
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
           {/* Action column */}
           <div>
