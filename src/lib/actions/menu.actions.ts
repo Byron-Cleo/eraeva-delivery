@@ -25,6 +25,16 @@ export async function getMenuBySlug(slug: string) {
     include: {
       accompany: true,
       vegetable: true,
+      mealTypes: {
+        include: {
+          mealType: true,
+        },
+        orderBy: {
+          mealType: {
+            sortOrder: "asc",
+          },
+        },
+      },
     },
   });
 }

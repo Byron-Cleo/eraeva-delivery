@@ -16,6 +16,7 @@ import { MenuSelectionProvider } from "@/components/shared/menu/Context/MenuSele
 import MenuAccompanyment from "@/components/shared/menu/menu-accompanyment";
 import MenuSelectionSummary from "@/components/shared/menu/menu-selection-summary";
 import MenuLiveTotal from "../../../../components/shared/menu/menu-live-total";
+import MenuOrderDialog from "@/components/shared/menu/menu-order-dialog";
 
 const ProductDetailsPage = async (props: {
   params: Promise<{ slug: string }>;
@@ -95,22 +96,21 @@ const ProductDetailsPage = async (props: {
                     <Badge variant="destructive">Out Stock</Badge>
                   )}
                 </div>
-                {/* Cart actions are disabled here until cart session handling is implemented in production. */}
-                {/* {menu.stock > 0 && (
+                {menu.stock > 0 && (
                   <div className="flex-center">
-                    <AddToCart
-                      cart={cart}
-                      item={{
-                        productId: menu.id,
-                        name: menu.name,
-                        slug: menu.slug,
-                        price: menu.price,
-                        qty: 1,
-                        image: menu.images![0],
-                      }}
+                    <MenuOrderDialog
+                      menuName={menu.name}
+                      menuDescription={menu.description}
+                      image={menu.images?.[0]}
+                      basePrice={Number(menu.price)}
+                      mealPeriod={menu.mealTypes?.[0]?.mealType.name}
+                      starches={starches}
+                      vegetables={vegetables}
+                      defaultAccompanyId={menu.accompanyId ?? undefined}
+                      defaultVegetableId={menu.vegetableId ?? undefined}
                     />
                   </div>
-                )} */}
+                )}
               </CardContent>
             </Card>
           </div>
