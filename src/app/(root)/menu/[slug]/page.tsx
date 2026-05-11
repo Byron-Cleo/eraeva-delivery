@@ -7,10 +7,10 @@ import {
   getAllAccompaniments,
 } from "@/lib/actions/menu.actions";
 import MenuImages from "@/components/shared/menu/menu-images";
-import AddToCart from "@/components/shared/menu/add-to-cart";
-import { getMyCart } from "@/lib/actions/cart.actions";
-import ReviewList from "./review-list";
-import { auth } from "@/auth";
+// import AddToCart from "@/components/shared/menu/add-to-cart";
+// import { getMyCart } from "@/lib/actions/cart.actions";
+// import ReviewList from "./review-list";
+// import { auth } from "@/auth";
 import Rating from "@/components/shared/menu/rating";
 import { MenuSelectionProvider } from "@/components/shared/menu/Context/MenuSelectionContext";
 import MenuAccompanyment from "@/components/shared/menu/menu-accompanyment";
@@ -23,10 +23,11 @@ const ProductDetailsPage = async (props: {
   const menu = await getMenuBySlug(slug);
   if (!menu) notFound();
 
-  const session = await auth();
-  const userId = session?.user?.id;
+  // Cart/session logic is intentionally disabled on the hosted menu details page.
+  // const session = await auth();
+  // const userId = session?.user?.id;
+  // const cart = await getMyCart();
 
-  const cart = await getMyCart();
   const allAccompaniments = await getAllAccompaniments();
   const starches = allAccompaniments.filter((a) => a.category === "starch");
   const vegetables = allAccompaniments.filter(
@@ -94,7 +95,8 @@ const ProductDetailsPage = async (props: {
                     <Badge variant="destructive">Out Stock</Badge>
                   )}
                 </div>
-                {menu.stock > 0 && (
+                {/* Cart actions are disabled here until cart session handling is implemented in production. */}
+                {/* {menu.stock > 0 && (
                   <div className="flex-center">
                     <AddToCart
                       cart={cart}
@@ -108,7 +110,7 @@ const ProductDetailsPage = async (props: {
                       }}
                     />
                   </div>
-                )}
+                )} */}
               </CardContent>
             </Card>
           </div>
