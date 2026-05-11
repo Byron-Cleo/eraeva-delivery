@@ -2,13 +2,18 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import MenuPrice from "@/components/shared/menu/menu-price";
-import { getMenuBySlug } from "@/lib/actions/menu.actions";
+import {
+  getMenuBySlug,
+  getAllAccompaniments,
+} from "@/lib/actions/menu.actions";
 import MenuImages from "@/components/shared/menu/menu-images";
 import AddToCart from "@/components/shared/menu/add-to-cart";
 import { getMyCart } from "@/lib/actions/cart.actions";
 import ReviewList from "./review-list";
 import { auth } from "@/auth";
 import Rating from "@/components/shared/menu/rating";
+import { MenuSelectionProvider } from "@/components/shared/menu/Context/MenuSelectionContext";
+import MenuAccompanyment from "@/components/shared/menu/menu-accompanyment";
 
 const ProductDetailsPage = async (props: {
   params: Promise<{ slug: string }>;
@@ -21,8 +26,13 @@ const ProductDetailsPage = async (props: {
   const userId = session?.user?.id;
 
   const cart = await getMyCart();
+  const allAccompaniments = await getAllAccompaniments();
+  const starches = allAccompaniments.filter((a) => a.category === "starch");
+  const vegetables = allAccompaniments.filter(
+    (a) => a.category === "vegetable",
+  );
   return (
-    <>
+    <MenuSelectionProvider>
       <section>
         <div className="grid grid-cols-1 md:grid-cols-5">
           {/* Images column */}
@@ -50,63 +60,13 @@ const ProductDetailsPage = async (props: {
               <p className="font-semibold">Description</p>
               <p>{menu.description}</p>
             </div>
-            {(menu.accompany || menu.vegetable) && (
-              <div className="mt-10">
-                <p className="font-semibold mb-3">Served With</p>
-                <div className="flex flex-col gap-3">
-                  {menu.accompany && (
-                    <div className="flex items-center gap-3 rounded-lg border p-3">
-                      {menu.accompany.image && (
-                        <img
-                          src={menu.accompany.image}
-                          alt={menu.accompany.name}
-                          className="h-12 w-12 rounded object-cover"
-                        />
-                      )}
-                      <div className="flex-1">
-                        <p className="font-medium">{menu.accompany.name}</p>
-                        {menu.accompany.description && (
-                          <p className="text-sm text-muted-foreground">
-                            {menu.accompany.description}
-                          </p>
-                        )}
-                      </div>
-                      {menu.accompany.price && (
-                        <MenuPrice
-                          value={Number(menu.accompany.price)}
-                          className="text-sm"
-                        />
-                      )}
-                    </div>
-                  )}
-                  {menu.vegetable && (
-                    <div className="flex items-center gap-3 rounded-lg border p-3">
-                      {menu.vegetable.image && (
-                        <img
-                          src={menu.vegetable.image}
-                          alt={menu.vegetable.name}
-                          className="h-12 w-12 rounded object-cover"
-                        />
-                      )}
-                      <div className="flex-1">
-                        <p className="font-medium">{menu.vegetable.name}</p>
-                        {menu.vegetable.description && (
-                          <p className="text-sm text-muted-foreground">
-                            {menu.vegetable.description}
-                          </p>
-                        )}
-                      </div>
-                      {menu.vegetable.price && (
-                        <MenuPrice
-                          value={Number(menu.vegetable.price)}
-                          className="text-sm"
-                        />
-                      )}
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
+            <MenuAccompanyment
+              starches={starches}
+              vegetables={vegetables}
+              images={menu.images}
+              defaultAccompanyId={menu.accompanyId ?? undefined}
+              defaultVegetableId={menu.vegetableId ?? undefined}
+            />
           </div>
           {/* Action column */}
           <div>
@@ -154,7 +114,7 @@ const ProductDetailsPage = async (props: {
           productSlug={product.slug}
         />
       </section> */}
-    </>
+    </MenuSelectionProvider>
   );
 };
 

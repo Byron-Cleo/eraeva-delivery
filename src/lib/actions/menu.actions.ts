@@ -175,6 +175,23 @@ export async function getAllCategories() {
   return data;
 }
 
+// get all accompaniments split by category (starch / vegetable)
+export async function getAllAccompaniments() {
+  const data = await prisma.menuAccompaniment.findMany({
+    orderBy: { name: "asc" },
+  });
+
+  return convertToPlainObject(data) as {
+    id: string;
+    name: string;
+    category: string;
+    description: string | null;
+    price: string | null;
+    image: string | null;
+    createdAt: Date;
+  }[];
+}
+
 //get featurd products
 export async function getFeaturedProducts() {
   const data = await prisma.menu.findMany({

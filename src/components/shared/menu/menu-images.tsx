@@ -1,21 +1,29 @@
 "use client";
-import { useState } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { useMenuSelection } from "@/components/shared/menu/Context/MenuSelectionContext";
+
+const getAccompaniment = (imageSrc: string) =>
+  imageSrc.split("/").pop()?.replace(".png", "").split("-").pop();
 
 const MenuImages = ({ images }: { images: string[] }) => {
-  const [current, setCurrent] = useState(0);
-  const currentImage = images[current];
-  const currentImageName = currentImage.split("/").pop(); // e.g. "beef-fry-rice.png"
-  const currentAccompaniment = currentImageName
-    ?.replace(".png", "")
-    .split("-")
-    .pop(); // e.g. "rice"
+  const { currentIndex, setCurrentIndex, setCurrentAccompaniment } =
+    useMenuSelection();
+
+  useEffect(() => {
+    setCurrentAccompaniment(getAccompaniment(images[0]));
+  }, []);
+
+  const handleSelect = (index: number) => {
+    setCurrentIndex(index);
+    setCurrentAccompaniment(getAccompaniment(images[index]));
+  };
 
   return (
     <div className="space-y-4">
       <Image
-        src={images[current]}
+        src={images[currentIndex]}
         alt="product image"
         width={1000}
         height={1000}
@@ -25,10 +33,10 @@ const MenuImages = ({ images }: { images: string[] }) => {
         {images.map((image, index) => (
           <div
             key={image}
-            onClick={() => setCurrent(index)}
+            onClick={() => handleSelect(index)}
             className={cn(
               "border mr-2 cursor-pointer hover:border-orange-600",
-              current === index && "border-orange-600",
+              currentIndex === index && "border-orange-600",
             )}
           >
             <Image src={image} alt="image" width={100} height={100} />
