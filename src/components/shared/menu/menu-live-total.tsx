@@ -77,9 +77,6 @@ const MenuLiveTotal = ({
       <div className="border-t pt-3 flex justify-between gap-3 items-start">
         <div>
           <div className="font-medium">Total</div>
-          <p className="text-xs text-muted-foreground">
-            Base price + selected add-on
-          </p>
         </div>
         <div className="text-right">
           <MenuPrice value={totalPrice} className="font-semibold" />
