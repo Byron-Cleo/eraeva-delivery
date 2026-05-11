@@ -32,8 +32,8 @@ const MenuImages = ({ images }: { images: string[] }) => {
             key={image}
             onClick={() => handleSelect(index)}
             className={cn(
-              "border mr-2 cursor-pointer hover:border-orange-600",
-              currentIndex === index && "border-orange-600",
+              "mr-2 cursor-pointer overflow-hidden rounded-lg border transition-colors hover:border-orange-600",
+              currentIndex === index && "rounded-lg border-orange-600",
             )}
           >
             <Image src={image} alt="image" width={100} height={100} />
