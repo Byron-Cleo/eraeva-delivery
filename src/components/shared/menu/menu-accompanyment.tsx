@@ -70,10 +70,13 @@ const MenuAccompanyment = ({
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Reset vegetable to default whenever the starch/image changes
+  // Initialize the vegetable once from the database default, but do not
+  // overwrite the user's in-page selection when starch/image changes.
   useEffect(() => {
-    setSelectedVegetableName(defaultVegetableName);
-  }, [currentAccompaniment]);
+    if (!selectedVegetableName) {
+      setSelectedVegetableName(defaultVegetableName);
+    }
+  }, [defaultVegetableName, selectedVegetableName, setSelectedVegetableName]);
 
   if (!starches.length && !vegetables.length) return null;
 
