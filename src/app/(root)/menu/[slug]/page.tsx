@@ -15,6 +15,7 @@ import Rating from "@/components/shared/menu/rating";
 import { MenuSelectionProvider } from "@/components/shared/menu/Context/MenuSelectionContext";
 import MenuAccompanyment from "@/components/shared/menu/menu-accompanyment";
 import MenuSelectionSummary from "@/components/shared/menu/menu-selection-summary";
+import MenuLiveTotal from "../../../../components/shared/menu/menu-live-total";
 
 const ProductDetailsPage = async (props: {
   params: Promise<{ slug: string }>;
@@ -81,12 +82,11 @@ const ProductDetailsPage = async (props: {
           <div>
             <Card>
               <CardContent className="p-4">
-                <div className="flex justify-between mb-2">
-                  <div>Price</div>
-                  <div>
-                    <MenuPrice value={Number(menu.price)} />
-                  </div>
-                </div>
+                <MenuLiveTotal
+                  basePrice={Number(menu.price)}
+                  vegetables={vegetables}
+                  defaultVegetableId={menu.vegetableId ?? undefined}
+                />
                 <div className="flex justify-between mb-2">
                   <div>Status</div>
                   {menu.stock > 0 ? (
