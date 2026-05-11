@@ -85,7 +85,8 @@ const sampleData = {
       category: "vegetable",
       description:
         "Finely shredded kale sautéed with onions — a Kenyan classic",
-      price: "0.00",
+      price: null,
+      isDefault: true,
       image: "/images/sample-meals/sukuma-wiki.png",
     },
     {
@@ -94,7 +95,8 @@ const sampleData = {
       category: "vegetable",
       description:
         "Lightly stir-fried shredded cabbage with tomatoes and spices",
-      price: "0.00",
+      price: null,
+      isDefault: true,
       image: "/images/sample-meals/cabbage.png",
     },
     {
@@ -103,6 +105,7 @@ const sampleData = {
       category: "vegetable",
       description: "Tender cowpea leaves cooked with garlic and spices",
       price: "50.00",
+      isDefault: false,
       image: "/images/sample-meals/kunde-spinach.png",
     },
     {
@@ -112,6 +115,7 @@ const sampleData = {
       description:
         "African nightshade — a nutritious and flavourful traditional green",
       price: "50.00",
+      isDefault: false,
       image: "/images/sample-meals/managu.png",
     },
   ],

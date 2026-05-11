@@ -199,6 +199,7 @@ model MenuAccompaniment {
   description String?
   price       Decimal? @db.Decimal(12, 2)
   image       String?
+  isDefault   Boolean  @default(false) // true = free included side (Sukuma Wiki, Cabbage); false = premium add-on
   createdAt   DateTime @default(now()) @db.Timestamp(6)
 
   // Back-reference for Relation 1: products that chose this as their starch

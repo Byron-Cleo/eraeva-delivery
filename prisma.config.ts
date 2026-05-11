@@ -9,6 +9,8 @@ export default defineConfig({
   },
   engine: "classic",
   datasource: {
-    url: env("DATABASE_URL"),
+    // DATABASE_MIGRATE_URL = direct (non-pooled) Neon endpoint, required by
+    // Prisma's schema engine. Falls back to DATABASE_URL if not set.
+    url: env("DATABASE_MIGRATE_URL") ?? env("DATABASE_URL"),
   },
 });

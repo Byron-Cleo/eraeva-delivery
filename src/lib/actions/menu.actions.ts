@@ -188,6 +188,7 @@ export async function getAllAccompaniments() {
     description: string | null;
     price: string | null;
     image: string | null;
+    isDefault: boolean;
     createdAt: Date;
   }[];
 }

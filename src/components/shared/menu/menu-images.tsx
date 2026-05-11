@@ -1,5 +1,4 @@
 "use client";
-import { useEffect } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useMenuSelection } from "@/components/shared/menu/Context/MenuSelectionContext";
@@ -11,9 +10,7 @@ const MenuImages = ({ images }: { images: string[] }) => {
   const { currentIndex, setCurrentIndex, setCurrentAccompaniment } =
     useMenuSelection();
 
-  useEffect(() => {
-    setCurrentAccompaniment(getAccompaniment(images[0]));
-  }, []);
+  // Initialization is handled by MenuAccompanyment which knows the defaultAccompanyId.
 
   const handleSelect = (index: number) => {
     setCurrentIndex(index);

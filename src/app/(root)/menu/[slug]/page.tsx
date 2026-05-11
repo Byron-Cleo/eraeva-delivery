@@ -14,6 +14,7 @@ import { auth } from "@/auth";
 import Rating from "@/components/shared/menu/rating";
 import { MenuSelectionProvider } from "@/components/shared/menu/Context/MenuSelectionContext";
 import MenuAccompanyment from "@/components/shared/menu/menu-accompanyment";
+import MenuSelectionSummary from "@/components/shared/menu/menu-selection-summary";
 
 const ProductDetailsPage = async (props: {
   params: Promise<{ slug: string }>;
@@ -34,6 +35,13 @@ const ProductDetailsPage = async (props: {
   return (
     <MenuSelectionProvider>
       <section>
+        <div className="-mx-4 sm:-mx-6 lg:-mx-8 mb-6 px-4 sm:px-6 lg:px-8 py-4 bg-gradient-to-r from-orange-500 via-orange-400 to-yellow-400 shadow-md">
+          <MenuSelectionSummary
+            menuName={menu.name}
+            starches={starches}
+            defaultAccompanyId={menu.accompanyId ?? undefined}
+          />
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-5">
           {/* Images column */}
           <div className="col-span-2">
