@@ -14,7 +14,12 @@ const MenuPrice = ({
   const [intValue, floatvalue] = stringValue.split(".");
 
   return (
-    <p className={cn("inline-flex items-start gap-1 whitespace-nowrap text-2xl", className)}>
+    <p
+      className={cn(
+        "inline-flex items-start gap-1 whitespace-nowrap text-2xl",
+        className,
+      )}
+    >
       <span className="text-xs leading-none">KSh</span>
       <span className="leading-none">{intValue}</span>
       <span className="text-xs leading-none">.{floatvalue}</span>
