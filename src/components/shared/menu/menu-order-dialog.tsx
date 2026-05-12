@@ -2,7 +2,14 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowRight, Minus, Plus, ShoppingCart } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Minus,
+  Plus,
+  ShoppingCart,
+  UtensilsCrossed,
+} from "lucide-react";
 import MenuPrice from "@/components/shared/menu/menu-price";
 import { useMenuSelection } from "@/components/shared/menu/Context/MenuSelectionContext";
 import { Button } from "@/components/ui/button";
@@ -213,15 +220,13 @@ const MenuOrderDialog = ({
                         : `x ${quantity}`}
                     </span>
                   </p>
-                  <p className="mt-1 text-sm leading-snug text-muted-foreground">
-                    {addOnPrice > 0 ? (
+                  {addOnPrice > 0 ? (
+                    <p className="mt-1 text-sm leading-snug text-muted-foreground">
                       <span className="inline-flex items-center rounded-full border border-green-200 bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">
                         Charged Vegetable
                       </span>
-                    ) : (
-                      `Included with ${activeStarch}`
-                    )}
-                  </p>
+                    </p>
+                  ) : null}
                 </div>
                 <div className="text-right">
                   {addOnPrice > 0 ? (
@@ -282,7 +287,17 @@ const MenuOrderDialog = ({
           </div>
         </div>
 
-        <DialogFooter>
+        <DialogFooter className="w-full sm:justify-between sm:space-x-0">
+          <Button
+            asChild
+            className="w-full border border-orange-300 bg-gradient-to-r from-orange-500 via-orange-400 to-amber-400 text-white shadow-sm hover:from-orange-600 hover:via-orange-500 hover:to-amber-500 sm:w-auto"
+          >
+            <Link href="/search">
+              <ArrowLeft className="h-4 w-4" />
+              Order Another Food
+              <UtensilsCrossed className="h-4 w-4" />
+            </Link>
+          </Button>
           <Button asChild className="w-full sm:w-auto">
             <Link href="/shipping-address">
               Proceed to Checkout
