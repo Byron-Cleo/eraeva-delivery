@@ -77,8 +77,8 @@ Node 24.14.0, npm 11.9.0 (pinned in `engines`).
 
 **CRITICAL:** When using the Neon MCP for any database operations:
 
-- **Always** use the `devstash` project
-- **Always** use the `development` branch
-- **NEVER** touch production unless explicitly instructed
+- **Always** use the `eraeva-delivery` project (ID: `tiny-rice-97841001`)
+- **Always** use the `development` branch (ID: `br-blue-scene-anjrfai6`) — this is the default branch
+- **NEVER** touch the `production` branch (ID: `br-square-frost-anpk7vwa`) unless explicitly instructed
 - If unsure which branch/project to use, ask before proceeding
 - When running migrations, tests, or seed operations, confirm they target development
