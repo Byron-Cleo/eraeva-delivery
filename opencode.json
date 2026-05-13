@@ -1,0 +1,23 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "neon": {
+      "type": "remote",
+      "url": "https://mcp.neon.tech/mcp",
+      "enabled": true
+    },
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "ctx7sk-28761c6b-6027-4399-b275-174e5309dd4e"
+      },
+      "enabled": true
+    },
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "@playwright/mcp@latest"],
+      "enabled": true
+    }
+  }
+}

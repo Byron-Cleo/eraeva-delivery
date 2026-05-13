@@ -1,0 +1,2 @@
+- [Do not report .env as exposed](feedback_env_gitignore.md) — .env is in .gitignore; skip this false positive in scans
+- [Only report actual issues](feedback_no_unimplemented_features.md) — Don't flag unimplemented features (e.g. missing auth) as issues
