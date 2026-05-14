@@ -6,7 +6,7 @@ import { convertToPlainObject, formatError } from "../utils";
 import { revalidatePath } from "next/cache";
 import { insertProductSchema, updateProductSchema } from "../validators";
 import z from "zod";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@/db/generated/prisma/client";
 
 //get latest products
 export async function getLatestMenus() {

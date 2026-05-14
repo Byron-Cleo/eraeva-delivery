@@ -1,5 +1,5 @@
 import { hashSync } from "bcrypt-ts-edge";
-import { MealPeriod } from "@prisma/client";
+import { MealPeriod } from "@/db/generated/prisma/client";
 
 // Pre-defined UUIDs allow cross-referencing between seeded records
 // without querying the database between inserts (e.g. Menu.accompanyId → ID.ugali).

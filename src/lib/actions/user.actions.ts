@@ -16,7 +16,7 @@ import { ShippingAddress } from "@/types";
 import { z } from "zod";
 import { PAGE_SIZE } from "../constants";
 import { revalidatePath } from "next/cache";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@/db/generated/prisma/client";
 import { getMyCart } from "./cart.actions";
 
 //sign in the user with credentials
