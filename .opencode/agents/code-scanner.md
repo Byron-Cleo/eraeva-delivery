@@ -1,7 +1,14 @@
 ---
 name: code-scanner
 description: "while asked to scan the code"
-tools: Glob, Grep, Read, WebFetch, WebSearch, mcp__ide__executeCode, mcp__ide__getDiagnostics
+tools:
+  Glob: true
+  Grep: true
+  Read: true
+  WebFetch: true
+  WebSearch: true
+  mcp__ide__executeCode: true
+  mcp__ide__getDiagnostics: true
 model: sonnet
 memory: project
 ---
