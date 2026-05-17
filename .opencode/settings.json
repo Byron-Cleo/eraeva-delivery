@@ -1,0 +1,12 @@
+{
+  "enabledMcpServers": [
+    "neon"
+  ],
+  "enableAllProjectMcpServers": true,
+  "workspaceFeatures": {
+    "skills": true,
+    "agents": true,
+    "memory": true,
+    "instructions": true
+  }
+}
