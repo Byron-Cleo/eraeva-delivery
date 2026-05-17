@@ -1,43 +1,38 @@
 ---
-description: Manage current feature workflow - load, start, review, explain, complete
+name: feature
+description: Manage current feature workflow - start, review, explain or complete
+argument-hint: load|start|review|test|explain|complete
 ---
 
-# Feature Workflow
+# Feature Workflow Skill
 
 Manages the full lifecycle of a feature from spec to merge.
 
 ## Working File
 
-Uses: @context/current-feature.md
+Uses: `@context/current-feature.md`
 
-Available actions: load, start, review, explain, complete
+### File Structure
 
-### load
-1. Read specified feature file from @context/features/
-2. Populate current-feature.md with name, goals, and notes
-3. Set Status to "Not Started"
+The current-feature.md file contains:
 
-### start
-1. Verify Goals are populated in current-feature.md
-2. Set Status to "In Progress"
-3. Create and checkout a feature branch
-4. List goals and begin implementation
+- `# Current Feature` — H1 heading with feature name when active
+- `## Status` — Not Started | In Progress | Complete
+- `## Goals` — Bullet points of what success looks like
+- `## Notes` — Additional context, constraints, or details from spec
+- `## History` — Completed features (append only)
 
-### review
-1. Check if all goals in current-feature.md are met
-2. Review code quality and organization
-3. Suggest improvements before completion
+## Available Actions
 
-### explain
-1. Read current-feature.md
-2. Get changed files from `git diff main --name-only`
-3. Explain what changed per file
-4. Summarize how pieces fit together
+| Action | Description |
+|--------|-------------|
+| `load` | Load a feature spec or inline description |
+| `start` | Begin implementation, create branch |
+| `review` | Check goals met, code quality |
+| `test` | Write and run unit tests for the feature |
+| `explain` | Document what changed and why |
+| `complete` | Commit, push, merge, reset |
 
-### complete
-1. Commit changes with meaningful message
-2. Push to remote
-3. Create and merge pull request
-4. Reset current-feature.md
+See [actions/feature/](../actions/feature/) for detailed instructions on each action.
 
-Action: $ARGUMENTS
+Execute the requested action via `$ARGUMENTS`. If no action provided, explain the available options.
