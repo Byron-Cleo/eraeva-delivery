@@ -19,11 +19,13 @@ export const prisma = new PrismaClient({ adapter }).$extends({
   result: {
     menu: {
       price: {
+        needs: { price: true },
         compute(product) {
           return product.price.toString();
         },
       },
       rating: {
+        needs: { rating: true },
         compute(product) {
           return product.rating.toString();
         },
