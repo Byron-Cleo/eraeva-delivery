@@ -10,9 +10,9 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import Link from "next/link";
 import Image from "next/image";
-import { Product } from "@/types";
+import { Menu } from "@/types";
 
-const MenuCarousel = ({ data }: { data: Product[] }) => {
+const MenuCarousel = ({ data }: { data: Menu[] }) => {
   return (
     <Carousel
       className="w-full mb-12"

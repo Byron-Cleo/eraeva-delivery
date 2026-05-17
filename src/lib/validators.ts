@@ -25,7 +25,7 @@ export const insertMenuSchema = z.object({
 });
 
 //schema for updating products
-export const updateProductSchema = insertMenuSchema.extend({
+export const updateMenuSchema = insertMenuSchema.extend({
   id: z.string().min(1, "ID is required"),
 });
 

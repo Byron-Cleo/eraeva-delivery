@@ -8,7 +8,7 @@ import ViewAllProductsButton from "@/components/view-all-products-button";
 import IconBoxes from "@/components/icon-boxes";
 import DealCountDown from "@/components/deal-countdown";
 import sampleData from "@/db/sample-data";
-import { Product } from "@/types";
+import { Menu } from "@/types";
 
 const Homepage = async () => {
   const latestProducts = await getLatestMenus();

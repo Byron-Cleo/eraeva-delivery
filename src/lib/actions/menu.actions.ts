@@ -4,7 +4,7 @@ import { LATEST_PRODUCTS_LIMIT, PAGE_SIZE } from "../constants";
 import { prisma } from "@/db/prisma";
 import { convertToPlainObject, formatError } from "../utils";
 import { revalidatePath } from "next/cache";
-import { insertMenuSchema, updateProductSchema } from "../validators";
+import { insertMenuSchema, updateMenuSchema } from "../validators";
 import z from "zod";
 import { Prisma } from "@/db/generated/prisma/client";
 
@@ -157,9 +157,9 @@ export async function createProduct(data: z.infer<typeof insertMenuSchema>) {
 }
 
 //update a product
-export async function updateProduct(data: z.infer<typeof updateProductSchema>) {
+export async function updateProduct(data: z.infer<typeof updateMenuSchema>) {
   try {
-    const product = updateProductSchema.parse(data);
+    const product = updateMenuSchema.parse(data);
     const productExists = await prisma.menu.findFirst({
       where: { id: product.id },
     });

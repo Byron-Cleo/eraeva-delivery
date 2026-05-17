@@ -16,7 +16,7 @@ export type MenuAccompaniment = z.infer<typeof insertAccompanimentSchema> & {
   createdAt: Date;
 };
 
-export type Product = z.infer<typeof insertMenuSchema> & {
+export type Menu = z.infer<typeof insertMenuSchema> & {
   id: string;
   rating: string;
   numReviews: number;

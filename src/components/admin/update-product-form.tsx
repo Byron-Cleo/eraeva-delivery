@@ -1,8 +1,8 @@
 "use client";
 
 import { useToast } from "@/hooks/use-toast";
-import { updateProductSchema } from "@/lib/validators";
-import { Product } from "@/types";
+import { updateMenuSchema } from "@/lib/validators";
+import { Menu } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { ControllerRenderProps, SubmitHandler, useForm } from "react-hook-form";
@@ -31,18 +31,18 @@ const UpdateProductForm = ({
   productId,
 }: {
   //   type: "Create" | "Update";
-  product?: Product;
+  product?: Menu;
   productId?: string;
 }) => {
   const router = useRouter();
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof updateProductSchema>>({
-    resolver: zodResolver(updateProductSchema),
+  const form = useForm<z.infer<typeof updateMenuSchema>>({
+    resolver: zodResolver(updateMenuSchema),
     defaultValues: product,
   });
 
-  const onSubmit: SubmitHandler<z.infer<typeof updateProductSchema>> = async (
+  const onSubmit: SubmitHandler<z.infer<typeof updateMenuSchema>> = async (
     values,
   ) => {
     //form action on update
@@ -88,7 +88,7 @@ const UpdateProductForm = ({
               field,
             }: {
               field: ControllerRenderProps<
-                z.infer<typeof updateProductSchema>,
+                z.infer<typeof updateMenuSchema>,
                 "name"
               >;
             }) => (
@@ -109,7 +109,7 @@ const UpdateProductForm = ({
               field,
             }: {
               field: ControllerRenderProps<
-                z.infer<typeof updateProductSchema>,
+                z.infer<typeof updateMenuSchema>,
                 "slug"
               >;
             }) => (
@@ -146,7 +146,7 @@ const UpdateProductForm = ({
               field,
             }: {
               field: ControllerRenderProps<
-                z.infer<typeof updateProductSchema>,
+                z.infer<typeof updateMenuSchema>,
                 "category"
               >;
             }) => (
@@ -167,7 +167,7 @@ const UpdateProductForm = ({
               field,
             }: {
               field: ControllerRenderProps<
-                z.infer<typeof updateProductSchema>,
+                z.infer<typeof updateMenuSchema>,
                 "brand"
               >;
             }) => (
@@ -190,7 +190,7 @@ const UpdateProductForm = ({
               field,
             }: {
               field: ControllerRenderProps<
-                z.infer<typeof updateProductSchema>,
+                z.infer<typeof updateMenuSchema>,
                 "price"
               >;
             }) => (
@@ -211,7 +211,7 @@ const UpdateProductForm = ({
               field,
             }: {
               field: ControllerRenderProps<
-                z.infer<typeof updateProductSchema>,
+                z.infer<typeof updateMenuSchema>,
                 "stock"
               >;
             }) => (
@@ -330,7 +330,7 @@ const UpdateProductForm = ({
               field,
             }: {
               field: ControllerRenderProps<
-                z.infer<typeof updateProductSchema>,
+                z.infer<typeof updateMenuSchema>,
                 "description"
               >;
             }) => (

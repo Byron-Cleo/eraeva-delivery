@@ -7,7 +7,7 @@ import { Heart, Utensils } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import MenuPrice from "./menu-price";
 import Rating from "./rating";
-import { Product } from "@/types";
+import { Menu } from "@/types";
 
 const BURST_PARTICLES = [
   { tx: "-24px", ty: "-24px" },
@@ -20,7 +20,7 @@ const BURST_PARTICLES = [
   { tx: "-30px", ty: "0px" },
 ];
 
-const MenuCard = ({ product }: { product: Product }) => {
+const MenuCard = ({ product }: { product: Menu }) => {
   const [liked, setLiked] = useState(false);
   const [burst, setBurst] = useState(false);
 

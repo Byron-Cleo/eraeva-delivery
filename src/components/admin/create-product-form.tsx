@@ -2,8 +2,8 @@
 
 import { useToast } from "@/hooks/use-toast";
 import { productDefaultValues } from "@/lib/constants";
-import { insertMenuSchema, updateProductSchema } from "@/lib/validators";
-import { Product } from "@/types";
+import { insertMenuSchema, updateMenuSchema } from "@/lib/validators";
+import { Menu } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { ControllerRenderProps, SubmitHandler, useForm } from "react-hook-form";
@@ -46,7 +46,7 @@ const ProductForm = (
   });
 
   // const form = useForm<z.infer<typeof insertMenuSchema>>({
-  //   resolver: type === "" ? zodResolver(updateProductSchema) : zodResolver(insertMenuSchema),
+  //   resolver: type === "" ? zodResolver(updateMenuSchema) : zodResolver(insertMenuSchema),
   //   defaultValues:
   //     product && type === "Update" ? product : productDefaultValues,
   // });
