@@ -21,7 +21,7 @@ const MenuImages = ({ images }: { images: string[] }) => {
     <div className="space-y-4">
       <Image
         src={images[currentIndex]}
-        alt="product image"
+        alt="menu image"
         width={1000}
         height={1000}
         className="min-h-[300px] object-cover object-center"

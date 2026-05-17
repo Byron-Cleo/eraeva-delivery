@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getAllMenus, deleteProduct } from "@/lib/actions/menu.actions";
+import { getAllMenus, deleteMenu } from "@/lib/actions/menu.actions";
 import { Metadata } from "next";
 import { prisma } from "@/db/prisma";
 import { Button } from "@/components/ui/button";
@@ -36,12 +36,12 @@ const AdminProductsPage = async (props: {
     <div className="spce-y-2">
       <div className="flex-between">
         <div className="flex items-center gap-3">
-          <h1 className="h2-bold">Products</h1>
+          <h1 className="h2-bold">Menu Items</h1>
           {searchText && (
             <div className="">
               {" "}
               Filtered by <i>&quot;{searchText}&quot;</i> {"  "}
-              <Link href="/admin/products">
+               <Link href="/admin/menus">
                 <Button variant="outline" size="sm">
                   Remove Filter
                 </Button>
@@ -50,7 +50,7 @@ const AdminProductsPage = async (props: {
           )}
         </div>
         <Button asChild variant="default">
-          <Link href="/admin/products/create">Create Product</Link>
+          <Link href="/admin/menus/create">Create Menu</Link>
         </Button>
       </div>
       <div className="autoflow-auto">
@@ -87,10 +87,10 @@ const AdminProductsPage = async (props: {
                 </TableCell>
                 <TableCell className="flex gap-2">
                   <Button asChild variant="outline" size="sm">
-                    <Link href={`/admin/products/${product.id}`}>Edit</Link>
+                    <Link href={`/admin/menus/${product.id}`}>Edit</Link>
                   </Button>
                   {/* Delete button */}
-                  <DeleteDialog id={product.id} action={deleteProduct} />
+                  <DeleteDialog id={product.id} action={deleteMenu} />
                 </TableCell>
               </TableRow>
             ))}

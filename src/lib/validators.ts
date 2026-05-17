@@ -18,7 +18,7 @@ export const insertMenuSchema = z.object({
   description: z.string().min(3, "Description must be at least 3 characters"),
   // stock: z.coerce.number(),
   stock: z.coerce.number<number>(),
-  images: z.array(z.string()).min(1, "Product must have at least one image"),
+  images: z.array(z.string()).min(1, "Menu must have at least one image"),
   isFeatured: z.boolean(),
   banner: z.string().nullable(),
   price: currency,
@@ -62,7 +62,7 @@ export const insertAccompanimentSchema = z.object({
 
 //cart schemas
 export const cartItemSchema = z.object({
-  menuId: z.string().min(1, "Product is required."),
+  menuId: z.string().min(1, "Menu is required."),
   name: z.string().min(1, "Name is required."),
   slug: z.string().min(1, "Slug is required."),
   qty: z.number().int().nonnegative("Quantity must be a positive number."),
@@ -147,7 +147,7 @@ export const updateUserSchema = updateUserProfileSchema.extend({
 export const insertReviewSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
   description: z.string().min(3, "Description must be at least 3 characters"),
-  menuId: z.string().min(1, "Product is required"),
+  menuId: z.string().min(1, "Menu is required"),
   userId: z.string().min(1, "User is required"),
   rating: z.coerce
     .number<number>()

@@ -74,7 +74,7 @@ const DealCountDown = () => {
         </ul>
         <div className="text-center">
           <Button asChild>
-            <Link href="/search">View Products</Link>
+            <Link href="/search">View Menu</Link>
           </Button>
         </div>
       </div>

@@ -66,7 +66,7 @@ const AdminOverviewPage = async () => {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Products</CardTitle>
+            <CardTitle className="text-sm font-medium">Menu Items</CardTitle>
             <Barcode />
           </CardHeader>
           <CardContent>

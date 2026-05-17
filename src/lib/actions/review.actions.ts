@@ -30,7 +30,7 @@ export async function createUpdateReview(
     const product = await prisma.menu.findFirst({
       where: { id: review.menuId },
     });
-    if (!product) throw new Error("Product not found");
+    if (!product) throw new Error("Menu not found");
 
     //check if user already reviewed a product
     const reviewExists = await prisma.review.findFirst({

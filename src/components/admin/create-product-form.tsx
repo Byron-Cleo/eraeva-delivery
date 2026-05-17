@@ -20,7 +20,7 @@ import slugify from "slugify";
 import { Textarea } from "../ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { createProduct, updateProduct } from "@/lib/actions/menu.actions";
+import { createMenu, updateMenu } from "@/lib/actions/menu.actions";
 import { UploadButton } from "@/lib/uploadthing";
 import { Card, CardContent } from "../ui/card";
 import Image from "next/image";
@@ -56,7 +56,7 @@ const ProductForm = (
   ) => {
     // form action on creating product
     // if(type === "Create") {
-    const res = await createProduct(values);
+    const res = await createMenu(values);
 
     if (!res.success) {
       toast({
@@ -67,18 +67,18 @@ const ProductForm = (
       toast({
         description: res.message,
       });
-      router.push("/admin/products");
+      router.push("/admin/menus");
     }
     // }
 
     //form action on update
     // if(type === "Update"){
     //   if(!productId){
-    //     router.push('/admin/products')
+    //     router.push('/admin/menus')
     //     return;
     //   }
 
-    //   const res = await updateProduct({...values, id: productId})
+    //   const res = await updateMenu({...values, id: productId})
 
     //   if(!res.success){
     //     toast({
@@ -89,7 +89,7 @@ const ProductForm = (
     //     toast({
     //       description: res.message
     //     })
-    //     router.push('/admin/products')
+    //     router.push('/admin/menus')
     //   }
     // }
   };
@@ -121,7 +121,7 @@ const ProductForm = (
               <FormItem className="w-full">
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter product name" {...field} />
+                  <Input placeholder="Enter menu name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -223,7 +223,7 @@ const ProductForm = (
               <FormItem className="w-full">
                 <FormLabel>Price</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter product price" {...field} />
+                  <Input placeholder="Enter menu price" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -244,7 +244,7 @@ const ProductForm = (
               <FormItem className="w-full">
                 <FormLabel>Stock</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter product stock" {...field} />
+                  <Input placeholder="Enter menu stock" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -267,7 +267,7 @@ const ProductForm = (
                           <Image
                             key={image}
                             src={image}
-                            alt="product image"
+                            alt="menu image"
                             className="w-20 h-20 object-cover rounded-sm "
                             width={100}
                             height={100}
@@ -302,7 +302,7 @@ const ProductForm = (
         {/* <div className="flex flex-col md:flex-row gap-5"> */}
         <div className="upload-field">
           {/* isFeatured */}
-          Feature Product
+          Feature Menu
           <Card>
             <CardContent className="space-y-2 mt-2">
               <FormField
@@ -364,7 +364,7 @@ const ProductForm = (
                 <FormLabel>Description</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Enter product description"
+                    placeholder="Enter menu description"
                     className="resize-none"
                     {...field}
                   />
@@ -382,7 +382,7 @@ const ProductForm = (
             disabled={form.formState.isSubmitting}
             className="button col-span-2 w-full"
           >
-            {form.formState.isSubmitting ? "Submitting" : " Create Product"}
+            {form.formState.isSubmitting ? "Submitting" : " Create Menu"}
           </Button>
         </div>
       </form>

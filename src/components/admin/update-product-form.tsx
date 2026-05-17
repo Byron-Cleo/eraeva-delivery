@@ -19,7 +19,7 @@ import slugify from "slugify";
 import { Textarea } from "../ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { updateProduct } from "@/lib/actions/menu.actions";
+import { updateMenu } from "@/lib/actions/menu.actions";
 import { UploadButton } from "@/lib/uploadthing";
 import { Card, CardContent } from "../ui/card";
 import Image from "next/image";
@@ -48,11 +48,11 @@ const UpdateProductForm = ({
     //form action on update
     // if(type === "Update"){
     if (!productId) {
-      router.push("/admin/products");
+      router.push("/admin/menus");
       return;
     }
 
-    const res = await updateProduct({ ...values, id: productId });
+    const res = await updateMenu({ ...values, id: productId });
 
     if (!res.success) {
       toast({
@@ -63,7 +63,7 @@ const UpdateProductForm = ({
       toast({
         description: res.message,
       });
-      router.push("/admin/products");
+      router.push("/admin/menus");
     }
   };
   //   }
@@ -95,7 +95,7 @@ const UpdateProductForm = ({
               <FormItem className="w-full">
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter product name" {...field} />
+                  <Input placeholder="Enter menu name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -197,7 +197,7 @@ const UpdateProductForm = ({
               <FormItem className="w-full">
                 <FormLabel>Price</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter product price" {...field} />
+                  <Input placeholder="Enter menu price" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -218,7 +218,7 @@ const UpdateProductForm = ({
               <FormItem className="w-full">
                 <FormLabel>Stock</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter product stock" {...field} />
+                  <Input placeholder="Enter menu stock" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -241,7 +241,7 @@ const UpdateProductForm = ({
                           <Image
                             key={image}
                             src={image}
-                            alt="product image"
+                            alt="menu image"
                             className="w-20 h-20 object-cover rounded-sm "
                             width={100}
                             height={100}
@@ -276,7 +276,7 @@ const UpdateProductForm = ({
         {/* <div className="flex flex-col md:flex-row gap-5"> */}
         <div className="upload-field">
           {/* isFeatured */}
-          Feature Product
+          Feature Menu
           <Card>
             <CardContent className="space-y-2 mt-2">
               <FormField
@@ -338,7 +338,7 @@ const UpdateProductForm = ({
                 <FormLabel>Description</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Enter product description"
+                    placeholder="Enter menu description"
                     className="resize-none"
                     {...field}
                   />
@@ -356,7 +356,7 @@ const UpdateProductForm = ({
             disabled={form.formState.isSubmitting}
             className="button col-span-2 w-full"
           >
-            {form.formState.isSubmitting ? "Submitting" : "Update Product"}
+            {form.formState.isSubmitting ? "Submitting" : "Update Menu"}
           </Button>
         </div>
       </form>

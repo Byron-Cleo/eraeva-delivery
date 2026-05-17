@@ -4,8 +4,8 @@ import { getMenuById } from "@/lib/actions/menu.actions";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Update Product",
-  description: "Admin update product page",
+  title: "Update Menu",
+  description: "Admin update menu page",
 };
 
 const AdminProductUpdatePage = async (props: {
@@ -19,7 +19,7 @@ const AdminProductUpdatePage = async (props: {
 
   return (
     <div className="space-y-8 max-w-5xl max-auto">
-      <h1 className="h2-bold">Update Product</h1>
+      <h1 className="h2-bold">Update Menu</h1>
       <UpdateProductForm product={product} productId={product.id} />
       {/* <UpdateProductForm type="Update" product={product} productId={product.id} /> */}
     </div>

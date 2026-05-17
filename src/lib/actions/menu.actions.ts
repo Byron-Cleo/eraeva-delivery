@@ -120,26 +120,26 @@ export async function getAllMenus({
 }
 
 //DELETE A PRODUCT
-export async function deleteProduct(id: string) {
+export async function deleteMenu(id: string) {
   try {
     const productExist = await prisma.menu.findFirst({
       where: { id },
     });
 
-    if (!productExist) throw new Error("Product is not found");
+    if (!productExist) throw new Error("Menu is not found");
 
     await prisma.menu.delete({ where: { id } });
 
-    revalidatePath("/admin/products");
+    revalidatePath("/admin/menus");
 
-    return { success: true, message: "Product deleted successfully" };
+    return { success: true, message: "Menu deleted successfully" };
   } catch (error) {
     return { success: false, message: formatError(error) };
   }
 }
 
 //create a product
-export async function createProduct(data: z.infer<typeof insertMenuSchema>) {
+export async function createMenu(data: z.infer<typeof insertMenuSchema>) {
   try {
     //validate and store the review
     const product = insertMenuSchema.parse(data);
@@ -148,29 +148,29 @@ export async function createProduct(data: z.infer<typeof insertMenuSchema>) {
     await prisma.menu.create({ data: product });
 
     //navigate back to the page where it is being created in the admin page
-    revalidatePath("/admin/products");
+    revalidatePath("/admin/menus");
 
-    return { success: true, message: "Product created successfully" };
+    return { success: true, message: "Menu created successfully" };
   } catch (error) {
     return { success: false, message: formatError(error) };
   }
 }
 
 //update a product
-export async function updateProduct(data: z.infer<typeof updateMenuSchema>) {
+export async function updateMenu(data: z.infer<typeof updateMenuSchema>) {
   try {
     const product = updateMenuSchema.parse(data);
     const productExists = await prisma.menu.findFirst({
       where: { id: product.id },
     });
 
-    if (!productExists) throw new Error("Product not found");
+    if (!productExists) throw new Error("Menu not found");
 
     await prisma.menu.update({ where: { id: product.id }, data: product });
 
-    revalidatePath("/admin/products");
+    revalidatePath("/admin/menus");
 
-    return { success: true, message: "Product updated successfully" };
+    return { success: true, message: "Menu updated successfully" };
   } catch (error) {
     return { success: false, message: formatError(error) };
   }
@@ -204,7 +204,7 @@ export async function getAllAccompaniments() {
 }
 
 //get featurd products
-export async function getFeaturedProducts() {
+export async function getFeaturedMenus() {
   const data = await prisma.menu.findMany({
     where: { isFeatured: true },
     orderBy: { createdAt: "desc" },

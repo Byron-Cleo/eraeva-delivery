@@ -23,7 +23,7 @@ const MenuList = ({
         </div>
       ) : (
         <div>
-          <p>no products yet</p>
+          <p>no menus yet</p>
         </div>
       )}
     </div>
