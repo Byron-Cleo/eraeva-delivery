@@ -18,6 +18,7 @@ import { PAGE_SIZE } from "../constants";
 import { revalidatePath } from "next/cache";
 import { Prisma } from "@/db/generated/prisma/client";
 import { getMyCart } from "./cart.actions";
+import { redirect } from "next/navigation";
 
 //sign in the user with credentials
 export async function signInWithCredentials(
@@ -60,8 +61,6 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
       confirmPassword: formData.get("confirmPassword"),
     });
 
-    const plainPassword = user.password;
-
     user.password = hashSync(user.password, 10);
 
     //2. FORM DATA TO DATABASE.
@@ -82,15 +81,8 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
       },
     });
 
-    //signin the user after successful creating in the db
-    await signIn("credentials", {
-      email: user.email,
-      password: plainPassword,
-    });
-
-    return { success: true, message: "User registered successfully." };
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
+    redirect("/sign-in");
+  } catch (error) {
     if (isRedirectError(error)) {
       throw error;
     }
