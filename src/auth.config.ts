@@ -1,7 +1,15 @@
 import Google from "next-auth/providers/google"
 import type { NextAuthConfig } from "next-auth"
 
+const googleProvider = Google({
+  clientId: process.env.AUTH_GOOGLE_ID!,
+  clientSecret: process.env.AUTH_GOOGLE_SECRET!,
+})
+googleProvider.clientId = googleProvider.options!.clientId
+googleProvider.clientSecret = googleProvider.options!.clientSecret
+
 export const authConfig = {
+  providers: [googleProvider],
   pages: {
     signIn: "/sign-in",
     error: "/sign-in",
@@ -26,5 +34,4 @@ export const authConfig = {
   },
   trustHost: true,
   debug: process.env.PROJECT_ENV === "development",
-  providers: [Google],
 } satisfies NextAuthConfig
