@@ -2,7 +2,7 @@
 
 ## Status
 
-Not Started
+Complete
 
 ## Goals
 
@@ -29,6 +29,15 @@ Not Started
 ## History
 
 <!-- Keep this updated. Earliest to latest -->
+### 2026-05-17 — Auth Setup: NextAuth + Google Provider
+
+- Created `src/auth.config.ts` — edge-compatible config with Google OAuth (split pattern)
+- Refactored `src/auth.ts` — imports config, adds Prisma adapter + Credentials provider + callbacks
+- Created `src/proxy.ts` — Next.js 16 proxy, protects `/dashboard/*` + all existing routes
+- Removed `src/middleware.ts` — replaced by proxy.ts (Next.js 16 requirement)
+- Updated `src/types/next-auth.d.ts` — added explicit `id` to Session user type
+- Added Google sign-in button to custom sign-in page with divider UI
+
 ### 2026-04-20 — Target Date Updated
 
 - Updated target milestone date
