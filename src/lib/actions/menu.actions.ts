@@ -4,7 +4,7 @@ import { LATEST_PRODUCTS_LIMIT, PAGE_SIZE } from "../constants";
 import { prisma } from "@/db/prisma";
 import { convertToPlainObject, formatError } from "../utils";
 import { revalidatePath } from "next/cache";
-import { insertProductSchema, updateProductSchema } from "../validators";
+import { insertMenuSchema, updateProductSchema } from "../validators";
 import z from "zod";
 import { Prisma } from "@/db/generated/prisma/client";
 
@@ -139,10 +139,10 @@ export async function deleteProduct(id: string) {
 }
 
 //create a product
-export async function createProduct(data: z.infer<typeof insertProductSchema>) {
+export async function createProduct(data: z.infer<typeof insertMenuSchema>) {
   try {
     //validate and store the review
-    const product = insertProductSchema.parse(data);
+    const product = insertMenuSchema.parse(data);
 
     //now create the review and store in the database
     await prisma.menu.create({ data: product });

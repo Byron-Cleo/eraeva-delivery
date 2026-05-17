@@ -2,7 +2,7 @@
 
 import { useToast } from "@/hooks/use-toast";
 import { productDefaultValues } from "@/lib/constants";
-import { insertProductSchema, updateProductSchema } from "@/lib/validators";
+import { insertMenuSchema, updateProductSchema } from "@/lib/validators";
 import { Product } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -40,18 +40,18 @@ const ProductForm = (
   const router = useRouter();
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof insertProductSchema>>({
-    resolver: zodResolver(insertProductSchema),
+  const form = useForm<z.infer<typeof insertMenuSchema>>({
+    resolver: zodResolver(insertMenuSchema),
     defaultValues: productDefaultValues,
   });
 
-  // const form = useForm<z.infer<typeof insertProductSchema>>({
-  //   resolver: type === "" ? zodResolver(updateProductSchema) : zodResolver(insertProductSchema),
+  // const form = useForm<z.infer<typeof insertMenuSchema>>({
+  //   resolver: type === "" ? zodResolver(updateProductSchema) : zodResolver(insertMenuSchema),
   //   defaultValues:
   //     product && type === "Update" ? product : productDefaultValues,
   // });
 
-  const onSubmit: SubmitHandler<z.infer<typeof insertProductSchema>> = async (
+  const onSubmit: SubmitHandler<z.infer<typeof insertMenuSchema>> = async (
     values,
   ) => {
     // form action on creating product
@@ -114,7 +114,7 @@ const ProductForm = (
               field,
             }: {
               field: ControllerRenderProps<
-                z.infer<typeof insertProductSchema>,
+                z.infer<typeof insertMenuSchema>,
                 "name"
               >;
             }) => (
@@ -135,7 +135,7 @@ const ProductForm = (
               field,
             }: {
               field: ControllerRenderProps<
-                z.infer<typeof insertProductSchema>,
+                z.infer<typeof insertMenuSchema>,
                 "slug"
               >;
             }) => (
@@ -172,7 +172,7 @@ const ProductForm = (
               field,
             }: {
               field: ControllerRenderProps<
-                z.infer<typeof insertProductSchema>,
+                z.infer<typeof insertMenuSchema>,
                 "category"
               >;
             }) => (
@@ -193,7 +193,7 @@ const ProductForm = (
               field,
             }: {
               field: ControllerRenderProps<
-                z.infer<typeof insertProductSchema>,
+                z.infer<typeof insertMenuSchema>,
                 "brand"
               >;
             }) => (
@@ -216,7 +216,7 @@ const ProductForm = (
               field,
             }: {
               field: ControllerRenderProps<
-                z.infer<typeof insertProductSchema>,
+                z.infer<typeof insertMenuSchema>,
                 "price"
               >;
             }) => (
@@ -237,7 +237,7 @@ const ProductForm = (
               field,
             }: {
               field: ControllerRenderProps<
-                z.infer<typeof insertProductSchema>,
+                z.infer<typeof insertMenuSchema>,
                 "stock"
               >;
             }) => (
@@ -356,7 +356,7 @@ const ProductForm = (
               field,
             }: {
               field: ControllerRenderProps<
-                z.infer<typeof insertProductSchema>,
+                z.infer<typeof insertMenuSchema>,
                 "description"
               >;
             }) => (

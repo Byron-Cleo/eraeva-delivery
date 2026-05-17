@@ -10,7 +10,7 @@ const currency = z
   );
 
 //schema for inserting products
-export const insertProductSchema = z.object({
+export const insertMenuSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
   slug: z.string().min(3, "Slug must be at least 3 characters"),
   category: z.string().min(3, "Category must be at least 3 characters"),
@@ -25,7 +25,7 @@ export const insertProductSchema = z.object({
 });
 
 //schema for updating products
-export const updateProductSchema = insertProductSchema.extend({
+export const updateProductSchema = insertMenuSchema.extend({
   id: z.string().min(1, "ID is required"),
 });
 
@@ -50,9 +50,19 @@ export const signUpFormSchema = z
     path: ["confirmPassword"],
   });
 
+//schema for inserting menu accompaniments (starches/vegetables)
+export const insertAccompanimentSchema = z.object({
+  name: z.string().min(1, "Name is required."),
+  category: z.string().min(1, "Category is required."),
+  description: z.string().nullable(),
+  price: currency.nullable(),
+  image: z.string().nullable(),
+  isDefault: z.boolean().optional().default(false),
+});
+
 //cart schemas
 export const cartItemSchema = z.object({
-  productId: z.string().min(1, "Product is required."),
+  menuId: z.string().min(1, "Product is required."),
   name: z.string().min(1, "Name is required."),
   slug: z.string().min(1, "Slug is required."),
   qty: z.number().int().nonnegative("Quantity must be a positive number."),

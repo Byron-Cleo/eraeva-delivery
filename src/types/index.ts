@@ -1,6 +1,7 @@
 import { z } from "zod";
 import {
-  insertProductSchema,
+  insertMenuSchema,
+  insertAccompanimentSchema,
   cartItemSchema,
   insertCartSchema,
   shippingAddressSchema,
@@ -10,17 +11,12 @@ import {
   insertReviewSchema,
 } from "@/lib/validators";
 
-export type MenuAccompaniment = {
+export type MenuAccompaniment = z.infer<typeof insertAccompanimentSchema> & {
   id: string;
-  name: string;
-  category: string;
-  description: string | null;
-  price: string | null;
-  image: string | null;
   createdAt: Date;
 };
 
-export type Product = z.infer<typeof insertProductSchema> & {
+export type Product = z.infer<typeof insertMenuSchema> & {
   id: string;
   rating: string;
   numReviews: number;
