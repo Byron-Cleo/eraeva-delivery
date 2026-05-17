@@ -1,7 +1,7 @@
 ---
 name: feature
 description: Manage current feature workflow - start, review, explain or complete
-argument-hint: load|start|review|explain|complete
+argument-hint: load|start|review|test|explain|complete
 ---
 
 # Feature Workflow Skill
@@ -29,36 +29,10 @@ The current-feature.md file contains:
 | `load` | Load a feature spec or inline description |
 | `start` | Begin implementation, create branch |
 | `review` | Check goals met, code quality |
+| `test` | Write and run unit tests for the feature |
 | `explain` | Document what changed and why |
 | `complete` | Commit, push, merge, reset |
 
-### load
-1. Reads a feature specification from @context/features/
-2. Populates current-feature.md with name, goals, and notes
-3. Sets Status to "Not Started"
+See [actions/feature/](../actions/feature/) for detailed instructions on each action.
 
-### start
-1. Verifies Goals are populated in current-feature.md
-2. Sets Status to "In Progress"
-3. Creates and checks out a feature branch (derived from H1 heading)
-4. Lists the goals and begins implementation
-
-### review
-1. Checks if all goals in current-feature.md have been met
-2. Reviews code quality and organization
-3. Suggests any improvements before completion
-
-### explain
-1. Reads current-feature.md to understand what was implemented
-2. Gets list of changed files from `git diff main --name-only`
-3. For each file created or modified:
-   - Shows file path
-   - Gives 1-2 sentence explanation of what changed
-   - Highlights key functions, components, or patterns
-4. Ends with summary of how pieces fit together
-
-### complete
-1. Commits changes with meaningful message
-2. Pushes to remote
-3. Creates and merges pull request
-4. Resets current-feature.md for next feature
+Execute the requested action via `$ARGUMENTS`. If no action provided, explain the available options.

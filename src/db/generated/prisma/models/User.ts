@@ -187,7 +187,7 @@ export type UserGroupByOutputType = {
   image: string | null
   password: string | null
   role: string
-  address: runtime.JsonValue
+  address: runtime.JsonValue | null
   paymentMethod: string | null
   createdAt: Date
   updatedAt: Date
@@ -222,7 +222,7 @@ export type UserWhereInput = {
   image?: Prisma.StringNullableFilter<"User"> | string | null
   password?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.StringFilter<"User"> | string
-  address?: Prisma.JsonFilter<"User">
+  address?: Prisma.JsonNullableFilter<"User">
   paymentMethod?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -241,7 +241,7 @@ export type UserOrderByWithRelationInput = {
   image?: Prisma.SortOrderInput | Prisma.SortOrder
   password?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
-  address?: Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentMethod?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -263,7 +263,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   image?: Prisma.StringNullableFilter<"User"> | string | null
   password?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.StringFilter<"User"> | string
-  address?: Prisma.JsonFilter<"User">
+  address?: Prisma.JsonNullableFilter<"User">
   paymentMethod?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -282,7 +282,7 @@ export type UserOrderByWithAggregationInput = {
   image?: Prisma.SortOrderInput | Prisma.SortOrder
   password?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
-  address?: Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentMethod?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -302,7 +302,7 @@ export type UserScalarWhereWithAggregatesInput = {
   image?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   password?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   role?: Prisma.StringWithAggregatesFilter<"User"> | string
-  address?: Prisma.JsonWithAggregatesFilter<"User">
+  address?: Prisma.JsonNullableWithAggregatesFilter<"User">
   paymentMethod?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -316,7 +316,7 @@ export type UserCreateInput = {
   image?: string | null
   password?: string | null
   role?: string
-  address: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -335,7 +335,7 @@ export type UserUncheckedCreateInput = {
   image?: string | null
   password?: string | null
   role?: string
-  address: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -354,7 +354,7 @@ export type UserUpdateInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -373,7 +373,7 @@ export type UserUncheckedUpdateInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -392,7 +392,7 @@ export type UserCreateManyInput = {
   image?: string | null
   password?: string | null
   role?: string
-  address: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -406,7 +406,7 @@ export type UserUpdateManyMutationInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -420,7 +420,7 @@ export type UserUncheckedUpdateManyInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -560,7 +560,7 @@ export type UserCreateWithoutAccountInput = {
   image?: string | null
   password?: string | null
   role?: string
-  address: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -578,7 +578,7 @@ export type UserUncheckedCreateWithoutAccountInput = {
   image?: string | null
   password?: string | null
   role?: string
-  address: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -612,7 +612,7 @@ export type UserUpdateWithoutAccountInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -630,7 +630,7 @@ export type UserUncheckedUpdateWithoutAccountInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -648,7 +648,7 @@ export type UserCreateWithoutSessionInput = {
   image?: string | null
   password?: string | null
   role?: string
-  address: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -666,7 +666,7 @@ export type UserUncheckedCreateWithoutSessionInput = {
   image?: string | null
   password?: string | null
   role?: string
-  address: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -700,7 +700,7 @@ export type UserUpdateWithoutSessionInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -718,7 +718,7 @@ export type UserUncheckedUpdateWithoutSessionInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -736,7 +736,7 @@ export type UserCreateWithoutCartInput = {
   image?: string | null
   password?: string | null
   role?: string
-  address: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -754,7 +754,7 @@ export type UserUncheckedCreateWithoutCartInput = {
   image?: string | null
   password?: string | null
   role?: string
-  address: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -788,7 +788,7 @@ export type UserUpdateWithoutCartInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -806,7 +806,7 @@ export type UserUncheckedUpdateWithoutCartInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -824,7 +824,7 @@ export type UserCreateWithoutOrdersInput = {
   image?: string | null
   password?: string | null
   role?: string
-  address: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -842,7 +842,7 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   image?: string | null
   password?: string | null
   role?: string
-  address: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -876,7 +876,7 @@ export type UserUpdateWithoutOrdersInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -894,7 +894,7 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -912,7 +912,7 @@ export type UserCreateWithoutReviewsInput = {
   image?: string | null
   password?: string | null
   role?: string
-  address: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -930,7 +930,7 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   image?: string | null
   password?: string | null
   role?: string
-  address: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -964,7 +964,7 @@ export type UserUpdateWithoutReviewsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -982,7 +982,7 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  address?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1150,7 +1150,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     image: string | null
     password: string | null
     role: string
-    address: runtime.JsonValue
+    address: runtime.JsonValue | null
     paymentMethod: string | null
     createdAt: Date
     updatedAt: Date
