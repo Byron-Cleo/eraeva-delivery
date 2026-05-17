@@ -1,28 +1,29 @@
-# Current Feature: Auth Credentials - Email/Password Provider
+# Current Feature
 
 ## Status
 
-Complete
+Not Started
 
 ## Goals
 
-- Add Credentials provider for email/password authentication with registration
-- Add password field to User model via migration
-- Create bcrypt-validated Credentials provider in split config pattern
-- Create registration API route at `POST /api/auth/register`
-- Verify Google OAuth still works alongside credentials
+<!-- What does success look like? -->
 
 ## Notes
 
-- `bcrypt-ts-edge` used for hashing (already installed, not bcryptjs)
-- Credentials provider lives only in `auth.ts` (needs DB access — not in `auth.config.ts`)
-- Registration via UI (`signUpUser`): creates user, redirects to `/sign-in`
-- Registration API (`POST /api/auth/register`): validates, checks duplicates, hashes, creates user, returns 201
-- GET `/api/auth/register` redirects to `/sign-up` page
+<!-- Additional context, constraints, or details from spec -->
 
 ## History
 
 <!-- Keep this updated. Earliest to latest -->
+### 2026-05-17 — Auth Credentials - Email/Password Provider
+
+- Added password field to User model via migration
+- Created bcrypt-validated Credentials provider in split config pattern
+- Created registration API route at `POST /api/auth/register`
+- Fixed Google OAuth: made `address` field optional on User to allow OAuth signup
+- Fixed Google provider config for NextAuth v5 beta.31 (clientId/secret in options)
+- Created API register route for developer curl testing
+
 ### 2026-05-17 — Auth Setup: NextAuth + Google Provider
 
 - Created `src/auth.config.ts` — edge-compatible config with Google OAuth (split pattern)
