@@ -1,30 +1,16 @@
-# Current Feature: Auth Setup - NextAuth + Google Provider
+# Current Feature
 
 ## Status
 
-Complete
+Not Started | In Progress | Complete
 
 ## Goals
 
-- Install NextAuth v5 (`next-auth@beta`) and `@auth/prisma-adapter`
-- Set up split auth config pattern for edge compatibility
-- Add Google OAuth provider
-- Protect `/dashboard/*` routes using Next.js 16 proxy
-- Redirect unauthenticated users to sign-in
+<!-- Bullet points of what success looks like -->
 
 ## Notes
 
-- `src/auth.config.ts` — Edge-compatible config (providers only, no adapter)
-- `src/auth.ts` — Full config with Prisma adapter and JWT strategy
-- `src/app/api/auth/[...nextauth]/route.ts` — Export handlers from auth.ts
-- `src/proxy.ts` — Route protection with redirect logic
-- `src/types/next-auth.d.ts` — Extend Session type with user.id
-- Use `next-auth@beta` (not `@latest` which installs v4)
-- Proxy file must be at `src/proxy.ts` (same level as `app/`)
-- Use named export: `export const proxy = auth(...)` not default export
-- Use `session: { strategy: 'jwt' }` with split config pattern
-- Don't set custom `pages.signIn` — use NextAuth's default page
-- Env vars needed: `AUTH_SECRET`, `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET`
+<!-- Additional context, constraints, or details from spec -->
 
 ## History
 
