@@ -66,11 +66,11 @@ export async function createOrder() {
 
       //create order items from the cart items
       for (const item of cart.items as CartItem[]) {
-        const { productId, ...rest } = item;
+        const { menuId, ...rest } = item;
         await tx.orderItem.create({
           data: {
             ...rest,
-            menuId: productId,
+            menuId,
             price: item.price,
             orderId: insertedOrder.id,
           },

@@ -59,7 +59,7 @@ const AddToCart = ({
   // handle remove from cart
   const handleRemoveFromCart = async () => {
     startTransition(async () => {
-      const res = (await removeItemFromCart(item.productId)) || undefined;
+      const res = (await removeItemFromCart(item.menuId)) || undefined;
 
       //Handle success case of removing from cart
       toast({
@@ -71,7 +71,7 @@ const AddToCart = ({
 
   //check if item is in cart
   const existItem =
-    cart && cart.items.find((x) => x.productId === item.productId);
+    cart && cart.items.find((x) => x.menuId === item.menuId);
 
   return existItem ? (
     <div>
