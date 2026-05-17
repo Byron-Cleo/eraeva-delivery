@@ -49,13 +49,13 @@ export async function addItemToCart(data: { item: CartItem }) {
     //parse and validate added item
     const item = cartItemSchema.parse(data.item);
 
-    //find the product from the database
-    const product = await prisma.menu.findFirst({
-      where: { id: item.productId },
+    //find the menu from the database
+    const menu = await prisma.menu.findFirst({
+      where: { id: item.menuId },
     });
-    if (!product) throw new Error("Product not found");
+    if (!menu) throw new Error("Menu not found");
 
-    //1. creating a cart is making it MUST HAVE A PRODUCT AND USER hence called a cart
+    //1. creating a cart is making it MUST HAVE A MENU AND USER hence called a cart
     //creating new cart object
     if (!cart) {
       const newCart = insertCartSchema.parse({
@@ -68,35 +68,35 @@ export async function addItemToCart(data: { item: CartItem }) {
       // Add the new cart to database
       await prisma.cart.create({ data: newCart });
 
-      //Revalidate the product page: purpose to clear the cache for a particular path
-      revalidatePath(`/menu/${product.slug}`);
+      //Revalidate the menu page: purpose to clear the cache for a particular path
+      revalidatePath(`/menu/${menu.slug}`);
 
       return {
         success: true,
-        message: `${product.name} added to cart successfully`,
+        message: `${menu.name} added to cart successfully`,
       };
     } else {
-      //2. If there is a cart: Meaning there is a PRODUCT AND ASSOCIATED USER
+      //2. If there is a cart: Meaning there is a MENU AND ASSOCIATED USER
       //check the existing item is already in the cart
       const existItem = (cart.items as CartItem[]).find(
-        (i) => i.productId === item.productId,
+        (i) => i.menuId === item.menuId,
       );
 
       if (existItem) {
         //check stock
-        if (product.stock < existItem.qty + 1) {
-          throw new Error("Product is out of stock");
+        if (menu.stock < existItem.qty + 1) {
+          throw new Error("Menu is out of stock");
         }
 
         //increase the quantity
         (cart.items as CartItem[]).find(
-          (i) => i.productId === item.productId,
+          (i) => i.menuId === item.menuId,
         )!.qty = existItem.qty + 1;
       } else {
-        //NEW PRODUCT: meaning item product does not exist IN THE CART
-        if (product.stock < 1) throw new Error("Not enough stock");
+        //NEW MENU: meaning item menu does not exist IN THE CART
+        if (menu.stock < 1) throw new Error("Not enough stock");
 
-        //then add the product into the cart to FINALLY EXIST IN THE CART
+        //then add the menu into the cart to FINALLY EXIST IN THE CART
         (cart.items as CartItem[]).push(item);
       }
 
@@ -109,12 +109,12 @@ export async function addItemToCart(data: { item: CartItem }) {
         },
       });
 
-      //Revalidate the product page: purpose to clear the cache for a particular path
-      revalidatePath(`/menu/${product.slug}`);
+      //Revalidate the menu page: purpose to clear the cache for a particular path
+      revalidatePath(`/menu/${menu.slug}`);
 
       return {
         success: true,
-        message: `${product.name} ${existItem ? "updated in" : "added to"} Cart Successfully.`,
+        message: `${menu.name} ${existItem ? "updated in" : "added to"} Cart Successfully.`,
       };
     }
   } catch (error) {
@@ -153,17 +153,17 @@ export async function getMyCart() {
   });
 }
 
-export async function removeItemFromCart(productId: string) {
+export async function removeItemFromCart(menuId: string) {
   try {
     // check for cart cookie
     const sessionCartId = (await cookies()).get("sessionCartId")?.value;
     if (!sessionCartId) throw new Error("Cart session not found");
 
-    //Get the product from the database
-    const product = await prisma.menu.findFirst({
-      where: { id: productId },
+    //Get the menu from the database
+    const menu = await prisma.menu.findFirst({
+      where: { id: menuId },
     });
-    if (!product) throw new Error("Product not found");
+    if (!menu) throw new Error("Menu not found");
 
     //Get user cart from the database
     const cart = await getMyCart();
@@ -171,7 +171,7 @@ export async function removeItemFromCart(productId: string) {
 
     //Check for the existing item
     const exist = (cart.items as CartItem[]).find(
-      (x) => x.productId === productId,
+      (x) => x.menuId === menuId,
     );
 
     if (!exist) throw new Error("Item not found in cart");
@@ -180,12 +180,12 @@ export async function removeItemFromCart(productId: string) {
     if (exist.qty === 1) {
       //remove the item from the cart
       cart.items = (cart.items as CartItem[]).filter(
-        (x) => x.productId !== exist.productId,
+        (x) => x.menuId !== exist.menuId,
       );
     } else {
       //decrease the quantity by 1 since it is higher than 1
       (cart.items as CartItem[]).find(
-        (x) => x.productId === exist.productId,
+        (x) => x.menuId === exist.menuId,
       )!.qty = exist.qty - 1;
     }
 
@@ -198,12 +198,12 @@ export async function removeItemFromCart(productId: string) {
       },
     });
 
-    //Revalidate the product page: purpose to clear the cache for a particular path
-    revalidatePath(`/menu/${product.slug}`);
+    //Revalidate the menu page: purpose to clear the cache for a particular path
+    revalidatePath(`/menu/${menu.slug}`);
 
     return {
       success: true,
-      message: `${product.name} was removed from cart successfully`,
+      message: `${menu.name} was removed from cart successfully`,
     };
   } catch (error) {
     return {
