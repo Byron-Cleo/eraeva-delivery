@@ -12,13 +12,14 @@ import {
 import { APP_NAME } from "@/lib/constants";
 import CredentialsSignInForm from "./credentials-signin-form";
 import GoogleSignInButton from "./google-signin-button";
+import RegisteredToast from "./registered-toast";
 
 export const metadata: Metadata = {
   title: "Sign In",
 };
 
 const SignInPage = async (props: {
-  searchParams: Promise<{ callbackUrl: string }>;
+  searchParams: Promise<{ callbackUrl: string; registered?: string }>;
 }) => {
   const session = await auth();
 
@@ -30,6 +31,7 @@ const SignInPage = async (props: {
 
   return (
     <div className="w-full max-w-md mx-auto">
+      <RegisteredToast />
       <Card>
         <CardHeader className="space-y-4">
           <Link href="/" className="flex-center">

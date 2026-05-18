@@ -49,6 +49,17 @@ Node 24.14.0, npm 11.9.0 (pinned in `engines`).
 | `npx prisma studio` | DB browser |
 | `npx tsx src/db/seed.ts` | Seed database (not wired into npm scripts — run manually) |
 
+## Feature Workflow
+
+| Action | Description | Action Reference |
+|---|---|---|
+| `load` | Load a feature spec or inline description | `context/actions/feature/load.md` |
+| `start` | Begin implementation, create branch | `context/actions/feature/start.md` |
+| `review` | Check goals met, code quality | `context/actions/feature/review.md` |
+| `test` | Write and run unit tests for the feature | `context/actions/feature/test.md` |
+| `explain` | Document what changed and why | `context/actions/feature/explain.md` |
+| `complete` | Commit, push, merge, reset | `context/actions/feature/complete.md` |
+
 ## Architecture
 
 - **`src/app/`** — Next.js App Router routes. Route groups: `(auth)/`, `(root)/`. Admin routes at `/admin/*`, user routes at `/user/*`.

@@ -51,6 +51,7 @@ const config = hasSecret
           session.user.id = token.sub;
           session.user.role = token.role;
           session.user.name = token.name;
+          session.user.image = token.picture;
 
           if (trigger === "update") {
             session.user.name = user.name;
@@ -64,6 +65,7 @@ const config = hasSecret
             token.sub = user.id;
             token.id = user.id;
             token.role = user.role;
+            token.picture = user.image;
 
             if (user.name === null || user.name === "NO_NAME") {
               token.name = user.email.split("@")[0];

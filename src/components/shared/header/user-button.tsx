@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { UserIcon } from "lucide-react";
+import UserAvatar from "@/components/shared/user-avatar";
 
 const UserButton = async () => {
   const session = await auth();
@@ -24,19 +25,15 @@ const UserButton = async () => {
     );
   }
 
-  const firstInitial = session.user?.name?.charAt(0).toUpperCase() ?? "U";
-
   return (
     <div className="flex gap-2 items-center">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <div className="flex items-center">
-            <Button
-              variant="ghost"
-              className="realtive w-8 h-8 rounded-full ml-2 flex items-center justify-center bg-gray-200"
-            >
-              {firstInitial}
-            </Button>
+            <UserAvatar
+              name={session.user?.name}
+              image={session.user?.image}
+            />
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end" forceMount>

@@ -1,99 +1,153 @@
 "use client";
 
-import { useActionState } from "react";
-import { useFormStatus } from "react-dom";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { signUpDefaultValues } from "@/lib/constants";
 import { signUpUser } from "@/lib/actions/user.actions";
-import { useSearchParams } from "next/navigation";
+import { signUpFormSchema } from "@/lib/validators";
+import { z } from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
 const SignUpForm = () => {
-  const [data, action] = useActionState(signUpUser, {
-    success: false,
-    message: "",
+  const router = useRouter();
+  const form = useForm<z.infer<typeof signUpFormSchema>>({
+    resolver: zodResolver(signUpFormSchema),
+    defaultValues: signUpDefaultValues,
   });
 
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const onSubmit: SubmitHandler<z.infer<typeof signUpFormSchema>> = async (
+    values,
+  ) => {
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("email", values.email);
+    formData.append("password", values.password);
+    formData.append("confirmPassword", values.confirmPassword);
 
-  const SignUpButton = () => {
-    const { pending } = useFormStatus();
-
-    return (
-      <Button disabled={pending} className="w-full" variant="default">
-        {pending ? "Submitting..." : "Sign Up"}
-      </Button>
+    const res = await signUpUser(
+      { success: false, message: "" },
+      formData,
     );
+
+    if (!res.success) {
+      if ("fieldErrors" in res && res.fieldErrors) {
+        for (const [field, message] of Object.entries(res.fieldErrors)) {
+          form.setError(field as keyof z.infer<typeof signUpFormSchema>, {
+            message,
+          });
+        }
+      }
+      if (res.message) {
+        form.setError("root", { message: res.message });
+      }
+      return;
+    }
+
+    router.push("/sign-in?registered=true");
   };
 
   return (
-    <form action={action}>
-      <input type="hidden" name="callbackUrl" value={callbackUrl} />
-      <div className="space-y-6">
-        <div>
-          <Label htmlFor="name">Name:</Label>
-          <Input
-            id="name"
-            name="name"
-            type="text"
-            required
-            autoComplete="name"
-            defaultValue={signUpDefaultValues.name}
-          />
-        </div>
-        {/* {data && !data.success && (
-          <div className="tex-center text-destructive">{errorsMsg ? errorsMsg[0] : null}</div>
-        )} */}
-        <div>
-          <Label htmlFor="email">Email:</Label>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            required
-            autoComplete="email"
-            defaultValue={signUpDefaultValues.email}
-          />
-        </div>
-        {/* {data && !data.success && (
-          <div className="tex-center text-destructive">{errorsMsg ? errorsMsg[1] : null}</div>
-        )} */}
-        <div>
-          <Label htmlFor="password">Password:</Label>
-          <Input
-            id="password"
-            name="password"
-            type="password"
-            required
-            autoComplete="password"
-            defaultValue={signUpDefaultValues.password}
-          />
-        </div>
-        {/* {data && !data.success && (
-          <div className="tex-center text-destructive">{errorsMsg ? errorsMsg[2] : null}</div>
-        )} */}
-        <div>
-          <Label htmlFor="confirmPassword">Confirm Password:</Label>
-          <Input
-            id="confirmPassword"
-            name="confirmPassword"
-            type="password"
-            required
-            autoComplete="confirmPassword"
-            defaultValue={signUpDefaultValues.confirmPassword}
-          />
-        </div>
-        {/* {data && !data.success && (
-          <div className="tex-center text-destructive">{errorsMsg ? errorsMsg[3] : null}</div>
-        )} */}
-        {data && !data.success && (
-          <div className="tex-center text-destructive">{data.message}</div>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-6"
+      >
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name:</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Enter your name"
+                  autoComplete="name"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email:</FormLabel>
+              <FormControl>
+                <Input
+                  type="email"
+                  placeholder="Enter your email"
+                  autoComplete="email"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password:</FormLabel>
+              <FormControl>
+                <Input
+                  type="password"
+                  placeholder="Enter your password"
+                  autoComplete="new-password"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Confirm Password:</FormLabel>
+              <FormControl>
+                <Input
+                  type="password"
+                  placeholder="Confirm your password"
+                  autoComplete="new-password"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {form.formState.errors.root && (
+          <div className="text-center text-destructive">
+            {form.formState.errors.root.message}
+          </div>
         )}
         <div>
-          <SignUpButton />
+          <Button
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            className="w-full"
+            variant="default"
+          >
+            {form.formState.isSubmitting ? "Submitting..." : "Sign Up"}
+          </Button>
         </div>
         <div className="text-sm text-center text-muted-foreground">
           Already have an account?{" "}
@@ -101,8 +155,8 @@ const SignUpForm = () => {
             Sign In
           </Link>
         </div>
-      </div>
-    </form>
+      </form>
+    </Form>
   );
 };
 

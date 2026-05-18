@@ -13,12 +13,11 @@ import { hashSync } from "bcrypt-ts-edge";
 import { prisma } from "@/db/prisma";
 import { formatError } from "@/lib/utils";
 import { ShippingAddress } from "@/types";
-import { z } from "zod";
+import { z, ZodError } from "zod";
 import { PAGE_SIZE } from "../constants";
 import { revalidatePath } from "next/cache";
 import { Prisma } from "@/db/generated/prisma/client";
 import { getMyCart } from "./cart.actions";
-import { redirect } from "next/navigation";
 
 //sign in the user with credentials
 export async function signInWithCredentials(
@@ -81,11 +80,34 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
       },
     });
 
-    redirect("/sign-in");
+    return {
+      success: true,
+      message: "Account created successfully! You can now log in.",
+    };
   } catch (error) {
-    if (isRedirectError(error)) {
-      throw error;
+    if (error instanceof ZodError) {
+      const fieldErrors: Record<string, string> = {};
+      for (const issue of error.issues) {
+        const path = issue.path[0] as string;
+        if (path && !fieldErrors[path]) {
+          fieldErrors[path] = issue.message;
+        }
+      }
+      return {
+        success: false,
+        message: "Please fix the errors below.",
+        fieldErrors,
+      };
     }
+
+    if (formatError(error).includes("already exists")) {
+      return {
+        success: false,
+        message: "",
+        fieldErrors: { email: "This email is already taken." },
+      };
+    }
+
     return { success: false, message: formatError(error) };
   }
 }

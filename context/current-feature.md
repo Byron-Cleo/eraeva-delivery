@@ -1,16 +1,32 @@
-# Current Feature
+# Current Feature: Auth UI - Sign In, Register & Sign Out
 
 ## Status
 
-Not Started
+Complete
 
 ## Goals
 
-<!-- What does success look like? -->
+- Replace NextAuth default pages with custom Sign In page at `/sign-in`
+- Create Register page at `/register` with name, email, password, confirm password
+- Display user avatar (Google image or initials fallback) and name at bottom of sidebar
+- Avatar dropdown with "Sign out" link, clicking avatar goes to `/profile`
+- Form validation, error display, and proper redirects
+- Show toast notification with a descriptive message after successful registration telling the user they can now log in
 
 ## Notes
 
-<!-- Additional context, constraints, or details from spec -->
+- **Avatar Logic**: If user has `image` (from Google) use that; otherwise generate initials from name (e.g., "Brad Traversy" → "BT")
+- **Sign In**: Email/password fields + "Sign in with Google" button + link to register
+- **Register**: Submit to `/api/auth/register`, redirect to sign-in on success
+- Reusable avatar component handling both image and initials cases
+- **Toast on register**: After successful sign-up, redirect to `/sign-in?registered=true`. The sign-in page detects the param and shows a success-style toast at the top-center with green border/background (`border-green-500 bg-green-50 text-green-800`), centered text, and two stacked lines: "Account created successfully!" / "You can now log in."
+
+### 2026-05-18 — Auth UI - Sign In, Register & Sign Out
+
+- Updated spec from GitHub to Google references across feature docs
+- Added `image`/`picture` passthrough in JWT and session callbacks in `auth.ts`
+- Created reusable `UserAvatar` component at `src/components/shared/user-avatar.tsx` with Google image or initials fallback
+- Updated `user-button.tsx` to use UserAvatar instead of hardcoded first initial
 
 ## History
 

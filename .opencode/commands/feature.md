@@ -24,14 +24,14 @@ The current-feature.md file contains:
 
 ## Available Actions
 
-| Action | Description |
-|--------|-------------|
-| `load` | Load a feature spec or inline description |
-| `start` | Begin implementation, create branch |
-| `review` | Check goals met, code quality |
-| `test` | Write and run unit tests for the feature |
-| `explain` | Document what changed and why |
-| `complete` | Commit, push, merge, reset |
+| Action | Description | Action Reference |
+|--------|-------------|-----------------|
+| `load` | Load a feature spec or inline description | `context/actions/feature/load.md` |
+| `start` | Begin implementation, create branch | `context/actions/feature/start.md` |
+| `review` | Check goals met, code quality | `context/actions/feature/review.md` |
+| `test` | Write and run unit tests for the feature | `context/actions/feature/test.md` |
+| `explain` | Document what changed and why | `context/actions/feature/explain.md` |
+| `complete` | Commit, push, merge, reset | `context/actions/feature/complete.md` |
 
 See [actions/feature/](../actions/feature/) for detailed instructions on each action.
 
