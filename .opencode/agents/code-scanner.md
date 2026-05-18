@@ -1,7 +1,17 @@
 ---
 name: code-scanner
 description: "Scan the codebase for security issues, performance problems, and code quality"
-tools: Glob, Grep, Read, WebFetch, WebSearch, mcp__ide__executeCode, mcp__ide__getDiagnostics
+permission:
+  read: allow
+  glob: allow
+  grep: allow
+  webfetch: allow
+  websearch: allow
+  mcp__ide__executeCode: allow
+  mcp__ide__getDiagnostics: allow
+  edit: deny
+  write: deny
+  bash: deny
 model: sonnet
 memory: project
 ---
