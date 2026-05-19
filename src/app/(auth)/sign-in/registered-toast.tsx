@@ -21,6 +21,36 @@ const RegisteredToast = () => {
         className: "text-center",
       });
     }
+
+    if (searchParams.get("verified") === "true") {
+      toast({
+        variant: "success",
+        description: (
+          <>
+            Email verified successfully!<br />
+            You can now log in.
+          </>
+        ),
+        className: "text-center",
+      });
+    }
+
+    const error = searchParams.get("error");
+    if (
+      error &&
+      ["InvalidVerificationToken", "VerificationTokenExpired", "MissingVerificationParams"].includes(error)
+    ) {
+      const messages: Record<string, string> = {
+        MissingVerificationParams: "Invalid verification link.",
+        InvalidVerificationToken: "Invalid or already used verification link.",
+        VerificationTokenExpired: "Verification link has expired. Please register again.",
+      };
+      toast({
+        variant: "destructive",
+        description: messages[error] || "Verification failed.",
+        className: "text-center",
+      });
+    }
   }, [searchParams, toast]);
 
   return null;

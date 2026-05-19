@@ -15,7 +15,7 @@ import SignUpForm from "./sign-up-form";
 
 
 export const metadata: Metadata = {
-  title: "Sign In",
+  title: "Register",
 };
 
 const SignUpPage = async (props: {searchParams: Promise<{callbackUrl:string}>}) => {
@@ -43,7 +43,7 @@ const SignUpPage = async (props: {searchParams: Promise<{callbackUrl:string}>}) 
         </CardHeader>
         <CardTitle className="text-center">Create Account</CardTitle>
         <CardDescription className="text-center">
-          Enter your information below to Sign Up.
+          Enter your information below to Register.
         </CardDescription>
         <CardContent className="space-y-4">
           <SignUpForm />

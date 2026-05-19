@@ -4,6 +4,7 @@ import type { NextAuthConfig } from "next-auth"
 const googleProvider = Google({
   clientId: process.env.AUTH_GOOGLE_ID!,
   clientSecret: process.env.AUTH_GOOGLE_SECRET!,
+  allowDangerousEmailAccountLinking: true,
 })
 googleProvider.clientId = googleProvider.options!.clientId
 googleProvider.clientSecret = googleProvider.options!.clientSecret

@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 };
 
 const SignInPage = async (props: {
-  searchParams: Promise<{ callbackUrl: string; registered?: string }>;
+  searchParams: Promise<{ callbackUrl?: string; registered?: string; verified?: string; error?: string }>;
 }) => {
   const session = await auth();
 

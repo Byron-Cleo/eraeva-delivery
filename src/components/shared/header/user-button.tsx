@@ -29,12 +29,15 @@ const UserButton = async () => {
     <div className="flex gap-2 items-center">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <div className="flex items-center">
+          <Button variant="ghost" className="flex items-center gap-2 px-2">
             <UserAvatar
               name={session.user?.name}
               image={session.user?.image}
             />
-          </div>
+            <span className="hidden sm:inline text-sm font-medium">
+              {session.user?.name?.split(" ")[0]}
+            </span>
+          </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end" forceMount>
             <DropdownMenuLabel className="font-normal">

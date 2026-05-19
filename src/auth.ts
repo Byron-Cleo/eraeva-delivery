@@ -103,6 +103,16 @@ const config = hasSecret
           return token;
         },
       },
+      events: {
+        async signIn({ account, user }: any) {
+          if (account?.provider === "google" && user.email) {
+            await prisma.user.updateMany({
+              where: { email: user.email, emailVerified: null },
+              data: { emailVerified: new Date() },
+            });
+          }
+        },
+      },
     })
   : null;
 

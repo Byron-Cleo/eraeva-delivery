@@ -54,7 +54,7 @@ const SignUpForm = () => {
       return;
     }
 
-    router.push("/sign-in?registered=true");
+    router.push(`/verify-email?email=${encodeURIComponent(values.email)}`);
   };
 
   return (
@@ -146,13 +146,13 @@ const SignUpForm = () => {
             className="w-full"
             variant="default"
           >
-            {form.formState.isSubmitting ? "Submitting..." : "Sign Up"}
+            {form.formState.isSubmitting ? "Submitting..." : "Register."}
           </Button>
         </div>
         <div className="text-sm text-center text-muted-foreground">
           Already have an account?{" "}
-          <Link href="/sign-in" target="_self" className="link">
-            Sign In
+          <Link href="/sign-in" target="_self" className="font-semibold text-primary hover:text-primary/80">
+            Sign In.
           </Link>
         </div>
       </form>

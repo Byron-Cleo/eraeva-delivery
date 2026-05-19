@@ -28,6 +28,7 @@ const sampleData = {
       email: "admin@example.com",
       password: hashSync("12345", 10),
       role: "admin",
+      emailVerified: new Date(),
       address: {
         fullName: "Byron Ochara",
         streetAddress: "Nairobi, Kenya",
@@ -41,6 +42,7 @@ const sampleData = {
       email: "user@example.com",
       password: hashSync("12345", 10),
       role: "user",
+      emailVerified: new Date(),
       address: {
         fullName: "Maxin Ochara",
         streetAddress: "Mombasa, Kenya",

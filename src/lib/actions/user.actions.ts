@@ -30,6 +30,20 @@ export async function signInWithCredentials(
       password: formData.get("password"),
     });
 
+    const existingUser = await prisma.user.findUnique({
+      where: { email: user.email },
+      select: { email: true, emailVerified: true },
+    });
+
+    if (existingUser && !existingUser.emailVerified) {
+      return {
+        success: false,
+        email: existingUser.email,
+        message:
+          "Please verify your email address before signing in. Check your email inbox or Spam folder to verify your email address first.",
+      };
+    }
+
     await signIn("credentials", user);
 
     return { success: true, message: "Signed in Successfully." };
@@ -64,7 +78,7 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
 
     //2. FORM DATA TO DATABASE.
     //create user in the database
-    await prisma.user.create({
+    const newUser = await prisma.user.create({
       data: {
         name: user.name,
         email: user.email,
@@ -80,9 +94,31 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
       },
     });
 
+    //3. GENERATE VERIFICATION TOKEN AND SEND EMAIL
+    const token = crypto.randomUUID();
+    const expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+
+    await prisma.verificationToken.create({
+      data: {
+        identifier: user.email,
+        token,
+        expires,
+      },
+    });
+
+    if (process.env.RESEND_API_KEY) {
+      const { sendVerificationEmail } = await import("@/email");
+      await sendVerificationEmail({
+        name: newUser.name,
+        email: user.email,
+        token,
+      });
+    }
+
     return {
       success: true,
-      message: "Account created successfully! You can now log in.",
+      message:
+        "Account created successfully! Please check your email to verify your account before signing in.",
     };
   } catch (error) {
     if (error instanceof ZodError) {
@@ -108,6 +144,55 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
       };
     }
 
+    return { success: false, message: formatError(error) };
+  }
+}
+
+//resend verification email
+export async function resendVerification(
+  _prevState: { success: boolean; message: string },
+  formData: FormData,
+) {
+  const email = formData.get("email") as string;
+  if (!email) {
+    return { success: false, message: "Email is required." };
+  }
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email },
+      select: { id: true, name: true, email: true, emailVerified: true },
+    });
+
+    if (!user) {
+      return { success: false, message: "No account found with that email." };
+    }
+
+    if (user.emailVerified) {
+      return {
+        success: false,
+        message: "This email is already verified. You can sign in.",
+      };
+    }
+
+    await prisma.verificationToken.deleteMany({
+      where: { identifier: email },
+    });
+
+    const token = crypto.randomUUID();
+    const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+    await prisma.verificationToken.create({
+      data: { identifier: email, token, expires },
+    });
+
+    if (process.env.RESEND_API_KEY) {
+      const { sendVerificationEmail } = await import("@/email");
+      await sendVerificationEmail({ name: user.name, email, token });
+    }
+
+    return { success: true, message: "Verification email sent. Please check your inbox." };
+  } catch (error) {
     return { success: false, message: formatError(error) };
   }
 }
